@@ -5,37 +5,37 @@ import DraftNotice from '../components/DraftNotice.astro';
 ---
 
 <BaseLayout
-  title="Rokko security posture — Operating principles under review"
-  description="The approved operating principles behind Rokko security, approvals, and inspectable outcomes. Specific architecture and compliance claims remain under review."
+  title="Rokko and your business data"
+  description="See the security rules Rokko is being built around: tight access, owner approval for big changes, and a clear record of what happened."
   noindex
 >
   <PageHero
-    eyebrow="Security posture"
-    title="Trust begins with a visible operating boundary."
-    deck="Rokko’s detailed public security, hosting, retention, and compliance statements are under architecture and legal review. This page publishes only the approved operating principles."
+    eyebrow="Your data"
+    title="Your business data should stay your business."
+    deck="Worried a stolen login could expose your customer list or let someone change a job? We are building Rokko to keep access tight, hold big moves for the right person, and show you what happened."
     tone="dark"
   />
 
   <section class="section security-principles">
     <div class="container--content">
-      <DraftNotice title="Specific claims are approval-gated">No certification, dedicated-environment, encryption, retention, or compliance claim is being published until it has an approved technical and legal source.</DraftNotice>
+      <DraftNotice title="We won’t fake a security badge">Our hosting, data handling, and independent review details are still being checked. Until the paperwork is approved, we won’t post a badge or make a promise we can’t prove.</DraftNotice>
       <div class="grid-3 security-principles__grid">
-        <article class="numbered-card"><span class="numbered-card__number">01</span><h2>Necessary context</h2><p>Each workflow should define the operating context it needs instead of assuming broad access.</p></article>
-        <article class="numbered-card"><span class="numbered-card__number">02</span><h2>Visible authority</h2><p>Consequential actions should have an explicit approval policy and accountable owner.</p></article>
-        <article class="numbered-card"><span class="numbered-card__number">03</span><h2>Inspectable outcomes</h2><p>The result state should be legible enough for the operator to verify what happened.</p></article>
+        <article class="numbered-card"><span class="numbered-card__number">01</span><h2>Keep access tight</h2><p>Each person should see only the jobs and customer details they need to do their work.</p></article>
+        <article class="numbered-card"><span class="numbered-card__number">02</span><h2>Big changes wait for you</h2><p>The right person should say yes before Rokko changes a job, schedule, or other important record.</p></article>
+        <article class="numbered-card"><span class="numbered-card__number">03</span><h2>See what happened</h2><p>If something looks wrong, you should be able to see what changed, when it changed, and who approved it.</p></article>
       </div>
     </div>
   </section>
 
   <section class="section section--dark review-list">
     <div class="container--content review-list__grid">
-      <div><p class="eyebrow">Before public security approval</p><h2>The implementation has to answer the concrete questions.</h2></div>
+      <div><p class="eyebrow">The facts we’re still checking</p><h2>Before we ask for your trust, we need clear answers.</h2></div>
       <ul>
-        <li>Deployment and tenant-isolation architecture</li>
-        <li>Authentication, authorization, and approval-policy controls</li>
-        <li>Data access, retention, deletion, and subprocessors</li>
-        <li>Logging, auditability, incident response, and security contact</li>
-        <li>Any applicable certification or regulatory statement</li>
+        <li>Where your data is kept and how it stays separate from other customers</li>
+        <li>How logins, team access, and approvals work</li>
+        <li>How long information is kept and how it is erased</li>
+        <li>What record we keep and what happens if there is a security problem</li>
+        <li>Which independent checks or certificates truly apply</li>
       </ul>
     </div>
   </section>

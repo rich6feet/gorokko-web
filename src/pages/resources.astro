@@ -4,27 +4,27 @@ import PageHero from '../components/PageHero.astro';
 import FinalCta from '../components/FinalCta.astro';
 
 const guides = [
-  { number: '01', title: 'Choose an operating question', body: 'Start with a question a real owner already asks and define what a trustworthy answer must include.' },
-  { number: '02', title: 'Draw the authority line', body: 'Name the moves a teammate may prepare, the moves a person must approve, and the conditions that require escalation.' },
-  { number: '03', title: 'Define proof before automation', body: 'Choose evidence tied to the workflow instead of a broad metric that cannot explain why the outcome changed.' },
+  { number: '01', title: 'Pick one question', body: 'Start with a question you already ask every day. Write down what a useful answer must show.' },
+  { number: '02', title: 'Decide who says yes', body: 'Choose what Rokko may prepare, what a person must approve, and when your team needs to step in.' },
+  { number: '03', title: 'Know what good looks like', body: 'Pick a result your team can check. Skip big numbers that do not explain what really changed.' },
 ];
 ---
 
 <BaseLayout
-  title="Rokko resources — Designing accountable AI operations"
-  description="Practical starting principles for choosing a Rokko workflow, defining human authority, and setting an honest proof standard."
+  title="Rokko guides — Start with one problem worth fixing"
+  description="Three plain steps for choosing where Rokko may help your home-service team first."
 >
   <PageHero
-    eyebrow="Resources"
-    title="Better operating questions create better AI workflows."
-    deck="A practical starting library for teams deciding where an AI operations teammate belongs—and where it does not."
+    eyebrow="Guides"
+    title="Start with the headache your team already knows."
+    deck="These quick notes help you pick one useful place to try Rokko and set clear rules before the first test."
   />
 
   <section class="section resource-list">
     <div class="container--content">
       <div class="resource-list__heading">
-        <p class="eyebrow">Field notes</p>
-        <p class="deck">These are operating principles, not generic automation recipes. Each one helps make the context, authority, and evidence visible.</p>
+        <p class="eyebrow">Three things to settle first</p>
+        <p class="deck">Keep it simple. Pick the question. Pick who makes the call. Pick the result you can check.</p>
       </div>
       <div class="grid-3">
         {guides.map((guide) => (
@@ -41,20 +41,20 @@ const guides = [
   <section class="section section--dark worksheet">
     <div class="container--content worksheet__grid">
       <div>
-        <p class="eyebrow">A five-line workflow brief</p>
-        <h2>Write this before the first demo.</h2>
+        <p class="eyebrow">Five lines to bring to a demo</p>
+        <h2>Write this down before we talk.</h2>
       </div>
       <ol>
-        <li><span>Question</span><p>What does the operator need to know or decide?</p></li>
-        <li><span>Context</span><p>Which record is allowed to answer that question?</p></li>
-        <li><span>Move</span><p>What supported action may be prepared?</p></li>
-        <li><span>Authority</span><p>Who approves it, and what triggers escalation?</p></li>
-        <li><span>Proof</span><p>How will the operator verify the outcome?</p></li>
+        <li><span>Question</span><p>What do you need to know or decide?</p></li>
+        <li><span>Details</span><p>Which job record, note, or schedule has the answer?</p></li>
+        <li><span>Next step</span><p>What should Rokko get ready for you?</p></li>
+        <li><span>Approval</span><p>Who says yes, and when should the crew step in?</p></li>
+        <li><span>Result</span><p>How will you know the work is done right?</p></li>
       </ol>
     </div>
   </section>
 
-  <FinalCta title="Turn the worksheet into a tailored product conversation." />
+  <FinalCta title="Bring the five lines. We’ll build the demo around them." />
 </BaseLayout>
 
 <style>

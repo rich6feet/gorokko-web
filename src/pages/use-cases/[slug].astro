@@ -13,26 +13,26 @@ const { item } = Astro.props;
 ---
 
 <BaseLayout
-  title={`${item.title} with Rokko — Home-service operations use case`}
+  title={`${item.title} with Rokko — Home-service example`}
   description={item.short}
 >
-  <PageHero eyebrow={`Use case ${item.number}`} title={item.title} deck={item.short} tone="moss" />
+  <PageHero eyebrow={`Example ${item.number}`} title={item.title} deck={item.short} tone="moss" />
 
   <section class="section operating-question">
     <div class="container--content operating-question__grid">
       <div>
-        <p class="eyebrow">The operating question</p>
+        <p class="eyebrow">The question</p>
         <blockquote>“{item.question}”</blockquote>
       </div>
       <div>
-        <p class="deck">This page describes a target workflow, not an unqualified claim that every source system, channel, or action is currently supported.</p>
+        <p class="deck">This is an example of how the work could flow. We confirm the tools, messages, and changes Rokko can handle before any test starts.</p>
       </div>
     </div>
   </section>
 
   <section class="section section--paper friction">
     <div class="container--content">
-      <p class="eyebrow">Where the friction lives</p>
+      <p class="eyebrow">Why this gets messy</p>
       <div class="grid-3">
         {item.friction.map((point, index) => (
           <article class="numbered-card">
@@ -47,8 +47,8 @@ const { item } = Astro.props;
   <section class="section section--dark workflow">
     <div class="container--content">
       <div class="workflow__heading">
-        <div><p class="eyebrow">Target workflow</p><h2>A controlled path from signal to outcome.</h2></div>
-        <p class="deck">The precise context, policy, and action surface is verified during implementation.</p>
+        <div><p class="eyebrow">A simple path</p><h2>From stuck work to a clear next step.</h2></div>
+        <p class="deck">Before a test starts, we agree on which details Rokko may check, what it may prepare, and who says yes.</p>
       </div>
       <ol>
         {item.flow.map((step, index) => (
@@ -60,15 +60,15 @@ const { item } = Astro.props;
 
   <section class="section proof-standard">
     <div class="container--content proof-standard__grid">
-      <div><p class="eyebrow">Proof standard</p><h2>Define success before the pilot begins.</h2></div>
+      <div><p class="eyebrow">Know what good looks like</p><h2>Set the goal before the test starts.</h2></div>
       <p class="deck">{item.proof}</p>
     </div>
   </section>
 
   <FinalCta
-    eyebrow={`Explore ${item.title.toLowerCase()}`}
-    title="Shape the demo around the real operating boundary."
-    body="Bring the question, source context, accountable owner, and result that would make this workflow useful."
+    eyebrow={`Try ${item.title.toLowerCase()}`}
+    title="Build the demo around the real headache."
+    body="Bring the question, the job details, the person who says yes, and the result your team wants."
   />
 </BaseLayout>
 

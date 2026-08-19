@@ -1,0 +1,711 @@
+---
+import '../../styles/product-workspace.css';
+import { productChannels } from '../../content/productWorkspace';
+
+const initialChannel = productChannels[0];
+const categories = ['Operating rooms', 'Direct messages'] as const;
+const threadedMessages = productChannels.flatMap((channel) =>
+  channel.messages
+    .filter((message) => message.replies?.length)
+    .map((message) => ({ channel, message })),
+);
+const initialThreadId = `${initialChannel.id}:owner-answer`;
+---
+
+<section class="messenger-app is-thread-open" aria-label="Sample Rokko workroom" data-messenger-app>
+  <div class="messenger-scrim" data-sidebar-scrim aria-hidden="true"></div>
+  <div class="messenger-shell">
+    <aside id="workspace-sidebar" class="messenger-sidebar" aria-label="Workroom navigation" data-sidebar>
+      <div class="messenger-workspace">
+        <div class="messenger-workspace__mark" aria-hidden="true">
+          <img src="/brand/gorokko-symbol-color.svg" alt="" width="28" height="28" />
+        </div>
+        <div class="messenger-workspace__copy">
+          <strong>Rokko workroom</strong>
+          <span>Sample workspace</span>
+        </div>
+        <button class="icon-button sidebar-collapse" type="button" aria-label="Collapse workroom list" aria-expanded="true" data-sidebar-collapse>
+          <i data-lucide="panel-left-close" aria-hidden="true"></i>
+        </button>
+        <button class="icon-button sidebar-mobile-close" type="button" aria-label="Close workroom list" data-sidebar-mobile-close>
+          <i data-lucide="x" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <nav class="messenger-nav" aria-label="Rooms and direct messages">
+        {categories.map((category) => (
+          <section class="channel-group" aria-labelledby={`channel-group-${category.replace(' ', '-').toLowerCase()}`}>
+          <h2 id={`channel-group-${category.replace(' ', '-').toLowerCase()}`} class="messenger-nav__label">{category === 'Operating rooms' ? 'Work rooms' : category}</h2>
+            {productChannels.filter((channel) => channel.category === category).map((channel) => (
+              <button
+                class="channel-button"
+                type="button"
+                aria-current={channel.id === initialChannel.id ? 'page' : undefined}
+                data-channel-id={channel.id}
+              >
+                {channel.kind === 'channel' ? (
+                  <span class="channel-button__glyph" aria-hidden="true">#</span>
+                ) : (
+                  <span class="dm-avatar" aria-hidden="true">
+                    {channel.id === 'rokko-dm' ? <img src="/brand/gorokko-symbol-color.svg" alt="" /> : 'MC'}
+                    <span class:list={['presence-dot', `presence-dot--${channel.presence ?? 'offline'}`]}></span>
+                  </span>
+                )}
+                <span class="channel-button__label">{channel.label}</span>
+                {channel.unread && (
+                  <span class="unread-badge" role="status" aria-label={`${channel.unread} unread`} data-unread-count={channel.unread}>{channel.unread}</span>
+                )}
+              </button>
+            ))}
+          </section>
+        ))}
+      </nav>
+
+      <div class="workspace-footer">
+        <span class="workspace-footer__status"><span class="presence-dot presence-dot--online"></span> Sample is ready</span>
+        <span class="workspace-footer__label">No customer data</span>
+      </div>
+    </aside>
+
+    <section class="messenger-main" aria-labelledby="active-channel-title">
+      <header class="messenger-topbar">
+        <button class="icon-button mobile-only" type="button" aria-label="Open workroom list" aria-controls="workspace-sidebar" aria-expanded="false" data-sidebar-mobile-open>
+          <i data-lucide="panel-left" aria-hidden="true"></i>
+        </button>
+        <div class="messenger-topbar__context">
+          <h2 id="active-channel-title" data-channel-title># {initialChannel.label}</h2>
+          <p data-channel-topic>{initialChannel.topic}</p>
+        </div>
+        <label class="messenger-search" data-search-box>
+          <i data-lucide="search" aria-hidden="true"></i>
+          <span class="sr-only">Search this room</span>
+          <input type="search" placeholder="Search this room" autocomplete="off" data-message-search />
+          <kbd>Ctrl K</kbd>
+        </label>
+        <button class="icon-button mobile-only" type="button" aria-label="Open search" data-search-toggle>
+          <i data-lucide="search" aria-hidden="true"></i>
+        </button>
+        <button class="icon-button theme-toggle" type="button" aria-label="Switch color theme" data-theme-toggle>
+          <i data-lucide="moon" aria-hidden="true" data-theme-icon></i>
+        </button>
+        <div class="profile-control">
+          <button class="profile-button" type="button" aria-label="Open user menu" aria-expanded="false" data-profile-toggle>
+            <span class="topbar-avatar" aria-hidden="true">MC<span class="presence-dot presence-dot--online"></span></span>
+            <i data-lucide="chevron-down" aria-hidden="true"></i>
+          </button>
+          <div class="profile-menu" role="menu" hidden data-profile-menu>
+            <div class="profile-menu__identity">
+              <strong>Maya Chen</strong>
+              <span>Owner view · sample only</span>
+            </div>
+            <button type="button" role="menuitem" data-theme-auto>
+              <i data-lucide="monitor" aria-hidden="true"></i>
+              Follow my device theme
+            </button>
+            <a href="/security/" role="menuitem">
+              <i data-lucide="shield-check" aria-hidden="true"></i>
+              How we handle your data
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <div class="message-viewport" data-message-viewport>
+        <div class="channel-switcher" data-channel-switcher>
+          {productChannels.map((channel) => (
+            <section
+              class="message-channel"
+              aria-label={`${channel.label} messages`}
+              role="log"
+              aria-live={channel.id === initialChannel.id ? 'polite' : 'off'}
+              data-channel-panel={channel.id}
+              hidden={channel.id !== initialChannel.id}
+            >
+              <header class="channel-welcome">
+                <span class="channel-welcome__icon" aria-hidden="true">{channel.kind === 'channel' ? '#' : '@'}</span>
+                <div>
+                  <h3>{channel.kind === 'channel' ? '#' : ''}{channel.label}</h3>
+                  <p>{channel.topic}</p>
+                </div>
+              </header>
+
+              {channel.messages.map((message, messageIndex) => (
+                <article class="message-row" data-message-id={message.id} style={`--message-index:${messageIndex}`}>
+                  <div class:list={['message-avatar-wrap', message.presence && `has-presence`]}>
+                    <div class:list={['message-avatar', `message-avatar--${message.avatarKind ?? 'person'}`]} aria-hidden="true">
+                      {message.avatarKind === 'rokko' ? <img src="/brand/gorokko-symbol-color.svg" alt="" width="26" height="26" /> : message.avatar}
+                    </div>
+                    {message.presence && <span class:list={['presence-dot', `presence-dot--${message.presence}`]}></span>}
+                  </div>
+                  <div class="message-content">
+                    <div class="message-meta">
+                      <strong>{message.author}</strong>
+                      {message.role && <span>{message.role}</span>}
+                      <time datetime={message.datetime}>{message.time}</time>
+                    </div>
+                    {message.body.map((paragraph) => <p>{paragraph}</p>)}
+
+                    {message.card && (
+                      <section class="approval-card" role="group" aria-label={message.card.label}>
+                        <span class="approval-card__label" data-card-label>{message.card.label}</span>
+                        <strong>{message.card.title}</strong>
+                        <p>{message.card.body}</p>
+                        <div class="approval-card__actions">
+                          {message.card.primaryAction && <button class="mini-button mini-button--primary" type="button" data-demo-approve>{message.card.primaryAction}</button>}
+                          {message.card.secondaryAction && <button class="mini-button" type="button" data-demo-secondary>{message.card.secondaryAction}</button>}
+                        </div>
+                      </section>
+                    )}
+
+                    {message.reactions && (
+                      <div class="reaction-row" role="group" aria-label="Message reactions">
+                        {message.reactions.map((reaction) => (
+                          <button
+                            class="reaction-button"
+                            type="button"
+                            aria-label={`${reaction.label}, ${reaction.count} reactions`}
+                            aria-pressed={reaction.reacted ? 'true' : 'false'}
+                            data-reaction
+                            data-count={reaction.count}
+                            data-emoji={reaction.emoji}
+                          >
+                            <span aria-hidden="true">{reaction.emoji}</span>
+                            <span data-reaction-count>{reaction.count}</span>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+
+                    {message.replies?.length && (
+                      <button class="thread-link" type="button" data-open-thread={`${channel.id}:${message.id}`}>
+                        <span class="thread-link__avatars" aria-hidden="true">
+                          {message.replies.slice(0, 2).map((reply) => <span>{reply.avatarKind === 'rokko' ? 'R' : reply.avatar}</span>)}
+                        </span>
+                        <strong>{message.replies.length} replies</strong>
+                        <span>View thread</span>
+                      </button>
+                    )}
+                  </div>
+
+                  <div class="message-actions" role="group" aria-label={`Actions for ${message.author}'s message`}>
+                    <button type="button" aria-label="Add a quick reaction" data-quick-react><i data-lucide="smile-plus" aria-hidden="true"></i></button>
+                    <button type="button" aria-label="Reply in a thread" data-open-thread={message.replies?.length ? `${channel.id}:${message.id}` : undefined} data-start-thread={!message.replies?.length ? `${channel.id}:${message.id}` : undefined}><i data-lucide="message-square" aria-hidden="true"></i></button>
+                    {message.editable ? (
+                      <button type="button" aria-label="Edit this message" data-edit-message><i data-lucide="pencil" aria-hidden="true"></i></button>
+                    ) : (
+                      <button type="button" aria-label="Copy message text" data-copy-message><i data-lucide="copy" aria-hidden="true"></i></button>
+                    )}
+                  </div>
+                </article>
+              ))}
+            </section>
+          ))}
+        </div>
+        <p class="search-status sr-only" aria-live="polite" data-search-status></p>
+      </div>
+
+      <form class="message-composer" data-message-form>
+        <div class="emoji-picker" hidden data-emoji-picker></div>
+        <div class="message-composer__box">
+          <button class="icon-button" type="button" aria-label="Add emoji" aria-expanded="false" data-emoji-trigger>
+            <i data-lucide="smile" aria-hidden="true"></i>
+          </button>
+          <label class="sr-only" for="message-input">Write a message</label>
+          <textarea id="message-input" name="message" rows="1" placeholder={`Message #${initialChannel.label}`} data-message-input></textarea>
+          <button class="send-button" type="submit" aria-label="Send message">
+            <i data-lucide="arrow-up" aria-hidden="true"></i>
+          </button>
+        </div>
+        <p class="composer-note">Sample only. Messages disappear when you leave.</p>
+      </form>
+    </section>
+
+    <aside class="messenger-thread" aria-label="Thread details" aria-hidden="false" data-thread-panel>
+      <header class="thread-header">
+        <div>
+          <strong>Thread</strong>
+          <span data-thread-channel># {initialChannel.label}</span>
+        </div>
+        <button class="icon-button" type="button" aria-label="Close thread" data-close-thread>
+          <i data-lucide="x" aria-hidden="true"></i>
+        </button>
+      </header>
+      <div class="thread-views" data-thread-views>
+        {threadedMessages.map(({ channel, message }) => (
+          <section class="thread-view" data-thread-id={`${channel.id}:${message.id}`} hidden={`${channel.id}:${message.id}` !== initialThreadId}>
+            <article class="thread-parent">
+              <div class:list={['message-avatar', `message-avatar--${message.avatarKind ?? 'person'}`]} aria-hidden="true">
+                {message.avatarKind === 'rokko' ? <img src="/brand/gorokko-symbol-color.svg" alt="" width="24" height="24" /> : message.avatar}
+              </div>
+              <div>
+                <div class="message-meta"><strong>{message.author}</strong><time datetime={message.datetime}>{message.time}</time></div>
+                <p>{message.body[0]}</p>
+              </div>
+            </article>
+            <div class="thread-replies" data-thread-replies>
+              {message.replies?.map((reply, replyIndex) => (
+                <article class="thread-reply" style={`--message-index:${replyIndex}`}>
+                  <div class:list={['message-avatar', `message-avatar--${reply.avatarKind ?? 'person'}`]} aria-hidden="true">
+                    {reply.avatarKind === 'rokko' ? <img src="/brand/gorokko-symbol-color.svg" alt="" width="22" height="22" /> : reply.avatar}
+                  </div>
+                  <div><div class="message-meta"><strong>{reply.author}</strong><time>{reply.time}</time></div><p>{reply.body}</p></div>
+                </article>
+              ))}
+            </div>
+          </section>
+        ))}
+        <section class="thread-view thread-view--empty" data-thread-empty hidden>
+          <i data-lucide="message-square-more" aria-hidden="true"></i>
+          <strong>Start a thread</strong>
+          <p>Keep the job details with the message that needs them.</p>
+          <div class="thread-replies" data-thread-replies></div>
+        </section>
+      </div>
+      <form class="thread-composer" data-thread-form>
+        <label class="sr-only" for="thread-input">Reply in this thread</label>
+        <input id="thread-input" type="text" placeholder="Reply in thread" autocomplete="off" data-thread-input />
+        <button class="icon-button" type="submit" aria-label="Send thread reply"><i data-lucide="arrow-up" aria-hidden="true"></i></button>
+      </form>
+    </aside>
+  </div>
+
+  <div class="messenger-toast" role="status" aria-live="polite" hidden data-toast></div>
+  <p class="sr-only" aria-live="polite" data-announcer></p>
+</section>
+
+<script>
+  type ThemeChoice = 'light' | 'dark' | null;
+  type LucideApi = { createIcons: (options?: Record<string, unknown>) => void };
+
+  const setupMessenger = (app: HTMLElement) => {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');
+    const mobileViewport = window.matchMedia('(max-width: 47.99rem)');
+    const switchDelay = () => reducedMotion.matches ? 0 : 150;
+    let themeOverride: ThemeChoice = null;
+    let activeChannel = 'owner-brief';
+    let activeThreadId = 'owner-brief:owner-answer';
+    let typingTimer = 0;
+    let replyTimer = 0;
+
+    const $ = <T extends Element>(selector: string) => app.querySelector<T>(selector);
+    const $$ = <T extends Element>(selector: string) => [...app.querySelectorAll<T>(selector)];
+    const messageViewport = $<HTMLElement>('[data-message-viewport]');
+    const switcher = $<HTMLElement>('[data-channel-switcher]');
+    const title = $<HTMLElement>('[data-channel-title]');
+    const topic = $<HTMLElement>('[data-channel-topic]');
+    const search = $<HTMLInputElement>('[data-message-search]');
+    const searchBox = $<HTMLElement>('[data-search-box]');
+    const searchStatus = $<HTMLElement>('[data-search-status]');
+    const messageForm = $<HTMLFormElement>('[data-message-form]');
+    const messageInput = $<HTMLTextAreaElement>('[data-message-input]');
+    const threadPanel = $<HTMLElement>('[data-thread-panel]');
+    const threadInput = $<HTMLInputElement>('[data-thread-input]');
+    const announcer = $<HTMLElement>('[data-announcer]');
+    const toast = $<HTMLElement>('[data-toast]');
+    const profileMenu = $<HTMLElement>('[data-profile-menu]');
+    const profileToggle = $<HTMLButtonElement>('[data-profile-toggle]');
+    const emojiPicker = $<HTMLElement>('[data-emoji-picker]');
+    const emojiTrigger = $<HTMLButtonElement>('[data-emoji-trigger]');
+
+    const lucide = () => (window as Window & { lucide?: LucideApi }).lucide;
+    const refreshIcons = () => window.requestAnimationFrame(() => lucide()?.createIcons({ attrs: { 'stroke-width': 1.8 } }));
+    if (document.readyState === 'complete') refreshIcons();
+    else window.addEventListener('load', refreshIcons, { once: true });
+
+    const announce = (message: string) => {
+      if (!announcer) return;
+      announcer.textContent = '';
+      window.setTimeout(() => { announcer.textContent = message; }, 20);
+    };
+
+    const showToast = (message: string) => {
+      if (!toast) return;
+      toast.textContent = message;
+      toast.hidden = false;
+      toast.classList.remove('is-hiding');
+      window.setTimeout(() => toast.classList.add('is-hiding'), 1800);
+      window.setTimeout(() => { toast.hidden = true; }, reducedMotion.matches ? 1850 : 2050);
+    };
+
+    const currentTheme = () => themeOverride ?? (systemTheme.matches ? 'dark' : 'light');
+    const syncThemeControl = () => {
+      const theme = currentTheme();
+      const control = $<HTMLButtonElement>('[data-theme-toggle]');
+      const icon = $<HTMLElement>('[data-theme-icon]');
+      if (!control || !icon) return;
+      control.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`);
+      icon.setAttribute('data-lucide', theme === 'dark' ? 'sun' : 'moon');
+      refreshIcons();
+    };
+
+    $<HTMLButtonElement>('[data-theme-toggle]')?.addEventListener('click', () => {
+      themeOverride = currentTheme() === 'dark' ? 'light' : 'dark';
+      app.dataset.theme = themeOverride;
+      syncThemeControl();
+      announce(`${themeOverride} theme selected for this visit`);
+    });
+
+    $<HTMLButtonElement>('[data-theme-auto]')?.addEventListener('click', () => {
+      themeOverride = null;
+      delete app.dataset.theme;
+      syncThemeControl();
+      if (profileMenu) profileMenu.hidden = true;
+      profileToggle?.setAttribute('aria-expanded', 'false');
+      announce('Theme now follows your device');
+    });
+
+    systemTheme.addEventListener('change', () => {
+      if (themeOverride === null) syncThemeControl();
+    });
+    syncThemeControl();
+
+    const closeProfileMenu = () => {
+      if (profileMenu) profileMenu.hidden = true;
+      profileToggle?.setAttribute('aria-expanded', 'false');
+    };
+
+    profileToggle?.addEventListener('click', () => {
+      if (!profileMenu) return;
+      const willOpen = profileMenu.hidden;
+      profileMenu.hidden = !willOpen;
+      profileToggle.setAttribute('aria-expanded', String(willOpen));
+      if (willOpen) profileMenu.querySelector<HTMLElement>('[role="menuitem"]')?.focus();
+    });
+
+    const closeSidebar = () => {
+      app.classList.remove('is-sidebar-open');
+      $<HTMLButtonElement>('[data-sidebar-mobile-open]')?.setAttribute('aria-expanded', 'false');
+    };
+
+    $<HTMLButtonElement>('[data-sidebar-collapse]')?.addEventListener('click', (event) => {
+      const button = event.currentTarget as HTMLButtonElement;
+      const collapsed = app.classList.toggle('is-sidebar-collapsed');
+      button.setAttribute('aria-expanded', String(!collapsed));
+      button.setAttribute('aria-label', collapsed ? 'Expand workroom list' : 'Collapse workroom list');
+      const icon = button.querySelector<HTMLElement>('[data-lucide]');
+      icon?.setAttribute('data-lucide', collapsed ? 'panel-left-open' : 'panel-left-close');
+      refreshIcons();
+    });
+
+    $<HTMLButtonElement>('[data-sidebar-mobile-open]')?.addEventListener('click', (event) => {
+      app.classList.add('is-sidebar-open');
+      (event.currentTarget as HTMLButtonElement).setAttribute('aria-expanded', 'true');
+    });
+    $<HTMLButtonElement>('[data-sidebar-mobile-close]')?.addEventListener('click', closeSidebar);
+    $<HTMLElement>('[data-sidebar-scrim]')?.addEventListener('click', closeSidebar);
+
+    const clearUnread = (button: HTMLButtonElement) => {
+      const badge = button.querySelector<HTMLElement>('[data-unread-count]');
+      if (!badge) return;
+      badge.classList.add('is-clearing');
+      window.setTimeout(() => { badge.hidden = true; }, reducedMotion.matches ? 0 : 180);
+    };
+
+    const firstThreadForChannel = (channelId: string) =>
+      $<HTMLButtonElement>(`[data-channel-panel="${channelId}"] [data-open-thread]`)?.dataset.openThread;
+
+    const closeThread = () => {
+      app.classList.remove('is-thread-open');
+      threadPanel?.setAttribute('aria-hidden', 'true');
+    };
+
+    if (mobileViewport.matches) closeThread();
+    mobileViewport.addEventListener('change', (event) => {
+      if (event.matches) closeThread();
+    });
+
+    const openThread = (threadId: string, focusPanel = false) => {
+      const view = $<HTMLElement>(`[data-thread-id="${threadId}"]`);
+      const empty = $<HTMLElement>('[data-thread-empty]');
+      $$<HTMLElement>('[data-thread-id]').forEach((item) => { item.hidden = item !== view; });
+      if (empty) empty.hidden = Boolean(view);
+      activeThreadId = threadId;
+      app.classList.add('is-thread-open');
+      threadPanel?.setAttribute('aria-hidden', 'false');
+      const channelLabel = $<HTMLElement>(`[data-channel-id="${activeChannel}"] .channel-button__label`)?.textContent ?? activeChannel;
+      const threadChannel = $<HTMLElement>('[data-thread-channel]');
+      if (threadChannel) threadChannel.textContent = `# ${channelLabel}`;
+      if (focusPanel) threadInput?.focus();
+    };
+
+    $<HTMLButtonElement>('[data-close-thread]')?.addEventListener('click', closeThread);
+
+    const resetSearch = () => {
+      if (!search) return;
+      search.value = '';
+      const activePanel = $<HTMLElement>(`[data-channel-panel="${activeChannel}"]`);
+      activePanel?.querySelectorAll<HTMLElement>('.message-row').forEach((row) => { row.hidden = false; });
+      if (searchStatus) searchStatus.textContent = '';
+    };
+
+    const switchChannel = (channelId: string, button: HTMLButtonElement) => {
+      if (channelId === activeChannel) {
+        closeSidebar();
+        return;
+      }
+      switcher?.classList.add('is-switching');
+      window.setTimeout(() => {
+        $$<HTMLElement>('[data-channel-panel]').forEach((panel) => {
+          const selected = panel.dataset.channelPanel === channelId;
+          panel.hidden = !selected;
+          panel.setAttribute('aria-live', selected ? 'polite' : 'off');
+        });
+        $$<HTMLButtonElement>('[data-channel-id]').forEach((item) => {
+          if (item === button) item.setAttribute('aria-current', 'page');
+          else item.removeAttribute('aria-current');
+        });
+        activeChannel = channelId;
+        const panel = $<HTMLElement>(`[data-channel-panel="${channelId}"]`);
+        const welcomeTitle = panel?.querySelector<HTMLElement>('.channel-welcome h3')?.textContent ?? channelId;
+        const welcomeTopic = panel?.querySelector<HTMLElement>('.channel-welcome p')?.textContent ?? '';
+        if (title) title.textContent = welcomeTitle;
+        if (topic) topic.textContent = welcomeTopic;
+        if (messageInput) messageInput.placeholder = `Message ${welcomeTitle}`;
+        clearUnread(button);
+        resetSearch();
+        if (messageViewport) messageViewport.scrollTop = 0;
+        const firstThread = firstThreadForChannel(channelId);
+        if (firstThread && window.innerWidth >= 1120) openThread(firstThread);
+        else closeThread();
+        closeSidebar();
+        switcher?.classList.remove('is-switching');
+        announce(`${welcomeTitle} opened`);
+        refreshIcons();
+      }, switchDelay());
+    };
+
+    $$<HTMLButtonElement>('[data-channel-id]').forEach((button) => {
+      button.addEventListener('click', () => switchChannel(button.dataset.channelId ?? '', button));
+    });
+
+    app.addEventListener('click', async (event) => {
+      const target = event.target as HTMLElement;
+      const openThreadButton = target.closest<HTMLButtonElement>('[data-open-thread]');
+      const startThreadButton = target.closest<HTMLButtonElement>('[data-start-thread]');
+      if (openThreadButton?.dataset.openThread) openThread(openThreadButton.dataset.openThread, true);
+      if (startThreadButton?.dataset.startThread) openThread(startThreadButton.dataset.startThread, true);
+
+      const reaction = target.closest<HTMLButtonElement>('[data-reaction]');
+      if (reaction) {
+        const pressed = reaction.getAttribute('aria-pressed') === 'true';
+        const previous = Number(reaction.dataset.count ?? '0');
+        const next = Math.max(0, previous + (pressed ? -1 : 1));
+        reaction.dataset.count = String(next);
+        reaction.setAttribute('aria-pressed', String(!pressed));
+        reaction.querySelector<HTMLElement>('[data-reaction-count]')!.textContent = String(next);
+        reaction.classList.remove('is-bumping');
+        void reaction.offsetWidth;
+        reaction.classList.add('is-bumping');
+        announce(`${reaction.dataset.emoji} reaction ${pressed ? 'removed' : 'added'}`);
+      }
+
+      const quickReact = target.closest<HTMLButtonElement>('[data-quick-react]');
+      if (quickReact) {
+        const row = quickReact.closest<HTMLElement>('.message-row');
+        row?.querySelector<HTMLButtonElement>('[data-reaction]')?.click();
+      }
+
+      const copyButton = target.closest<HTMLButtonElement>('[data-copy-message]');
+      if (copyButton) {
+        const text = copyButton.closest<HTMLElement>('.message-row')?.querySelector<HTMLElement>('.message-content > p')?.textContent ?? '';
+        try { await navigator.clipboard.writeText(text); showToast('Message copied'); }
+        catch { showToast('Copy isn’t available here'); }
+      }
+
+      const editButton = target.closest<HTMLButtonElement>('[data-edit-message]');
+      if (editButton) {
+        const paragraph = editButton.closest<HTMLElement>('.message-row')?.querySelector<HTMLElement>('.message-content > p');
+        if (!paragraph) return;
+        paragraph.contentEditable = paragraph.contentEditable === 'true' ? 'false' : 'true';
+        if (paragraph.contentEditable === 'true') { paragraph.focus(); showToast('Edit this sample message'); }
+        else showToast('Sample message updated');
+      }
+
+      const approveButton = target.closest<HTMLButtonElement>('[data-demo-approve]');
+      if (approveButton) {
+        const card = approveButton.closest<HTMLElement>('.approval-card');
+        const label = card?.querySelector<HTMLElement>('[data-card-label]');
+        if (label) label.textContent = 'You approved this sample';
+        approveButton.textContent = 'Approved';
+        approveButton.disabled = true;
+        showToast('Sample change approved');
+      }
+
+      const secondaryButton = target.closest<HTMLButtonElement>('[data-demo-secondary]');
+      if (secondaryButton) showToast('Kept on hold');
+    });
+
+    search?.addEventListener('input', () => {
+      const query = search.value.trim().toLowerCase();
+      const activePanel = $<HTMLElement>(`[data-channel-panel="${activeChannel}"]`);
+      const rows = [...(activePanel?.querySelectorAll<HTMLElement>('.message-row') ?? [])];
+      let visible = 0;
+      rows.forEach((row) => {
+        const match = !query || row.textContent?.toLowerCase().includes(query);
+        row.hidden = !match;
+        if (match) visible += 1;
+      });
+      if (searchStatus) searchStatus.textContent = query ? `${visible} matching messages` : '';
+    });
+
+    $<HTMLButtonElement>('[data-search-toggle]')?.addEventListener('click', () => {
+      searchBox?.classList.toggle('is-mobile-open');
+      search?.focus();
+    });
+
+    const createAvatar = (kind: 'person' | 'rokko', initials: string) => {
+      const wrap = document.createElement('div');
+      wrap.className = 'message-avatar-wrap';
+      const avatar = document.createElement('div');
+      avatar.className = `message-avatar message-avatar--${kind}`;
+      avatar.setAttribute('aria-hidden', 'true');
+      if (kind === 'rokko') {
+        const image = document.createElement('img');
+        image.src = '/brand/gorokko-symbol-color.svg';
+        image.alt = '';
+        avatar.append(image);
+      } else avatar.textContent = initials;
+      wrap.append(avatar);
+      return wrap;
+    };
+
+    const createMessage = (author: string, body: string, kind: 'person' | 'rokko', typing = false) => {
+      const row = document.createElement('article');
+      row.className = `message-row is-new${typing ? ' typing-row' : ''}`;
+      row.append(createAvatar(kind, kind === 'person' ? 'MC' : 'R'));
+      const content = document.createElement('div');
+      content.className = 'message-content';
+      const meta = document.createElement('div');
+      meta.className = 'message-meta';
+      const name = document.createElement('strong');
+      name.textContent = author;
+      const time = document.createElement('time');
+      time.textContent = 'now';
+      meta.append(name, time);
+      content.append(meta);
+      if (typing) {
+        row.setAttribute('aria-label', 'Rokko is typing');
+        const indicator = document.createElement('div');
+        indicator.className = 'typing-indicator';
+        indicator.innerHTML = '<span></span><span></span><span></span><b>Typing…</b>';
+        content.append(indicator);
+      } else {
+        const paragraph = document.createElement('p');
+        paragraph.textContent = body;
+        content.append(paragraph);
+      }
+      row.append(content);
+      return row;
+    };
+
+    const activePanel = () => $<HTMLElement>(`[data-channel-panel="${activeChannel}"]`);
+    const scrollToLatest = () => window.requestAnimationFrame(() => { if (messageViewport) messageViewport.scrollTop = messageViewport.scrollHeight; });
+
+    messageForm?.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const text = messageInput?.value.trim() ?? '';
+      if (!text) { messageInput?.focus(); return; }
+      window.clearTimeout(typingTimer);
+      window.clearTimeout(replyTimer);
+      const panel = activePanel();
+      panel?.append(createMessage('Maya Chen', text, 'person'));
+      if (messageInput) messageInput.value = '';
+      announce('Message sent');
+      scrollToLatest();
+      typingTimer = window.setTimeout(() => {
+        const typing = createMessage('Rokko', '', 'rokko', true);
+        typing.dataset.typing = 'true';
+        panel?.append(typing);
+        scrollToLatest();
+        replyTimer = window.setTimeout(() => {
+          typing.classList.add('is-leaving');
+          window.setTimeout(() => {
+            typing.remove();
+            panel?.append(createMessage('Rokko', 'I added that to this sample room. Nothing changes until you choose what happens next.', 'rokko'));
+            announce('Rokko replied');
+            scrollToLatest();
+          }, reducedMotion.matches ? 0 : 160);
+        }, reducedMotion.matches ? 300 : 1100);
+      }, reducedMotion.matches ? 0 : 260);
+    });
+
+    messageInput?.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        messageForm?.requestSubmit();
+      }
+    });
+
+    emojiTrigger?.addEventListener('click', async () => {
+      if (!emojiPicker || !messageInput) return;
+      const willOpen = emojiPicker.hidden;
+      if (willOpen) {
+        const { mountEmojiPicker } = await import('../../scripts/productEmojiPicker');
+        mountEmojiPicker(emojiPicker, messageInput);
+      }
+      emojiPicker.hidden = !willOpen;
+      emojiTrigger.setAttribute('aria-expanded', String(willOpen));
+    });
+
+    $<HTMLFormElement>('[data-thread-form]')?.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const text = threadInput?.value.trim() ?? '';
+      if (!text) return;
+      const activeView = $<HTMLElement>(`[data-thread-id="${activeThreadId}"]:not([hidden])`) ?? $<HTMLElement>('[data-thread-empty]:not([hidden])');
+      const replies = activeView?.querySelector<HTMLElement>('[data-thread-replies]');
+      const reply = document.createElement('article');
+      reply.className = 'thread-reply is-new';
+      const avatar = createAvatar('person', 'MC').firstElementChild!;
+      const copy = document.createElement('div');
+      copy.innerHTML = '<div class="message-meta"><strong>Maya Chen</strong><time>now</time></div>';
+      const paragraph = document.createElement('p');
+      paragraph.textContent = text;
+      copy.append(paragraph);
+      reply.append(avatar, copy);
+      replies?.append(reply);
+      if (threadInput) threadInput.value = '';
+      announce('Thread reply sent');
+    });
+
+    window.setTimeout(() => {
+      const leadButton = $<HTMLButtonElement>('[data-channel-id="lead-response"]');
+      if (!leadButton || leadButton.getAttribute('aria-current') === 'page') return;
+      const badge = leadButton.querySelector<HTMLElement>('[data-unread-count]');
+      if (!badge || badge.hidden) return;
+      const next = Number(badge.dataset.unreadCount ?? '0') + 1;
+      badge.dataset.unreadCount = String(next);
+      badge.textContent = String(next);
+      badge.setAttribute('aria-label', `${next} unread`);
+      badge.classList.remove('is-updating');
+      void badge.offsetWidth;
+      badge.classList.add('is-updating');
+      announce(`New sample message in lead-response. ${next} unread.`);
+    }, reducedMotion.matches ? 0 : 5200);
+
+    document.addEventListener('click', (event) => {
+      const target = event.target as Node;
+      if (profileMenu && profileToggle && !profileMenu.contains(target) && !profileToggle.contains(target)) closeProfileMenu();
+      if (emojiPicker && emojiTrigger && !emojiPicker.contains(target) && !emojiTrigger.contains(target)) {
+        emojiPicker.hidden = true;
+        emojiTrigger.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault();
+        searchBox?.classList.add('is-mobile-open');
+        search?.focus();
+      }
+      if (event.key === 'Escape') {
+        closeProfileMenu();
+        closeSidebar();
+        searchBox?.classList.remove('is-mobile-open');
+        if (mobileViewport.matches && app.classList.contains('is-thread-open')) closeThread();
+      }
+    });
+  };
+
+  document.querySelectorAll<HTMLElement>('[data-messenger-app]').forEach(setupMessenger);
+</script>

@@ -4,19 +4,19 @@ import ProductFlow from '../components/ProductFlow.astro';
 import { site } from '../config/site';
 
 const useCases = [
-  { title: 'Owner operations', body: 'Turn a broad operating question into a short, reviewable decision queue.', href: '/use-cases/owner-operations/' },
-  { title: 'AI receptionist', body: 'Give inbound conversations a clear path to a person, a next step, or an approved workflow.', href: '/use-cases/ai-receptionist/' },
-  { title: 'Speed to lead', body: 'Bring new opportunities into view while the context is still useful.', href: '/use-cases/speed-to-lead/' },
-  { title: 'No-show rescheduling', body: 'Coordinate the follow-up work around a missed appointment without hiding the decision.', href: '/use-cases/no-show-rescheduling/' },
-  { title: 'Sales to operations', body: 'Carry the important context from a won job into the team responsible for delivery.', href: '/use-cases/sales-to-operations/' },
+  { title: 'Your daily list', body: 'See what needs a yes, a no, or a closer look before the day gets away from you.', href: '/use-cases/owner-operations/' },
+  { title: 'Customer calls and messages', body: 'Give each new customer a clear next step, even when the office is slammed.', href: '/use-cases/ai-receptionist/' },
+  { title: 'Fast lead follow-up', body: 'See who needs a call back and who owns it before a good lead goes cold.', href: '/use-cases/speed-to-lead/' },
+  { title: 'Missed appointments', body: 'Get a missed visit back on track without losing the notes or double-booking the crew.', href: '/use-cases/no-show-rescheduling/' },
+  { title: 'Job handoff', body: 'Pass the promise, scope, and open questions from sales to the team doing the work.', href: '/use-cases/sales-to-operations/' },
 ];
 
 const faqs = [
-  { q: 'What is Rokko?', a: 'Rokko is an AI operations teammate being built for home-service companies. It is designed to help teams inspect live operating context, prepare the next supported move, and keep consequential actions under human authority.' },
-  { q: 'Does Rokko make changes without approval?', a: 'The public product direction is approval-bounded: consequential actions should be presented for review before execution. The exact approval policy is configured around the workflow and must be verified during implementation.' },
-  { q: 'Is Rokko a chatbot?', a: 'No. Conversation is an interface, not the whole product. The operating model connects questions, workflow context, approvals, and clear outcomes.' },
-  { q: 'Which systems does Rokko integrate with?', a: 'The integration surface is being verified. Rokko does not publish a marketplace or promise specific connectors before they are approved for the launch scope.' },
-  { q: 'How is pricing structured?', a: 'Public pricing has not been approved. Rokko will not publish invented plan names, fees, limits, or contract terms.' },
+  { q: 'What does Rokko do?', a: 'Rokko helps home-service owners see what needs attention. It brings the job details and team replies into one place, then keeps the next step in front of the right person.' },
+  { q: 'Will Rokko change a job without asking me?', a: 'The goal is simple: big changes wait for the right person to say yes. We set those rules with you before a test run starts.' },
+  { q: 'Is Rokko just a chatbot?', a: 'No. You can talk to Rokko like a teammate, but the point is getting real work unstuck. It helps with follow-up, handoffs, and decisions—not small talk.' },
+  { q: 'What software will Rokko work with?', a: 'We’re still confirming the first connections. We’ll list only the tools we have tested and are ready to support.' },
+  { q: 'How much does it cost?', a: 'Public pricing is not final yet. We won’t make up plan names, fees, or limits just to fill a page.' },
 ];
 ---
 
@@ -24,16 +24,16 @@ const faqs = [
   <section class="hero">
     <div class="container hero__grid">
       <div class="hero__copy">
-        <p class="eyebrow">AI operations teammate for home services</p>
-        <h1>Ask the business.<br /><span class="display-accent">Approve the next move.</span></h1>
+        <p class="eyebrow">An extra set of eyes for home-service teams</p>
+        <h1>See what needs attention.<br /><span class="display-accent">Make the call.</span></h1>
         <p class="deck">
-          Rokko is the AI operations teammate for home-service companies. From Slack, it checks live CRM context, coordinates appointments and pipeline work, and waits for approval before it changes anything.
+          Rokko helps you catch missed follow-ups, schedule problems, and jobs that need a decision. Ask a question in plain English. See the details. Nothing important moves until the right person says yes.
         </p>
         <div class="button-row">
-          <a class="button button--primary" href={site.demoPath}>Book a tailored demo</a>
-          <a class="button button--secondary" href="#core-flow">See Rokko in action</a>
+          <a class="button button--primary" href={site.demoPath}>Show me Rokko</a>
+          <a class="button button--secondary" href="#core-flow">See a sample workday</a>
         </div>
-        <p class="hero__note">Product direction shown with an illustrative, customer-safe workflow.</p>
+        <p class="hero__note">Sample screens only. No customer data.</p>
       </div>
       <ProductFlow />
     </div>
@@ -41,26 +41,26 @@ const faqs = [
 
   <section class="boundary" aria-label="Rokko product boundary">
     <div class="container boundary__grid">
-      <span>Live operating context</span>
-      <span>Visible owner approval</span>
-      <span>Clear outcome states</span>
-      <span>Home-service focus</span>
+      <span>See the right job details</span>
+      <span>You approve big changes</span>
+      <span>Know what happened</span>
+      <span>Built for service teams</span>
     </div>
   </section>
 
   <section class="section section--paper problem">
     <div class="container--content grid-2 problem__grid">
       <div>
-        <p class="eyebrow">The operating problem</p>
-        <h2>Your business already knows what happened. The hard part is deciding <span class="display-accent">what happens next.</span></h2>
+        <p class="eyebrow">The daily headache</p>
+        <h2>The answer is somewhere. Finding it <span class="display-accent">eats the morning.</span></h2>
       </div>
       <div class="problem__copy">
-        <p class="deck">The signal is spread across appointments, conversations, pipeline stages, notes, and people. Getting a trustworthy answer often means opening five tabs, asking three people, and still wondering whether the record is current.</p>
+        <p class="deck">Jobs, calls, texts, notes, and schedules all live in different places. You open five tabs, ask three people, and still wonder if the answer is current.</p>
         <div class="rule"></div>
         <dl class="signal-list">
-          <div><dt>01</dt><dd>Questions lose time while context is assembled.</dd></div>
-          <div><dt>02</dt><dd>Actions drift when ownership is not explicit.</dd></div>
-          <div><dt>03</dt><dd>Automation creates risk when authority disappears.</dd></div>
+          <div><dt>01</dt><dd>Simple answers take too long to find.</dd></div>
+          <div><dt>02</dt><dd>Follow-ups slip when nobody owns the next step.</dd></div>
+          <div><dt>03</dt><dd>Software causes trouble when it acts without asking.</dd></div>
         </dl>
       </div>
     </div>
@@ -69,25 +69,25 @@ const faqs = [
   <section id="core-flow" class="section section--moss flow-section">
     <div class="container--content">
       <div class="flow-section__intro">
-        <p class="eyebrow">The operating model</p>
-        <h2>Ask → Approve → <span class="display-accent">Verified</span></h2>
-        <p class="deck">A conversational entry point, an explicit decision boundary, and a result the team can inspect.</p>
+        <p class="eyebrow">How Rokko helps</p>
+        <h2>Ask → Check → <span class="display-accent">Approve</span></h2>
+        <p class="deck">Ask a real work question. Check what Rokko found. Approve the next step.</p>
       </div>
       <div class="flow-grid">
         <article>
           <span>01 / Ask</span>
-          <h3>Start with the operating question.</h3>
-          <p>Rokko is designed to assemble the relevant context around the question instead of making the operator hunt through systems.</p>
+          <h3>Ask it like you’d ask your office manager.</h3>
+          <p>Ask about jobs, follow-ups, or the schedule. You don’t need special commands.</p>
         </article>
         <article>
-          <span>02 / Approve</span>
-          <h3>Keep authority with the team.</h3>
-          <p>When a move matters, the proposed action and its basis remain visible before anything consequential proceeds.</p>
+          <span>02 / Check</span>
+          <h3>See the details behind the answer.</h3>
+          <p>Review the job notes and open questions in one place before you decide.</p>
         </article>
         <article>
-          <span>03 / Verified</span>
-          <h3>Return the outcome, not just a reply.</h3>
-          <p>The result comes back with a clear state, the supporting context, and what still needs attention.</p>
+          <span>03 / Approve</span>
+          <h3>You make the call.</h3>
+          <p>Approve the next step or hold it. Your crew can see what happened and what still needs work.</p>
         </article>
       </div>
     </div>
@@ -97,26 +97,26 @@ const faqs = [
     <div class="container--content">
       <div class="layers__heading">
         <div>
-          <p class="eyebrow">Three coordinated layers</p>
-          <h2>One teammate across the operating day.</h2>
+          <p class="eyebrow">Where it helps</p>
+          <h2>Keep the office and field crew on the same page.</h2>
         </div>
-        <p class="deck">The direction is broader than a chat window and more controlled than unattended automation.</p>
+        <p class="deck">Rokko does more than answer messages. It helps you spot stuck work and keep handoffs clear without taking over.</p>
       </div>
       <div class="grid-3">
         <article class="numbered-card">
-          <span class="numbered-card__number">Layer 01</span>
-          <h3>Owner operations</h3>
-          <p>Questions, priorities, and decision queues that help an owner see where attention is needed.</p>
+          <span class="numbered-card__number">Area 01</span>
+          <h3>Your daily list</h3>
+          <p>See the jobs, customer issues, and choices that need your attention today.</p>
         </article>
         <article class="numbered-card">
-          <span class="numbered-card__number">Layer 02</span>
-          <h3>Customer conversations</h3>
-          <p>Inbound communication with a defined path to human review and supported operating workflows.</p>
+          <span class="numbered-card__number">Area 02</span>
+          <h3>Customer follow-up</h3>
+          <p>Keep calls and messages tied to the job so the next person knows what to do.</p>
         </article>
         <article class="numbered-card">
-          <span class="numbered-card__number">Layer 03</span>
-          <h3>Workflow coordination</h3>
-          <p>Appointments, pipeline work, and handoffs brought into a consistent approval model.</p>
+          <span class="numbered-card__number">Area 03</span>
+          <h3>Jobs and schedules</h3>
+          <p>Catch missed visits, schedule gaps, and sales handoffs before they turn into callbacks.</p>
         </article>
       </div>
     </div>
@@ -126,16 +126,16 @@ const faqs = [
     <div class="container--content">
       <div class="grid-2 trace__top">
         <div>
-          <p class="eyebrow">End-to-end clarity</p>
-          <h2>Every move should have a visible state.</h2>
+          <p class="eyebrow">No mystery moves</p>
+          <h2>See what happened and who made the call.</h2>
         </div>
-        <p class="deck">A simple event trace makes the operating boundary legible to the person responsible for the outcome.</p>
+        <p class="deck">Each step stays in view. If something looks off, you can see where it changed and who approved it.</p>
       </div>
       <ol class="event-trace">
-        <li><span>08:42</span><strong>Question received</strong><small>Scope identified</small></li>
-        <li><span>08:43</span><strong>Context assembled</strong><small>Source recorded</small></li>
-        <li><span>08:44</span><strong>Approval requested</strong><small>Authority visible</small></li>
-        <li><span>08:47</span><strong>Outcome returned</strong><small>Status explicit</small></li>
+        <li><span>08:42</span><strong>Question asked</strong><small>Work picked</small></li>
+        <li><span>08:43</span><strong>Job details checked</strong><small>Notes shown</small></li>
+        <li><span>08:44</span><strong>Your approval requested</strong><small>Waiting on you</small></li>
+        <li><span>08:47</span><strong>Team sees the result</strong><small>Next step clear</small></li>
       </ol>
     </div>
   </section>
@@ -144,10 +144,10 @@ const faqs = [
     <div class="container--content">
       <div class="use-cases__heading">
         <div>
-          <p class="eyebrow">Use cases</p>
-          <h2>Start where operating friction is already expensive.</h2>
+          <p class="eyebrow">Ways to use it</p>
+          <h2>Start where lost time already hurts.</h2>
         </div>
-        <a class="text-link" href="/use-cases/">Explore all use cases</a>
+        <a class="text-link" href="/use-cases/">See all the ways Rokko can help</a>
       </div>
       <div class="use-case-list">
         {useCases.map((item, index) => (
@@ -166,16 +166,16 @@ const faqs = [
     <div class="container--content">
       <div class="grid-2 implementation__intro">
         <div>
-          <p class="eyebrow">Implementation</p>
-          <h2>Begin with one operating question worth answering well.</h2>
+          <p class="eyebrow">Start small</p>
+          <h2>Fix one daily headache first.</h2>
         </div>
-        <p class="deck">The rollout model is designed to create a reviewable boundary before expanding the workflow surface.</p>
+        <p class="deck">Pick one problem your team already feels. Set the rules. Try it with real people. Add more only when it works.</p>
       </div>
       <ol class="implementation__steps">
-        <li><span>01</span><strong>Map</strong><p>Choose the question, context, owner, and safe operating boundary.</p></li>
-        <li><span>02</span><strong>Configure</strong><p>Define the source, proposed action, and required approval state.</p></li>
-        <li><span>03</span><strong>Pilot</strong><p>Run the workflow with an explicit proof standard and human review.</p></li>
-        <li><span>04</span><strong>Operate</strong><p>Expand only after the outcomes and authority model are understood.</p></li>
+        <li><span>01</span><strong>Pick</strong><p>Choose one question that slows your day down.</p></li>
+        <li><span>02</span><strong>Set rules</strong><p>Decide what Rokko may prepare and who must approve it.</p></li>
+        <li><span>03</span><strong>Try it</strong><p>Run a small test with your team and check the result.</p></li>
+        <li><span>04</span><strong>Add more</strong><p>Bring in another task only after the first one earns its keep.</p></li>
       </ol>
     </div>
   </section>
@@ -183,12 +183,12 @@ const faqs = [
   <section class="section proof">
     <div class="container--content grid-2 proof__grid">
       <div>
-        <p class="eyebrow">The proof standard</p>
-        <h2>No invented metrics. No mystery actions.</h2>
+        <p class="eyebrow">Straight answers</p>
+        <h2>No made-up numbers. No hidden actions.</h2>
       </div>
       <div>
-        <p class="deck">Rokko is not publishing customer logos, outcome claims, plan limits, or case-study numbers until they have an approved source.</p>
-        <p>Proof will be tied to a defined workflow, a visible starting point, and an outcome that the operator can verify. That is slower than filling a page with generic claims. It is also more useful.</p>
+        <p class="deck">We won’t post customer logos, savings claims, or case-study numbers until the customer and the facts back them up.</p>
+        <p>When we share a result, you should be able to see what changed and how it was checked. That matters more than a big number with no story behind it.</p>
       </div>
     </div>
   </section>
@@ -199,10 +199,10 @@ const faqs = [
         <img src="/brand/gorokko-symbol-color.svg" alt="" width="160" height="160" />
       </div>
       <div>
-        <p class="eyebrow">Trust by operating design</p>
-        <h2>Authority should remain visible at the moment it matters.</h2>
-        <p class="deck">Rokko’s public security and deployment specifics are still under review. The approved direction begins with least-necessary context, explicit approval for consequential moves, and inspectable outcomes.</p>
-        <a class="text-link" href="/security/">Read the security posture</a>
+        <p class="eyebrow">Your business data</p>
+        <h2>Your customer list and money moves deserve tight control.</h2>
+        <p class="deck">Worried a bad login could expose customer details or let someone change a job? Rokko is being built so people see only the work they need. Big changes wait for approval. If something looks wrong, you can check what happened.</p>
+        <a class="text-link" href="/security/">See how we’re handling security</a>
       </div>
     </div>
   </section>
@@ -210,8 +210,8 @@ const faqs = [
   <section class="section faq">
     <div class="container--content faq__grid">
       <div>
-        <p class="eyebrow">Frequently asked</p>
-        <h2>Clear answers, including where the answer is not public yet.</h2>
+        <p class="eyebrow">Quick answers</p>
+        <h2>What owners ask us first.</h2>
       </div>
       <div>
         {faqs.map((item) => (
@@ -227,12 +227,12 @@ const faqs = [
   <section class="section section--moss final-cta">
     <div class="container--content final-cta__grid">
       <div>
-        <p class="eyebrow">The next operating question</p>
-        <h2>Bring the workflow.<br /><span class="display-accent">Keep the authority.</span></h2>
+        <p class="eyebrow">Start with one headache</p>
+        <h2>Show us where work<br /><span class="display-accent">keeps getting dropped.</span></h2>
       </div>
       <div>
-        <p class="deck">A tailored demo starts with the part of your operation that already demands too many tabs, handoffs, and follow-ups.</p>
-        <a class="button button--primary" href={site.demoPath}>Book a tailored demo</a>
+        <p class="deck">Bring the part of your day that takes too many tabs, texts, and follow-ups. We’ll shape the demo around that.</p>
+        <a class="button button--primary" href={site.demoPath}>Show me Rokko</a>
       </div>
     </div>
   </section>

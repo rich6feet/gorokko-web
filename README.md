@@ -41,6 +41,25 @@ For an explicitly requested manual deployment:
 npm run deploy
 ```
 
+## Deploying to Cloudflare Pages
+
+This Astro project also builds to a plain static folder that can be deployed through Cloudflare Pages without a Node server at runtime.
+
+Use these settings in the Cloudflare dashboard:
+
+- Framework preset: `Astro`
+- Build command: `npm run build`
+- Output directory: `dist`
+- Production branch: `main`
+
+For a direct Pages upload, replace the placeholder with the existing Pages project name:
+
+```sh
+npx wrangler pages deploy dist --project-name <pages-project-name>
+```
+
+The current `gorokko.com` production setup remains the existing `gorokko-web` Worker with Static Assets. The Pages settings above document compatibility; they do not create or switch to a second Cloudflare project.
+
 ## Content approval gates
 
 The following inputs remain fail-closed until the owner supplies approved values:

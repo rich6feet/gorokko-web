@@ -3,34 +3,34 @@ const steps = [
   {
     id: 'ask',
     label: 'Ask',
-    title: 'See what needs a decision',
-    detail: 'Which appointments need attention today?',
-    meta: 'Question received',
+    title: 'Ask it like you’d ask your office manager',
+    detail: 'Which jobs need my attention today?',
+    meta: 'Question asked',
   },
   {
     id: 'approve',
-    label: 'Approve',
-    title: 'Review the proposed move',
-    detail: 'Prepare the supported changes and hold them for owner review.',
-    meta: 'Approval required',
+    label: 'Check',
+    title: 'See the details behind the answer',
+    detail: 'Show me the jobs, notes, and open questions I need to check.',
+    meta: 'Ready to check',
   },
   {
     id: 'verified',
-    label: 'Verified',
-    title: 'Return a clear outcome',
-    detail: 'Result returned with source, status, and the next unresolved item.',
-    meta: 'Outcome verified',
+    label: 'Approve',
+    title: 'You make the call',
+    detail: 'Approve the next step, or hold it until your crew checks the details.',
+    meta: 'Waiting on you',
   },
 ];
 ---
 
 <section class="product-flow" aria-labelledby="product-flow-title" data-product-flow>
   <div class="product-flow__topline">
-    <span id="product-flow-title">Illustrative product flow</span>
-    <span>Customer-safe example</span>
+    <span id="product-flow-title">A sample workday</span>
+    <span>No customer data</span>
   </div>
   <div class="product-flow__body">
-    <div class="product-flow__rail" role="tablist" aria-label="Rokko workflow states">
+    <div class="product-flow__rail" role="tablist" aria-label="Three steps in Rokko">
       {steps.map((step, index) => (
         <button
           id={`tab-${step.id}`}
@@ -61,8 +61,8 @@ const steps = [
           <p class="product-flow__title">{step.title}</p>
           <p class="product-flow__detail">“{step.detail}”</p>
           <div class="product-flow__source">
-            <span>Context</span>
-            <strong>Operational record</strong>
+            <span>What Rokko checked</span>
+            <strong>Job record</strong>
           </div>
         </div>
       ))}

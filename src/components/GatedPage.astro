@@ -19,9 +19,9 @@ const { title, metaTitle, eyebrow, deck, reason, needed } = Astro.props;
   <PageHero eyebrow={eyebrow} title={title} deck={deck} />
   <section class="section gated-page">
     <div class="container--content gated-page__grid">
-      <DraftNotice title="Intentionally not published as placeholder content">{reason}</DraftNotice>
+      <DraftNotice title="We’re waiting for the real details">{reason}</DraftNotice>
       <div>
-        <p class="eyebrow">Required before approval</p>
+        <p class="eyebrow">What we still need</p>
         <ul>
           {needed.map((item) => <li>{item}</li>)}
         </ul>

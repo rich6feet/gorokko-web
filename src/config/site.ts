@@ -2,9 +2,9 @@ export const site = {
   name: 'Rokko',
   displayName: 'GO ROKKO',
   origin: 'https://gorokko.com',
-  defaultTitle: 'Rokko — The AI operations teammate for home services',
+  defaultTitle: 'Rokko — Keep jobs moving and your crew on the same page',
   defaultDescription:
-    'Rokko helps home-service teams check live operational context, coordinate the next move, and keep people in control of consequential actions.',
+    'Rokko helps home-service teams catch work that needs attention, review the details, and approve the next step.',
   demoPath: '/demo/',
   bookingUrl: null,
   legalEntity: null,
@@ -17,10 +17,10 @@ export const site = {
 } as const;
 
 export const navigation = [
-  { label: 'Product', href: '/product/' },
-  { label: 'Use cases', href: '/use-cases/' },
-  { label: 'Security', href: '/security/' },
-  { label: 'Resources', href: '/resources/' },
+  { label: 'How it works', href: '/product/' },
+  { label: 'Ways to use it', href: '/use-cases/' },
+  { label: 'Your data', href: '/security/' },
+  { label: 'Guides', href: '/resources/' },
 ] as const;
 
 export const indexedRoutes = [

@@ -1,0 +1,112 @@
+/* Rokko messaging interface tokens.
+   Scoped to the product demo so the editorial marketing site keeps its own theme. */
+.messenger-app {
+  color-scheme: light;
+  --msg-font-sans: "Inter", var(--grk-font-sans);
+  --msg-font-mono: "Geist Mono", var(--grk-font-mono);
+  --msg-bg-app: #eef0f2;
+  --msg-bg-sidebar: #f7f8f9;
+  --msg-bg-panel: #ffffff;
+  --msg-bg-raised: #ffffff;
+  --msg-bg-hover: #f1f3f5;
+  --msg-bg-active: #e7eaf0;
+  --msg-bg-input: #ffffff;
+  --msg-text-primary: #171a1f;
+  --msg-text-muted: #59616c;
+  --msg-text-faint: #69727e;
+  --msg-border: #d7dce2;
+  --msg-border-strong: #bcc3cc;
+  --msg-accent: #264dff;
+  --msg-accent-hover: #1639d8;
+  --msg-accent-soft: #e8edff;
+  --msg-accent-text: #1734b6;
+  --msg-on-accent: #ffffff;
+  --msg-positive: #17704a;
+  --msg-away: #9a5b00;
+  --msg-offline: #7a838e;
+  --msg-danger: #b63d36;
+  --msg-overlay: rgb(17 21 21 / 0.46);
+  --msg-shadow: 0 22px 70px rgb(21 27 36 / 0.14);
+  --msg-shadow-menu: 0 14px 36px rgb(21 27 36 / 0.18);
+  --msg-focus: 0 0 0 3px rgb(38 77 255 / 0.28);
+  --msg-radius-xs: 0.35rem;
+  --msg-radius-sm: 0.55rem;
+  --msg-radius-md: 0.8rem;
+  --msg-radius-lg: 1.1rem;
+  --msg-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --msg-duration-fast: 160ms;
+  --msg-duration-enter: 200ms;
+  --msg-sidebar-width: 16.5rem;
+  --msg-thread-width: 20rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .messenger-app:not([data-theme]) {
+    color-scheme: dark;
+    --msg-bg-app: #121416;
+    --msg-bg-sidebar: #191c20;
+    --msg-bg-panel: #202328;
+    --msg-bg-raised: #272b30;
+    --msg-bg-hover: #2b3036;
+    --msg-bg-active: #333942;
+    --msg-bg-input: #25292f;
+    --msg-text-primary: #f3f5f7;
+    --msg-text-muted: #bbc2cb;
+    --msg-text-faint: #9da7b2;
+    --msg-border: #373d44;
+    --msg-border-strong: #505863;
+    --msg-accent: #8ea3ff;
+    --msg-accent-hover: #a8b7ff;
+    --msg-accent-soft: #283459;
+    --msg-accent-text: #d6ddff;
+    --msg-on-accent: #111933;
+    --msg-positive: #79d5a7;
+    --msg-away: #efb866;
+    --msg-offline: #929ba5;
+    --msg-danger: #ff9c96;
+    --msg-overlay: rgb(0 0 0 / 0.66);
+    --msg-shadow: 0 22px 70px rgb(0 0 0 / 0.36);
+    --msg-shadow-menu: 0 14px 36px rgb(0 0 0 / 0.4);
+    --msg-focus: 0 0 0 3px rgb(142 163 255 / 0.35);
+  }
+}
+
+.messenger-app[data-theme='light'] {
+  color-scheme: light;
+}
+
+.messenger-app[data-theme='dark'] {
+  color-scheme: dark;
+  --msg-bg-app: #121416;
+  --msg-bg-sidebar: #191c20;
+  --msg-bg-panel: #202328;
+  --msg-bg-raised: #272b30;
+  --msg-bg-hover: #2b3036;
+  --msg-bg-active: #333942;
+  --msg-bg-input: #25292f;
+  --msg-text-primary: #f3f5f7;
+  --msg-text-muted: #bbc2cb;
+  --msg-text-faint: #9da7b2;
+  --msg-border: #373d44;
+  --msg-border-strong: #505863;
+  --msg-accent: #8ea3ff;
+  --msg-accent-hover: #a8b7ff;
+  --msg-accent-soft: #283459;
+  --msg-accent-text: #d6ddff;
+  --msg-on-accent: #111933;
+  --msg-positive: #79d5a7;
+  --msg-away: #efb866;
+  --msg-offline: #929ba5;
+  --msg-danger: #ff9c96;
+  --msg-overlay: rgb(0 0 0 / 0.66);
+  --msg-shadow: 0 22px 70px rgb(0 0 0 / 0.36);
+  --msg-shadow-menu: 0 14px 36px rgb(0 0 0 / 0.4);
+  --msg-focus: 0 0 0 3px rgb(142 163 255 / 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .messenger-app {
+    --msg-duration-fast: 0ms;
+    --msg-duration-enter: 0ms;
+  }
+}
