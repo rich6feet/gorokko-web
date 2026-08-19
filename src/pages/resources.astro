@@ -1,0 +1,74 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import FinalCta from '../components/FinalCta.astro';
+
+const guides = [
+  { number: '01', title: 'Choose an operating question', body: 'Start with a question a real owner already asks and define what a trustworthy answer must include.' },
+  { number: '02', title: 'Draw the authority line', body: 'Name the moves a teammate may prepare, the moves a person must approve, and the conditions that require escalation.' },
+  { number: '03', title: 'Define proof before automation', body: 'Choose evidence tied to the workflow instead of a broad metric that cannot explain why the outcome changed.' },
+];
+---
+
+<BaseLayout
+  title="Rokko resources — Designing accountable AI operations"
+  description="Practical starting principles for choosing a Rokko workflow, defining human authority, and setting an honest proof standard."
+>
+  <PageHero
+    eyebrow="Resources"
+    title="Better operating questions create better AI workflows."
+    deck="A practical starting library for teams deciding where an AI operations teammate belongs—and where it does not."
+  />
+
+  <section class="section resource-list">
+    <div class="container--content">
+      <div class="resource-list__heading">
+        <p class="eyebrow">Field notes</p>
+        <p class="deck">These are operating principles, not generic automation recipes. Each one helps make the context, authority, and evidence visible.</p>
+      </div>
+      <div class="grid-3">
+        {guides.map((guide) => (
+          <article class="numbered-card">
+            <span class="numbered-card__number">{guide.number}</span>
+            <h2>{guide.title}</h2>
+            <p>{guide.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark worksheet">
+    <div class="container--content worksheet__grid">
+      <div>
+        <p class="eyebrow">A five-line workflow brief</p>
+        <h2>Write this before the first demo.</h2>
+      </div>
+      <ol>
+        <li><span>Question</span><p>What does the operator need to know or decide?</p></li>
+        <li><span>Context</span><p>Which record is allowed to answer that question?</p></li>
+        <li><span>Move</span><p>What supported action may be prepared?</p></li>
+        <li><span>Authority</span><p>Who approves it, and what triggers escalation?</p></li>
+        <li><span>Proof</span><p>How will the operator verify the outcome?</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <FinalCta title="Turn the worksheet into a tailored product conversation." />
+</BaseLayout>
+
+<style>
+  .resource-list__heading { display: grid; gap: 1rem; margin-bottom: clamp(3rem, 6vw, 6rem); }
+  .resource-list .numbered-card { min-height: 23rem; }
+  .resource-list h2 { font-size: clamp(1.6rem, 2.6vw, 2.5rem); }
+  .worksheet__grid { display: grid; gap: clamp(3rem, 8vw, 8rem); }
+  .worksheet h2 { max-width: 11ch; }
+  .worksheet ol { margin: 0; padding: 0; border-top: 1px solid rgb(252 251 247 / 0.2); list-style: none; }
+  .worksheet li { display: grid; grid-template-columns: 6rem 1fr; gap: 1rem; padding-block: 1.25rem; border-bottom: 1px solid rgb(252 251 247 / 0.2); }
+  .worksheet span { color: var(--grk-success); font-family: var(--grk-font-mono); font-size: 0.7rem; text-transform: uppercase; }
+  .worksheet p { margin: 0; color: rgb(252 251 247 / 0.7); }
+  @media (min-width: 48rem) {
+    .resource-list__heading { grid-template-columns: 1fr 1fr; align-items: end; }
+    .worksheet__grid { grid-template-columns: 0.85fr 1.15fr; }
+  }
+</style>

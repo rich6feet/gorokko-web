@@ -1,0 +1,191 @@
+---
+import { navigation, site } from '../config/site';
+---
+
+<header class="site-header">
+  <div class="site-header__inner container">
+    <a class="site-header__logo" href="/" aria-label="Rokko home">
+      <img src="/brand/gorokko-03b-lockup-color.svg" width="520" height="116" alt="GO ROKKO" />
+    </a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation">
+      <span class="menu-toggle__label">Menu</span>
+      <span class="menu-toggle__bars" aria-hidden="true"></span>
+    </button>
+    <nav id="site-navigation" class="site-nav" aria-label="Primary">
+      <ul>
+        {navigation.map((item) => (
+          <li><a href={item.href}>{item.label}</a></li>
+        ))}
+      </ul>
+      <a class="button button--primary site-nav__cta" href={site.demoPath}>Book a tailored demo</a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector('.site-header');
+  const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+  const navigation = document.querySelector<HTMLElement>('#site-navigation');
+
+  const closeMenu = () => {
+    toggle?.setAttribute('aria-expanded', 'false');
+    header?.classList.remove('is-open');
+  };
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!isOpen));
+    header?.classList.toggle('is-open', !isOpen);
+  });
+
+  navigation?.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeMenu();
+  });
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    height: var(--grk-navbar-height);
+    background: rgb(242 240 233 / 0.94);
+    border-bottom: 1px solid var(--grk-border);
+    backdrop-filter: blur(14px);
+  }
+
+  .site-header__inner {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .site-header__logo {
+    display: flex;
+    min-width: 11rem;
+    min-height: 2.75rem;
+    align-items: center;
+  }
+
+  .site-header__logo img {
+    width: 11.75rem;
+    height: auto;
+  }
+
+  .menu-toggle {
+    display: inline-flex;
+    min-width: 3.75rem;
+    min-height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    padding: 0;
+    color: var(--grk-ink);
+    background: transparent;
+    border: 0;
+  }
+
+  .menu-toggle__label {
+    font-size: 0.82rem;
+    font-weight: 650;
+  }
+
+  .menu-toggle__bars,
+  .menu-toggle__bars::after {
+    display: block;
+    width: 1rem;
+    height: 1px;
+    content: '';
+    background: currentColor;
+    transition: transform var(--grk-duration-control) var(--grk-ease-standard);
+  }
+
+  .menu-toggle__bars::after {
+    transform: translateY(0.35rem);
+  }
+
+  .is-open .menu-toggle__bars {
+    transform: translateY(0.17rem) rotate(45deg);
+  }
+
+  .is-open .menu-toggle__bars::after {
+    transform: rotate(-90deg);
+  }
+
+  .site-nav {
+    position: fixed;
+    inset: var(--grk-navbar-height) 0 auto;
+    display: none;
+    padding: 1.25rem 1rem 1.5rem;
+    background: var(--grk-limestone);
+    border-bottom: 1px solid var(--grk-border);
+  }
+
+  .is-open .site-nav {
+    display: block;
+  }
+
+  .site-nav ul {
+    display: grid;
+    margin: 0 0 1rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .site-nav li {
+    border-bottom: 1px solid var(--grk-border);
+  }
+
+  .site-nav li a {
+    display: flex;
+    min-height: 3.25rem;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .site-nav__cta {
+    width: 100%;
+  }
+
+  @media (min-width: 62rem) {
+    .site-header__logo img {
+      width: 13.2rem;
+    }
+
+    .menu-toggle {
+      display: none;
+    }
+
+    .site-nav {
+      position: static;
+      display: flex;
+      padding: 0;
+      align-items: center;
+      gap: clamp(1rem, 2vw, 2rem);
+      background: transparent;
+      border: 0;
+    }
+
+    .site-nav ul {
+      display: flex;
+      margin: 0;
+      gap: clamp(0.9rem, 1.7vw, 1.6rem);
+    }
+
+    .site-nav li {
+      border: 0;
+    }
+
+    .site-nav li a {
+      min-height: 2.75rem;
+      font-size: 0.88rem;
+      font-weight: 570;
+    }
+
+    .site-nav__cta {
+      width: auto;
+    }
+  }
+</style>

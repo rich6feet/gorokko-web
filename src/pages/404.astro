@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Page not found — Rokko"
+  description="The page you requested is not available."
+  noindex
+>
+  <section class="not-found">
+    <div class="container--content not-found__grid">
+      <div>
+        <p class="eyebrow">404 / Outside the workflow</p>
+        <h1>This page is not part of the current operating path.</h1>
+      </div>
+      <div>
+        <p class="deck">Return to the Rokko homepage or explore the product model and approved use-case direction.</p>
+        <div class="button-row">
+          <a class="button button--primary" href="/">Return home</a>
+          <a class="button button--secondary" href="/product/">See the product</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found { min-height: 70vh; padding-block: clamp(5rem, 12vw, 11rem); }
+  .not-found__grid { display: grid; gap: clamp(3rem, 8vw, 8rem); align-items: end; }
+  .not-found h1 { max-width: 12ch; }
+  .not-found .deck { margin-bottom: 2rem; }
+  @media (min-width: 48rem) { .not-found__grid { grid-template-columns: 1.2fr 0.8fr; } }
+</style>

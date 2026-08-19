@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from './PageHero.astro';
+import DraftNotice from './DraftNotice.astro';
+
+interface Props {
+  title: string;
+  metaTitle: string;
+  eyebrow: string;
+  deck: string;
+  reason: string;
+  needed: string[];
+}
+
+const { title, metaTitle, eyebrow, deck, reason, needed } = Astro.props;
+---
+
+<BaseLayout title={metaTitle} description={deck} noindex>
+  <PageHero eyebrow={eyebrow} title={title} deck={deck} />
+  <section class="section gated-page">
+    <div class="container--content gated-page__grid">
+      <DraftNotice title="Intentionally not published as placeholder content">{reason}</DraftNotice>
+      <div>
+        <p class="eyebrow">Required before approval</p>
+        <ul>
+          {needed.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .gated-page__grid { display: grid; gap: clamp(3rem, 8vw, 8rem); align-items: start; }
+  .gated-page ul { margin: 0; padding: 0; border-top: 1px solid var(--grk-border); list-style: none; }
+  .gated-page li { padding-block: 1.25rem; border-bottom: 1px solid var(--grk-border); }
+  @media (min-width: 48rem) { .gated-page__grid { grid-template-columns: 1fr 1fr; } }
+</style>

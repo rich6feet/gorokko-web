@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import FinalCta from '../../components/FinalCta.astro';
+import { useCases } from '../../content/useCases';
+---
+
+<BaseLayout
+  title="Rokko use cases for home-service operations"
+  description="Explore approval-bounded Rokko use cases across owner operations, customer conversations, speed to lead, scheduling, and team handoffs."
+>
+  <PageHero
+    eyebrow="Use cases"
+    title="Start with the operating friction the team already feels."
+    deck="A Rokko workflow begins with a real question, a defined source of context, an accountable owner, and a proof standard that can be checked."
+  />
+
+  <section class="section use-case-index">
+    <div class="container--content">
+      <ol>
+        {useCases.map((item) => (
+          <li>
+            <a href={`/use-cases/${item.slug}/`}>
+              <span>{item.number}</span>
+              <div><h2>{item.title}</h2><p>{item.short}</p></div>
+              <strong aria-hidden="true">↗</strong>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section--dark selection-model">
+    <div class="container--content selection-model__grid">
+      <div>
+        <p class="eyebrow">Choose the first workflow</p>
+        <h2>A good starting point is narrow enough to verify and important enough to matter.</h2>
+      </div>
+      <dl>
+        <div><dt>Question</dt><dd>Can the team state the operating question in one sentence?</dd></div>
+        <div><dt>Context</dt><dd>Is the allowed source of truth known and available?</dd></div>
+        <div><dt>Authority</dt><dd>Is the owner and approval boundary explicit?</dd></div>
+        <div><dt>Outcome</dt><dd>Can the result be checked without inventing a proxy?</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <FinalCta />
+</BaseLayout>
+
+<style>
+  .use-case-index ol { margin: 0; padding: 0; border-top: 1px solid var(--grk-border); list-style: none; }
+  .use-case-index li { border-bottom: 1px solid var(--grk-border); }
+  .use-case-index a { display: grid; grid-template-columns: 3rem 1fr auto; gap: 1rem; min-height: 11rem; align-items: start; padding-block: 1.75rem; text-decoration: none; transition: padding var(--grk-duration-control) var(--grk-ease-standard), background var(--grk-duration-control) var(--grk-ease-standard); }
+  .use-case-index a:hover { padding-inline: 1rem; background: var(--grk-paper); }
+  .use-case-index span { color: var(--grk-cobalt); font-family: var(--grk-font-mono); font-size: 0.72rem; }
+  .use-case-index h2 { margin-bottom: 0.75rem; font-size: clamp(1.8rem, 4vw, 3.5rem); }
+  .use-case-index p { margin: 0; color: var(--grk-text-muted); }
+  .selection-model__grid { display: grid; gap: clamp(3rem, 8vw, 8rem); }
+  .selection-model h2 { max-width: 13ch; }
+  .selection-model dl { margin: 0; border-top: 1px solid rgb(252 251 247 / 0.2); }
+  .selection-model dl div { display: grid; grid-template-columns: 6rem 1fr; gap: 1rem; padding-block: 1.4rem; border-bottom: 1px solid rgb(252 251 247 / 0.2); }
+  .selection-model dt { color: var(--grk-success); font-family: var(--grk-font-mono); font-size: 0.7rem; text-transform: uppercase; }
+  .selection-model dd { margin: 0; color: rgb(252 251 247 / 0.7); }
+  @media (min-width: 48rem) {
+    .use-case-index a { grid-template-columns: 5rem 1fr auto; align-items: center; }
+    .use-case-index a div { display: grid; grid-template-columns: 0.75fr 1.25fr; align-items: center; gap: 2rem; }
+    .use-case-index h2 { margin: 0; }
+    .selection-model__grid { grid-template-columns: 0.9fr 1.1fr; }
+  }
+</style>

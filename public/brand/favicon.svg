@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" role="img" aria-labelledby="title">
+  <title id="title">Gorokko favicon</title>
+  <style>
+    .ink { fill: #111515; }
+    @media (prefers-color-scheme: dark) { .ink { fill: #FCFBF7; } }
+  </style>
+  <g transform="translate(40 20)">
+    <path class="ink" d="M0 0H220V40H40V220H180V148H112V108H220V260H0Z"/>
+    <rect x="180" y="108" width="40" height="40" fill="#264DFF"/>
+  </g>
+</svg>

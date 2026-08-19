@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import DraftNotice from '../components/DraftNotice.astro';
+---
+
+<BaseLayout
+  title="Book a tailored Rokko demo — Intake connection pending"
+  description="Prepare for a tailored Rokko demo by defining the operating question, context, authority boundary, and proof standard."
+  noindex
+>
+  <PageHero
+    eyebrow="Tailored demo"
+    title="Show us the workflow, not a wishlist of features."
+    deck="The strongest Rokko demo starts with one operating question, its source context, the accountable person, and the outcome that would make the answer useful."
+    tone="moss"
+  />
+
+  <section class="section demo-intake">
+    <div class="container--content demo-intake__grid">
+      <div>
+        <DraftNotice title="Demo intake is not connected yet">The approved booking URL, form endpoint, fallback contact, and response-time language have not been supplied. This page therefore does not submit, guess an email address, or send visitors to a dead link.</DraftNotice>
+      </div>
+      <div>
+        <p class="eyebrow">Bring these four inputs</p>
+        <ol>
+          <li><span>01</span><div><h2>The question</h2><p>What does the owner or operator need to know or decide?</p></div></li>
+          <li><span>02</span><div><h2>The context</h2><p>Which current record or source is allowed to answer it?</p></div></li>
+          <li><span>03</span><div><h2>The authority</h2><p>Who approves the move, and what requires escalation?</p></div></li>
+          <li><span>04</span><div><h2>The proof</h2><p>How should the outcome be checked?</p></div></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .demo-intake__grid { display: grid; gap: clamp(3rem, 8vw, 8rem); align-items: start; }
+  .demo-intake ol { margin: 0; padding: 0; border-top: 1px solid var(--grk-border); list-style: none; }
+  .demo-intake li { display: grid; grid-template-columns: 3rem 1fr; gap: 1rem; padding-block: 1.5rem; border-bottom: 1px solid var(--grk-border); }
+  .demo-intake li > span { color: var(--grk-cobalt); font-family: var(--grk-font-mono); font-size: 0.72rem; }
+  .demo-intake h2 { margin-bottom: 0.5rem; font-size: clamp(1.4rem, 2.5vw, 2rem); }
+  .demo-intake li p { margin: 0; color: var(--grk-text-muted); }
+  @media (min-width: 48rem) { .demo-intake__grid { grid-template-columns: 0.85fr 1.15fr; } }
+</style>

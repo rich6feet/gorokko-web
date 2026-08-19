@@ -1,0 +1,11 @@
+---
+import GatedPage from '../components/GatedPage.astro';
+---
+<GatedPage
+  eyebrow="System status"
+  title="The public status destination is not configured."
+  metaTitle="Rokko status — Public destination pending"
+  deck="Rokko does not publish a simulated uptime panel, incident history, or service-health claim."
+  reason="A live status URL, monitored production services, and approved incident communication policy have not been supplied."
+  needed={['Production service inventory', 'Monitoring and incident source', 'Public status provider or URL', 'Incident communication owner', 'Approved uptime language, if any']}
+/>

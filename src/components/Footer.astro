@@ -1,0 +1,125 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__top">
+      <a class="site-footer__logo" href="/" aria-label="Rokko home">
+        <img src="/brand/gorokko-03b-wordmark-color.svg" width="438" height="104" alt="GO ROKKO" />
+      </a>
+      <p>Ask the business. Approve the next move.</p>
+    </div>
+    <div class="site-footer__grid">
+      <nav aria-label="Product">
+        <h2>Product</h2>
+        <a href="/product/">How Rokko works</a>
+        <a href="/use-cases/">Use cases</a>
+        <a href="/security/">Security</a>
+        <a href="/demo/">Tailored demo</a>
+      </nav>
+      <nav aria-label="Company">
+        <h2>Company</h2>
+        <a href="/about/">About</a>
+        <a href="/resources/">Resources</a>
+        <a href="/status/">Status</a>
+      </nav>
+      <nav aria-label="Legal">
+        <h2>Legal</h2>
+        <a href="/privacy/">Privacy</a>
+        <a href="/terms/">Terms</a>
+        <a href="/sms-terms/">SMS terms</a>
+      </nav>
+    </div>
+    <div class="site-footer__bottom">
+      <span>© {year} Rokko.</span>
+      <span>Human authority stays visible.</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding-block: clamp(3.5rem, 7vw, 7rem) 2rem;
+    background: var(--grk-paper);
+    border-top: 1px solid var(--grk-border);
+  }
+
+  .site-footer__top {
+    display: grid;
+    gap: 1.5rem;
+    padding-bottom: clamp(3rem, 6vw, 6rem);
+    border-bottom: 1px solid var(--grk-border);
+  }
+
+  .site-footer__logo {
+    width: min(15rem, 65vw);
+  }
+
+  .site-footer__top p {
+    margin: 0;
+    font-family: var(--grk-font-serif);
+    font-size: clamp(1.5rem, 3vw, 2.35rem);
+    line-height: 1.1;
+  }
+
+  .site-footer__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    padding-block: 3rem;
+  }
+
+  .site-footer nav {
+    display: grid;
+    align-content: start;
+    gap: 0.5rem;
+  }
+
+  .site-footer nav h2 {
+    margin-bottom: 0.75rem;
+    color: var(--grk-text-muted);
+    font-family: var(--grk-font-mono);
+    font-size: var(--grk-text-label);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .site-footer nav a {
+    min-height: 2.75rem;
+    font-size: 0.92rem;
+  }
+
+  .site-footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    color: var(--grk-text-muted);
+    border-top: 1px solid var(--grk-border);
+    font-family: var(--grk-font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+  }
+
+  @media (min-width: 48rem) {
+    .site-footer__top {
+      grid-template-columns: 1fr 1fr;
+      align-items: end;
+    }
+
+    .site-footer__top p {
+      justify-self: end;
+      text-align: right;
+    }
+
+    .site-footer__grid {
+      grid-template-columns: 2fr repeat(3, 1fr);
+    }
+
+    .site-footer__grid::before {
+      content: '';
+    }
+  }
+</style>

@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import DraftNotice from '../components/DraftNotice.astro';
+---
+
+<BaseLayout
+  title="Rokko security posture — Operating principles under review"
+  description="The approved operating principles behind Rokko security, approvals, and inspectable outcomes. Specific architecture and compliance claims remain under review."
+  noindex
+>
+  <PageHero
+    eyebrow="Security posture"
+    title="Trust begins with a visible operating boundary."
+    deck="Rokko’s detailed public security, hosting, retention, and compliance statements are under architecture and legal review. This page publishes only the approved operating principles."
+    tone="dark"
+  />
+
+  <section class="section security-principles">
+    <div class="container--content">
+      <DraftNotice title="Specific claims are approval-gated">No certification, dedicated-environment, encryption, retention, or compliance claim is being published until it has an approved technical and legal source.</DraftNotice>
+      <div class="grid-3 security-principles__grid">
+        <article class="numbered-card"><span class="numbered-card__number">01</span><h2>Necessary context</h2><p>Each workflow should define the operating context it needs instead of assuming broad access.</p></article>
+        <article class="numbered-card"><span class="numbered-card__number">02</span><h2>Visible authority</h2><p>Consequential actions should have an explicit approval policy and accountable owner.</p></article>
+        <article class="numbered-card"><span class="numbered-card__number">03</span><h2>Inspectable outcomes</h2><p>The result state should be legible enough for the operator to verify what happened.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark review-list">
+    <div class="container--content review-list__grid">
+      <div><p class="eyebrow">Before public security approval</p><h2>The implementation has to answer the concrete questions.</h2></div>
+      <ul>
+        <li>Deployment and tenant-isolation architecture</li>
+        <li>Authentication, authorization, and approval-policy controls</li>
+        <li>Data access, retention, deletion, and subprocessors</li>
+        <li>Logging, auditability, incident response, and security contact</li>
+        <li>Any applicable certification or regulatory statement</li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .security-principles__grid { margin-top: clamp(3rem, 6vw, 6rem); }
+  .security-principles h2 { font-size: clamp(1.6rem, 2.5vw, 2.4rem); }
+  .review-list__grid { display: grid; gap: clamp(3rem, 8vw, 8rem); }
+  .review-list h2 { max-width: 12ch; }
+  .review-list ul { margin: 0; padding: 0; border-top: 1px solid rgb(252 251 247 / 0.2); list-style: none; }
+  .review-list li { padding-block: 1.25rem; color: rgb(252 251 247 / 0.72); border-bottom: 1px solid rgb(252 251 247 / 0.2); }
+  @media (min-width: 48rem) { .review-list__grid { grid-template-columns: 0.9fr 1.1fr; } }
+</style>

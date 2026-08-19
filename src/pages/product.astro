@@ -1,0 +1,160 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import ProductFlow from '../components/ProductFlow.astro';
+import FinalCta from '../components/FinalCta.astro';
+---
+
+<BaseLayout
+  title="How Rokko works — Ask, approve, verify"
+  description="See the approval-bounded operating model behind Rokko: inspect context, prepare the next move, keep human authority visible, and return a clear outcome."
+>
+  <PageHero
+    eyebrow="How Rokko works"
+    title="Conversation is the interface. Operations are the work."
+    deck="Rokko is being built to connect the question a team asks with the operating context, approval boundary, and outcome that make the answer useful."
+    tone="moss"
+  />
+
+  <section class="section product-demo">
+    <div class="container--content product-demo__grid">
+      <div>
+        <p class="eyebrow">One legible loop</p>
+        <h2>The decision stays inspectable from question to outcome.</h2>
+        <p class="deck">This illustrative flow demonstrates the product model without presenting an unapproved customer screen or fabricated integration.</p>
+      </div>
+      <ProductFlow />
+    </div>
+  </section>
+
+  <section class="section section--paper capability">
+    <div class="container--content">
+      <div class="capability__heading">
+        <div>
+          <p class="eyebrow">The operating boundary</p>
+          <h2>Four states. One accountable line of sight.</h2>
+        </div>
+        <p class="deck">Each implementation defines its exact systems, actions, approval rules, and escalation path. The public model stays intentionally simple.</p>
+      </div>
+      <ol class="state-list">
+        <li><span>01</span><div><h3>Read context</h3><p>Use only the source context allowed for the supported operating question.</p></div></li>
+        <li><span>02</span><div><h3>Prepare the move</h3><p>Turn the context into a proposed next step with its basis visible.</p></div></li>
+        <li><span>03</span><div><h3>Await authority</h3><p>Hold consequential action at the configured approval boundary.</p></div></li>
+        <li><span>04</span><div><h3>Return the result</h3><p>Make success, failure, or unresolved work explicit instead of implying completion.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section--dark architecture">
+    <div class="container--content architecture__grid">
+      <div>
+        <p class="eyebrow">Product shape</p>
+        <h2>Useful in the places where the team already works.</h2>
+      </div>
+      <div class="architecture__stack">
+        <article><span>Interface</span><h3>Operating conversation</h3><p>Questions and proposed moves expressed in the team’s working language.</p></article>
+        <article><span>Control</span><h3>Approval policy</h3><p>The boundary that defines which actions require review and who owns the decision.</p></article>
+        <article><span>Workflow</span><h3>Supported operations</h3><p>The configured context, action, and outcome path for the chosen use case.</p></article>
+        <article><span>Evidence</span><h3>Visible result state</h3><p>A clear record of what happened and what still needs attention.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section proof-policy">
+    <div class="container--content grid-2">
+      <div>
+        <p class="eyebrow">Current product claims</p>
+        <h2>Specific capability follows verified implementation.</h2>
+      </div>
+      <div>
+        <p class="deck">Rokko does not publish a broad integration marketplace, universal channel support, or unattended automation claims before those capabilities are reviewed for the launch scope.</p>
+        <p>The model on this site describes the intended operating boundary. A tailored demo should show only the workflows and system context that can be supported honestly.</p>
+      </div>
+    </div>
+  </section>
+
+  <FinalCta title="Choose the first decision worth making clearer." />
+</BaseLayout>
+
+<style>
+  .product-demo__grid {
+    display: grid;
+    gap: clamp(3rem, 7vw, 7rem);
+    align-items: center;
+  }
+
+  .product-demo h2 { max-width: 12ch; }
+
+  .capability__heading {
+    display: grid;
+    gap: 2rem;
+    margin-bottom: clamp(3rem, 7vw, 7rem);
+    align-items: end;
+  }
+
+  .capability h2 { max-width: 12ch; }
+
+  .state-list {
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--grk-border);
+    list-style: none;
+  }
+
+  .state-list li {
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
+    gap: 1rem;
+    padding-block: 1.75rem;
+    border-bottom: 1px solid var(--grk-border);
+  }
+
+  .state-list > li > span {
+    color: var(--grk-cobalt);
+    font-family: var(--grk-font-mono);
+    font-size: 0.72rem;
+  }
+
+  .state-list h3 { margin-bottom: 0.6rem; }
+  .state-list p { margin: 0; color: var(--grk-text-muted); }
+
+  .architecture__grid {
+    display: grid;
+    gap: clamp(3rem, 8vw, 8rem);
+  }
+
+  .architecture h2 { max-width: 11ch; }
+
+  .architecture__stack {
+    border-top: 1px solid rgb(252 251 247 / 0.2);
+  }
+
+  .architecture__stack article {
+    display: grid;
+    gap: 0.5rem;
+    padding-block: 1.5rem;
+    border-bottom: 1px solid rgb(252 251 247 / 0.2);
+  }
+
+  .architecture__stack span {
+    color: var(--grk-success);
+    font-family: var(--grk-font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+  }
+
+  .architecture__stack h3 { margin: 0; }
+  .architecture__stack p { margin: 0; color: rgb(252 251 247 / 0.66); }
+
+  .proof-policy h2 { max-width: 11ch; }
+
+  @media (min-width: 50rem) {
+    .product-demo__grid { grid-template-columns: 0.8fr 1.2fr; }
+    .capability__heading { grid-template-columns: 1.1fr 0.9fr; }
+    .state-list li { grid-template-columns: 5rem 0.8fr 1.2fr; align-items: start; }
+    .state-list li div { display: contents; }
+    .state-list h3 { margin: 0; }
+    .architecture__grid { grid-template-columns: 0.8fr 1.2fr; }
+    .architecture__stack article { grid-template-columns: 6rem 0.85fr 1.15fr; align-items: start; }
+  }
+</style>

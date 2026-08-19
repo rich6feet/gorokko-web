@@ -1,0 +1,94 @@
+/* Gorokko 03B website foundation tokens.
+   Light editorial default; dark product/trust bands; no theme toggle at launch. */
+:root {
+  color-scheme: light;
+
+  /* Brand and semantic color */
+  --grk-ink: #111515;
+  --grk-limestone: #f2f0e9;
+  --grk-paper: #fcfbf7;
+  --grk-cobalt: #264dff;
+  --grk-moss: #17352a;
+  --grk-success: #71d7a0;
+  --grk-attention: #d76b45;
+  --grk-error: #c24a43;
+  --grk-fog: #656b69;
+  --grk-line: #cbc8bf;
+  --grk-white: #ffffff;
+
+  --grk-bg-page: var(--grk-limestone);
+  --grk-bg-surface: var(--grk-paper);
+  --grk-bg-product: var(--grk-moss);
+  --grk-bg-trust: var(--grk-ink);
+  --grk-text: var(--grk-ink);
+  --grk-text-muted: var(--grk-fog);
+  --grk-text-on-dark: var(--grk-paper);
+  --grk-border: var(--grk-line);
+  --grk-action: var(--grk-cobalt);
+  --grk-action-text: var(--grk-white);
+  --grk-focus: var(--grk-cobalt);
+
+  /* Type. The logo is outlined artwork and never uses these font tokens. */
+  --grk-font-sans: "Geist", "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --grk-font-serif: "Instrument Serif", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --grk-font-mono: "Geist Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+
+  --grk-text-display: clamp(3.5rem, 7.5vw, 7rem);
+  --grk-text-h1: clamp(3rem, 6vw, 5.5rem);
+  --grk-text-h2: clamp(2.25rem, 4.5vw, 4.25rem);
+  --grk-text-h3: clamp(1.4rem, 2vw, 2rem);
+  --grk-text-deck: clamp(1.15rem, 1.8vw, 1.5rem);
+  --grk-text-body: clamp(1rem, 0.97rem + 0.18vw, 1.125rem);
+  --grk-text-ui: 0.9375rem;
+  --grk-text-label: 0.78125rem;
+
+  --grk-leading-display: 0.95;
+  --grk-leading-heading: 1.02;
+  --grk-leading-deck: 1.45;
+  --grk-leading-body: 1.68;
+  --grk-leading-ui: 1.5;
+
+  /* 4px base / 8px primary rhythm */
+  --grk-space-1: 0.25rem;
+  --grk-space-2: 0.5rem;
+  --grk-space-3: 0.75rem;
+  --grk-space-4: 1rem;
+  --grk-space-6: 1.5rem;
+  --grk-space-8: 2rem;
+  --grk-space-12: 3rem;
+  --grk-space-16: 4rem;
+  --grk-space-24: 6rem;
+  --grk-space-32: 8rem;
+  --grk-space-40: 10rem;
+
+  --grk-section-y: clamp(4rem, 9vw, 10rem);
+  --grk-container: 80rem;
+  --grk-container-content: 75rem;
+  --grk-container-demo: 85rem;
+  --grk-measure: 72ch;
+
+  --grk-radius-control: 0.6875rem;
+  --grk-radius-panel: 1.125rem;
+  --grk-radius-media: 1.5rem;
+  --grk-shadow-interactive: 0 10px 30px rgb(17 21 21 / 0.09);
+
+  --grk-duration-control: 200ms;
+  --grk-duration-state: 280ms;
+  --grk-duration-reveal: 520ms;
+  --grk-ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  --grk-navbar-height: 4.5rem;
+  --grk-focus-ring: 0 0 0 3px rgb(38 77 255 / 0.35);
+}
+
+/* Verified contrast pairings used by the handoff:
+   cobalt/white 5.85:1; ink/limestone 16.13:1;
+   fog/paper 5.25:1; paper/moss 12.84:1. */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --grk-duration-control: 0ms;
+    --grk-duration-state: 0ms;
+    --grk-duration-reveal: 0ms;
+  }
+}

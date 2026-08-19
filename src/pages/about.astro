@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import FinalCta from '../components/FinalCta.astro';
+---
+
+<BaseLayout
+  title="About Rokko — A new direction for home-service operations"
+  description="Rokko is a new product and marketing direction focused on accountable AI operations for home-service companies."
+>
+  <PageHero
+    eyebrow="About Rokko"
+    title="Built from the distance between knowing and doing."
+    deck="Rokko is a new direction focused on helping home-service operators reach a trustworthy next move without giving up the authority that makes the move accountable."
+    tone="moss"
+  />
+
+  <section class="section origin">
+    <div class="container--content origin__grid">
+      <div>
+        <p class="eyebrow">Why this direction</p>
+        <h2>Most operating problems do not begin with a lack of software.</h2>
+      </div>
+      <div>
+        <p class="deck">They begin when useful context is spread across systems, decisions arrive without a clear owner, and automation removes the moment where judgment should happen.</p>
+        <p>Rokko is being built around a different line: assemble the context, prepare the next supported move, and keep the accountable person in control.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper principles">
+    <div class="container--content">
+      <p class="eyebrow">Operating principles</p>
+      <div class="grid-3">
+        <article class="numbered-card"><span class="numbered-card__number">01</span><h3>Evidence over theater</h3><p>Claims, demos, and proof should be tied to something the operator can inspect.</p></article>
+        <article class="numbered-card"><span class="numbered-card__number">02</span><h3>Authority over opacity</h3><p>Consequential moves should keep their owner and approval state visible.</p></article>
+        <article class="numbered-card"><span class="numbered-card__number">03</span><h3>Operations over novelty</h3><p>The product earns its place by reducing real operating friction, not by performing AI theater.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section commitment">
+    <div class="container--content commitment__grid">
+      <div><p class="eyebrow">The public standard</p><h2>We will say what is verified—and say when it is not.</h2></div>
+      <p class="deck">The current site intentionally withholds unapproved pricing, named customer proof, legal text, and broad capability claims. That boundary is part of how Rokko intends to market the product.</p>
+    </div>
+  </section>
+
+  <FinalCta title="Show us the operating question you keep asking." />
+</BaseLayout>
+
+<style>
+  .origin__grid,
+  .commitment__grid { display: grid; gap: clamp(3rem, 8vw, 8rem); align-items: start; }
+  .origin h2,
+  .commitment h2 { max-width: 12ch; }
+  .principles .numbered-card { min-height: 21rem; }
+  @media (min-width: 48rem) {
+    .origin__grid,
+    .commitment__grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>

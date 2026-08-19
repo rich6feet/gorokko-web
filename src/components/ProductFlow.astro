@@ -1,0 +1,268 @@
+---
+const steps = [
+  {
+    id: 'ask',
+    label: 'Ask',
+    title: 'See what needs a decision',
+    detail: 'Which appointments need attention today?',
+    meta: 'Question received',
+  },
+  {
+    id: 'approve',
+    label: 'Approve',
+    title: 'Review the proposed move',
+    detail: 'Prepare the supported changes and hold them for owner review.',
+    meta: 'Approval required',
+  },
+  {
+    id: 'verified',
+    label: 'Verified',
+    title: 'Return a clear outcome',
+    detail: 'Result returned with source, status, and the next unresolved item.',
+    meta: 'Outcome verified',
+  },
+];
+---
+
+<section class="product-flow" aria-labelledby="product-flow-title" data-product-flow>
+  <div class="product-flow__topline">
+    <span id="product-flow-title">Illustrative product flow</span>
+    <span>Customer-safe example</span>
+  </div>
+  <div class="product-flow__body">
+    <div class="product-flow__rail" role="tablist" aria-label="Rokko workflow states">
+      {steps.map((step, index) => (
+        <button
+          id={`tab-${step.id}`}
+          class="product-flow__tab"
+          type="button"
+          role="tab"
+          aria-selected={index === 0 ? 'true' : 'false'}
+          aria-controls={`panel-${step.id}`}
+          tabindex={index === 0 ? '0' : '-1'}
+          data-step={index}
+        >
+          <span>0{index + 1}</span>
+          {step.label}
+        </button>
+      ))}
+    </div>
+    <div class="product-flow__panels">
+      {steps.map((step, index) => (
+        <div
+          id={`panel-${step.id}`}
+          class="product-flow__panel"
+          role="tabpanel"
+          aria-labelledby={`tab-${step.id}`}
+          hidden={index !== 0}
+          data-panel={index}
+        >
+          <span class="status-label">{step.meta}</span>
+          <p class="product-flow__title">{step.title}</p>
+          <p class="product-flow__detail">“{step.detail}”</p>
+          <div class="product-flow__source">
+            <span>Context</span>
+            <strong>Operational record</strong>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-product-flow]').forEach((flow) => {
+    const tabs = [...flow.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const panels = [...flow.querySelectorAll<HTMLElement>('[role="tabpanel"]')];
+    let current = 0;
+    let timer: number | undefined;
+    let hasRun = false;
+
+    const selectStep = (index: number, focus = false) => {
+      current = index;
+      tabs.forEach((tab, tabIndex) => {
+        const selected = tabIndex === index;
+        tab.setAttribute('aria-selected', String(selected));
+        tab.tabIndex = selected ? 0 : -1;
+        if (selected && focus) tab.focus();
+      });
+      panels.forEach((panel, panelIndex) => {
+        panel.hidden = panelIndex !== index;
+      });
+    };
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => {
+        window.clearTimeout(timer);
+        selectStep(index);
+      });
+      tab.addEventListener('keydown', (event) => {
+        if (!['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+        event.preventDefault();
+        const direction = event.key === 'ArrowRight' ? 1 : -1;
+        selectStep((current + direction + tabs.length) % tabs.length, true);
+      });
+    });
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduceMotion && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        if (!entries.some((entry) => entry.isIntersecting) || hasRun) return;
+        hasRun = true;
+        const advance = () => {
+          if (current >= tabs.length - 1) return;
+          timer = window.setTimeout(() => {
+            selectStep(current + 1);
+            advance();
+          }, 1500);
+        };
+        advance();
+        observer.disconnect();
+      }, { threshold: 0.35 });
+      observer.observe(flow);
+    }
+  });
+</script>
+
+<style>
+  .product-flow {
+    overflow: hidden;
+    color: var(--grk-paper);
+    background: var(--grk-moss);
+    border: 1px solid rgb(252 251 247 / 0.18);
+    border-radius: var(--grk-radius-panel);
+    box-shadow: 0 30px 80px rgb(17 21 21 / 0.18);
+  }
+
+  .product-flow__topline {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.85rem 1rem;
+    color: rgb(252 251 247 / 0.58);
+    border-bottom: 1px solid rgb(252 251 247 / 0.16);
+    font-family: var(--grk-font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .product-flow__body {
+    display: grid;
+  }
+
+  .product-flow__rail {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-bottom: 1px solid rgb(252 251 247 / 0.16);
+  }
+
+  .product-flow__tab {
+    min-height: 4.2rem;
+    padding: 0.75rem;
+    color: rgb(252 251 247 / 0.55);
+    background: transparent;
+    border: 0;
+    border-right: 1px solid rgb(252 251 247 / 0.16);
+    font-size: 0.8rem;
+    font-weight: 650;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .product-flow__tab:last-child {
+    border-right: 0;
+  }
+
+  .product-flow__tab span {
+    display: block;
+    margin-bottom: 0.25rem;
+    color: var(--grk-success);
+    font-family: var(--grk-font-mono);
+    font-size: 0.65rem;
+  }
+
+  .product-flow__tab[aria-selected='true'] {
+    color: var(--grk-paper);
+    background: rgb(252 251 247 / 0.08);
+    box-shadow: inset 0 -3px 0 var(--grk-cobalt);
+  }
+
+  .product-flow__panels {
+    min-height: 24rem;
+    padding: clamp(1.4rem, 4vw, 3rem);
+  }
+
+  .product-flow__panel {
+    animation: panel-in var(--grk-duration-state) var(--grk-ease-standard);
+  }
+
+  .product-flow__panel[hidden] {
+    display: none;
+  }
+
+  .product-flow__panel .status-label {
+    color: var(--grk-success);
+  }
+
+  .product-flow__title {
+    max-width: 15ch;
+    margin-block: 3.5rem 1.25rem;
+    font-family: var(--grk-font-serif);
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    line-height: 1;
+  }
+
+  .product-flow__detail {
+    max-width: 30rem;
+    color: rgb(252 251 247 / 0.7);
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .product-flow__source {
+    display: flex;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    justify-content: space-between;
+    gap: 1rem;
+    border-top: 1px solid rgb(252 251 247 / 0.16);
+    font-family: var(--grk-font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+  }
+
+  .product-flow__source span {
+    color: rgb(252 251 247 / 0.48);
+  }
+
+  @keyframes panel-in {
+    from { opacity: 0; transform: translateY(0.5rem); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @media (min-width: 58rem) {
+    .product-flow__body {
+      grid-template-columns: 9rem 1fr;
+    }
+
+    .product-flow__rail {
+      grid-template-columns: 1fr;
+      border-right: 1px solid rgb(252 251 247 / 0.16);
+      border-bottom: 0;
+    }
+
+    .product-flow__tab {
+      border-right: 0;
+      border-bottom: 1px solid rgb(252 251 247 / 0.16);
+    }
+
+    .product-flow__tab:last-child {
+      border-bottom: 0;
+    }
+
+    .product-flow__tab[aria-selected='true'] {
+      box-shadow: inset 3px 0 0 var(--grk-cobalt);
+    }
+  }
+</style>

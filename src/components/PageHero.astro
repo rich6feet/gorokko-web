@@ -1,0 +1,68 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  deck: string;
+  tone?: 'light' | 'dark' | 'moss';
+}
+
+const { eyebrow, title, deck, tone = 'light' } = Astro.props;
+---
+
+<section class:list={['page-hero', `page-hero--${tone}`]}>
+  <div class="container--content page-hero__grid">
+    <div>
+      <p class="eyebrow">{eyebrow}</p>
+      <h1>{title}</h1>
+    </div>
+    <div class="page-hero__aside">
+      <p class="deck">{deck}</p>
+      <slot />
+    </div>
+  </div>
+</section>
+
+<style>
+  .page-hero {
+    padding-block: clamp(4rem, 10vw, 9rem);
+    border-bottom: 1px solid var(--grk-border);
+  }
+
+  .page-hero--dark {
+    color: var(--grk-paper);
+    background: var(--grk-ink);
+    border-color: rgb(252 251 247 / 0.18);
+  }
+
+  .page-hero--moss {
+    color: var(--grk-paper);
+    background: var(--grk-moss);
+    border-color: rgb(252 251 247 / 0.18);
+  }
+
+  .page-hero__grid {
+    display: grid;
+    gap: clamp(2.5rem, 8vw, 8rem);
+    align-items: end;
+  }
+
+  .page-hero h1 {
+    max-width: 13ch;
+    margin: 0;
+  }
+
+  .page-hero__aside .deck {
+    margin-bottom: 0;
+  }
+
+  .page-hero--dark .deck,
+  .page-hero--moss .deck {
+    color: rgb(252 251 247 / 0.72);
+  }
+
+  @media (min-width: 48rem) {
+    .page-hero__grid {
+      grid-template-columns: 1.25fr 0.75fr;
+    }
+  }
+</style>
