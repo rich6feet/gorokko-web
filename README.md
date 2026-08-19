@@ -18,23 +18,28 @@ npm run build
 
 ## Publishing
 
-The `Deploy Rokko to GitHub Pages` workflow builds the Astro site and publishes `dist/` whenever `main` changes. The repository's GitHub Pages settings must use **GitHub Actions** as the source.
+GitHub is the source repository. Production hosting is the Cloudflare Worker named `gorokko-web`, using Workers Static Assets with `dist/` as the asset directory. The Cloudflare Git integration builds and deploys changes from `main`.
 
-The custom domain is configured in the GitHub Pages repository settings/API. A `CNAME` file is intentionally not used because custom-workflow deployments ignore it.
+Cloudflare build contract:
 
-### Custom-domain DNS gate
+- build command: `npm run build`
+- deploy command: `npx wrangler deploy`
+- static asset directory: `dist`
+- production domains: `gorokko.com` and `www.gorokko.com`
 
-GitHub Pages is configured for `gorokko.com`, but the domain must point to GitHub before the site and its HTTPS certificate can become available:
+The checked-in `wrangler.jsonc` is the runtime configuration source. It serves the Astro output directly, preserves trailing-slash routing, and returns the custom `404.html` for missing routes.
 
-| Type | Name | Value |
-| --- | --- | --- |
-| `A` | `@` | `185.199.108.153` |
-| `A` | `@` | `185.199.109.153` |
-| `A` | `@` | `185.199.110.153` |
-| `A` | `@` | `185.199.111.153` |
-| `CNAME` | `www` | `rich6feet.github.io` |
+For a manual validation without publishing:
 
-Remove conflicting apex `A`, `AAAA`, `ALIAS`, or `ANAME` records before enabling HTTPS. GitHub also recommends account-level domain verification and warns against wildcard DNS records.
+```sh
+npm run cloudflare:dry-run
+```
+
+For an explicitly requested manual deployment:
+
+```sh
+npm run deploy
+```
 
 ## Content approval gates
 
