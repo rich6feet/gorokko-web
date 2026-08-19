@@ -16,6 +16,7 @@ const requiredOutputs = [
   'resources/index.html',
   'about/index.html',
   'demo/index.html',
+  'book/index.html',
   'security/index.html',
   'status/index.html',
   'privacy/index.html',
