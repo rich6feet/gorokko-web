@@ -41,7 +41,8 @@ const year = new Date().getFullYear();
 <style>
   .site-footer {
     padding-block: clamp(3.5rem, 7vw, 7rem) 2rem;
-    background: var(--grk-paper);
+    color: var(--grk-text);
+    background: var(--grk-bg-surface);
     border-top: 1px solid var(--grk-border);
   }
 
@@ -53,7 +54,12 @@ const year = new Date().getFullYear();
   }
 
   .site-footer__logo {
+    display: block;
     width: min(15rem, 65vw);
+  }
+
+  .site-footer__logo img {
+    transition: filter var(--grk-duration-state) var(--grk-ease-standard);
   }
 
   .site-footer__top p {
@@ -86,7 +92,9 @@ const year = new Date().getFullYear();
   }
 
   .site-footer nav a {
+    display: flex;
     min-height: 2.75rem;
+    align-items: center;
     font-size: 0.92rem;
   }
 
@@ -101,6 +109,16 @@ const year = new Date().getFullYear();
     font-family: var(--grk-font-mono);
     font-size: 0.72rem;
     text-transform: uppercase;
+  }
+
+  :global(html[data-theme='dark']) .site-footer__logo img {
+    filter: brightness(0) invert(1);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :global(html:not([data-theme])) .site-footer__logo img {
+      filter: brightness(0) invert(1);
+    }
   }
 
   @media (min-width: 48rem) {

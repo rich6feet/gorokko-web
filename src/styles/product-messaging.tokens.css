@@ -28,6 +28,8 @@
   --msg-overlay: rgb(17 21 21 / 0.46);
   --msg-shadow: 0 22px 70px rgb(21 27 36 / 0.14);
   --msg-shadow-menu: 0 14px 36px rgb(21 27 36 / 0.18);
+  --msg-edge: 0 0 0 1px rgb(255 255 255 / 0);
+  --msg-focus-outline: #264dff;
   --msg-focus: 0 0 0 3px rgb(38 77 255 / 0.28);
   --msg-radius-xs: 0.35rem;
   --msg-radius-sm: 0.55rem;
@@ -67,6 +69,8 @@
     --msg-overlay: rgb(0 0 0 / 0.66);
     --msg-shadow: 0 22px 70px rgb(0 0 0 / 0.36);
     --msg-shadow-menu: 0 14px 36px rgb(0 0 0 / 0.4);
+    --msg-edge: 0 0 0 1px rgb(255 255 255 / 0.08);
+    --msg-focus-outline: #8ea3ff;
     --msg-focus: 0 0 0 3px rgb(142 163 255 / 0.35);
   }
 }
@@ -101,6 +105,8 @@
   --msg-overlay: rgb(0 0 0 / 0.66);
   --msg-shadow: 0 22px 70px rgb(0 0 0 / 0.36);
   --msg-shadow-menu: 0 14px 36px rgb(0 0 0 / 0.4);
+  --msg-edge: 0 0 0 1px rgb(255 255 255 / 0.08);
+  --msg-focus-outline: #8ea3ff;
   --msg-focus: 0 0 0 3px rgb(142 163 255 / 0.35);
 }
 

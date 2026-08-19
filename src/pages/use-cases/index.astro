@@ -52,9 +52,9 @@ import { useCases } from '../../content/useCases';
 <style>
   .use-case-index ol { margin: 0; padding: 0; border-top: 1px solid var(--grk-border); list-style: none; }
   .use-case-index li { border-bottom: 1px solid var(--grk-border); }
-  .use-case-index a { display: grid; grid-template-columns: 3rem 1fr auto; gap: 1rem; min-height: 11rem; align-items: start; padding-block: 1.75rem; text-decoration: none; transition: padding var(--grk-duration-control) var(--grk-ease-standard), background var(--grk-duration-control) var(--grk-ease-standard); }
-  .use-case-index a:hover { padding-inline: 1rem; background: var(--grk-paper); }
-  .use-case-index span { color: var(--grk-cobalt); font-family: var(--grk-font-mono); font-size: 0.72rem; }
+  .use-case-index a { display: grid; grid-template-columns: 3rem 1fr auto; gap: 1rem; min-height: 11rem; align-items: start; padding-block: 1.75rem; text-decoration: none; transition: transform var(--grk-duration-control) var(--grk-ease-standard), background var(--grk-duration-control) var(--grk-ease-standard); }
+  .use-case-index a:hover { transform: translateX(0.25rem); background: var(--grk-bg-surface); }
+  .use-case-index span { color: var(--grk-action); font-family: var(--grk-font-mono); font-size: 0.72rem; }
   .use-case-index h2 { margin-bottom: 0.75rem; font-size: clamp(1.8rem, 4vw, 3.5rem); }
   .use-case-index p { margin: 0; color: var(--grk-text-muted); }
   .selection-model__grid { display: grid; gap: clamp(3rem, 8vw, 8rem); }

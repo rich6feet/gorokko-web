@@ -15,13 +15,23 @@ body {
   margin: 0;
   color: var(--grk-text);
   background:
-    linear-gradient(90deg, transparent 0, transparent calc(100% - 1px), rgb(17 21 21 / 0.035) calc(100% - 1px)) 0 0 / min(25vw, 22rem) 100%,
+    linear-gradient(90deg, transparent 0, transparent calc(100% - 1px), var(--grk-grid-line) calc(100% - 1px)) 0 0 / min(25vw, 22rem) 100%,
     var(--grk-bg-page);
   font-family: var(--grk-font-sans);
   font-size: var(--grk-text-body);
   line-height: var(--grk-leading-body);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+}
+
+html.is-theme-changing,
+html.is-theme-changing body,
+html.is-theme-changing .site-header,
+html.is-theme-changing .site-footer,
+html.is-theme-changing :where(section, article, aside, nav, div, a, button, input, textarea, select) {
+  transition-property: color, background-color, border-color, fill, stroke;
+  transition-duration: var(--grk-duration-state);
+  transition-timing-function: var(--grk-ease-standard);
 }
 
 img,
@@ -37,7 +47,7 @@ a {
 }
 
 a:hover {
-  text-decoration-color: var(--grk-cobalt);
+  text-decoration-color: var(--grk-action);
 }
 
 button,
@@ -45,6 +55,20 @@ input,
 textarea,
 select {
   font: inherit;
+}
+
+:where(input, textarea, select) {
+  color: var(--grk-text);
+  background-color: var(--grk-bg-surface);
+  border-color: var(--grk-border);
+  transition:
+    border-color var(--grk-duration-control) var(--grk-ease-standard),
+    box-shadow var(--grk-duration-control) var(--grk-ease-standard),
+    background-color var(--grk-duration-state) var(--grk-ease-standard);
+}
+
+:where(input, textarea, select):focus-visible {
+  border-color: var(--grk-focus);
 }
 
 button,
@@ -59,8 +83,20 @@ a {
 }
 
 ::selection {
-  color: var(--grk-white);
-  background: var(--grk-cobalt);
+  color: var(--grk-action-text);
+  background: var(--grk-action);
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }
 
 h1,
@@ -107,8 +143,8 @@ p {
   z-index: 100;
   transform: translateY(-180%);
   padding: 0.7rem 1rem;
-  color: var(--grk-white);
-  background: var(--grk-cobalt);
+  color: var(--grk-action-text);
+  background: var(--grk-action);
   border-radius: var(--grk-radius-control);
 }
 
@@ -135,7 +171,7 @@ p {
 }
 
 .section--paper {
-  background: var(--grk-paper);
+  background: var(--grk-bg-surface);
 }
 
 .section--dark {
@@ -166,12 +202,17 @@ p {
   width: 0.65rem;
   height: 0.65rem;
   content: '';
-  background: var(--grk-cobalt);
+  background: var(--grk-action);
 }
 
 .section--dark .eyebrow,
 .section--moss .eyebrow {
-  color: rgb(252 251 247 / 0.66);
+  color: var(--grk-text-muted-on-dark);
+}
+
+.section--dark .eyebrow::before,
+.section--moss .eyebrow::before {
+  background: var(--grk-action-on-dark);
 }
 
 .display-accent {
@@ -188,7 +229,7 @@ p {
 
 .section--dark .deck,
 .section--moss .deck {
-  color: rgb(252 251 247 / 0.74);
+  color: var(--grk-text-muted-on-dark);
 }
 
 .button-row {
@@ -205,13 +246,18 @@ p {
   justify-content: center;
   gap: 0.65rem;
   padding: 0.7rem 1.05rem;
-  border: 1px solid var(--grk-ink);
+  border: 1px solid var(--grk-text);
   border-radius: var(--grk-radius-control);
   font-size: var(--grk-text-ui);
   font-weight: 650;
   line-height: 1.2;
   text-decoration: none;
-  transition: transform var(--grk-duration-control) var(--grk-ease-standard), box-shadow var(--grk-duration-control) var(--grk-ease-standard), background var(--grk-duration-control) var(--grk-ease-standard);
+  transition:
+    transform var(--grk-duration-control) var(--grk-ease-standard),
+    box-shadow var(--grk-duration-control) var(--grk-ease-standard),
+    color var(--grk-duration-control) var(--grk-ease-standard),
+    background-color var(--grk-duration-control) var(--grk-ease-standard),
+    border-color var(--grk-duration-control) var(--grk-ease-standard);
 }
 
 .button:hover {
@@ -220,20 +266,36 @@ p {
   text-decoration: none;
 }
 
+.button:active {
+  transform: translateY(0) scale(0.975);
+  box-shadow: none;
+}
+
 .button--primary {
   color: var(--grk-action-text);
   background: var(--grk-action);
   border-color: var(--grk-action);
 }
 
+.button--primary:hover {
+  background: var(--grk-action-hover);
+  border-color: var(--grk-action-hover);
+}
+
 .button--secondary {
-  color: var(--grk-ink);
+  color: var(--grk-text);
   background: transparent;
 }
 
 .button--dark {
-  color: var(--grk-paper);
-  border-color: rgb(252 251 247 / 0.42);
+  color: var(--grk-text-on-dark);
+  border-color: var(--grk-border-on-dark);
+}
+
+.section--dark :focus-visible,
+.section--moss :focus-visible {
+  outline-color: var(--grk-focus-on-dark);
+  box-shadow: 0 0 0 3px rgb(142 165 255 / 0.38);
 }
 
 .text-link {
@@ -241,12 +303,22 @@ p {
   min-height: 2.75rem;
   align-items: center;
   gap: 0.55rem;
-  color: var(--grk-cobalt);
+  color: var(--grk-action);
   font-weight: 650;
 }
 
 .text-link::after {
   content: '→';
+  transition: transform var(--grk-duration-control) var(--grk-ease-standard);
+}
+
+.text-link:hover::after {
+  transform: translateX(0.22rem);
+}
+
+.section--dark .text-link,
+.section--moss .text-link {
+  color: var(--grk-action-on-dark);
 }
 
 .rule {
@@ -279,7 +351,7 @@ p {
 .numbered-card__number {
   display: block;
   margin-bottom: clamp(4rem, 8vw, 8rem);
-  color: var(--grk-cobalt);
+  color: var(--grk-action);
   font-family: var(--grk-font-mono);
   font-size: var(--grk-text-label);
 }
@@ -326,6 +398,41 @@ p {
   margin-bottom: 0;
 }
 
+/* Progressive underline treatment. Existing underlines remain visible when
+   background-image support is unavailable. */
+:where(main, .site-footer) a:not(.button):not([class*='logo']) {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0 1px;
+  text-decoration-color: transparent;
+  transition:
+    color var(--grk-duration-control) var(--grk-ease-standard),
+    background-size var(--grk-duration-state) var(--grk-ease-standard);
+}
+
+:where(main, .site-footer) a:not(.button):not([class*='logo']):hover,
+:where(main, .site-footer) a:not(.button):not([class*='logo']):focus-visible {
+  background-size: 100% 1px;
+}
+
+/* One-shot scroll reveal. JavaScript adds the pending state only after the
+   document is usable, so content remains visible when scripting is absent. */
+.reveal-pending {
+  opacity: 0;
+  transform: translate3d(0, 1.25rem, 0);
+  transition:
+    opacity var(--grk-duration-reveal) var(--grk-ease-standard),
+    transform var(--grk-duration-reveal) var(--grk-ease-standard);
+  transition-delay: var(--grk-reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.reveal-pending.is-revealed {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
 @media (min-width: 48rem) {
   .container,
   .container--content {
@@ -357,5 +464,12 @@ p {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+
+  .reveal-pending,
+  .reveal-pending.is-revealed {
+    opacity: 1;
+    transform: none;
+    will-change: auto;
   }
 }

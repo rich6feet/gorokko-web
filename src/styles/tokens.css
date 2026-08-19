@@ -1,9 +1,10 @@
 /* Gorokko 03B website foundation tokens.
-   Light editorial default; dark product/trust bands; no theme toggle at launch. */
+   Semantic theme values sit on top of stable brand primitives so light and
+   dark mode can be tuned independently without changing component intent. */
 :root {
   color-scheme: light;
 
-  /* Brand and semantic color */
+  /* Stable brand primitives. */
   --grk-ink: #111515;
   --grk-limestone: #f2f0e9;
   --grk-paper: #fcfbf7;
@@ -16,17 +17,31 @@
   --grk-line: #cbc8bf;
   --grk-white: #ffffff;
 
+  /* Light-theme semantic surfaces and content. */
   --grk-bg-page: var(--grk-limestone);
   --grk-bg-surface: var(--grk-paper);
+  --grk-bg-elevated: var(--grk-white);
+  --grk-bg-subtle: #e8e5dc;
   --grk-bg-product: var(--grk-moss);
   --grk-bg-trust: var(--grk-ink);
+  --grk-header-bg: rgb(242 240 233 / 0.92);
   --grk-text: var(--grk-ink);
-  --grk-text-muted: var(--grk-fog);
+  --grk-text-muted: #59615f;
+  --grk-text-faint: #6d7471;
   --grk-text-on-dark: var(--grk-paper);
-  --grk-border: var(--grk-line);
+  --grk-text-muted-on-dark: #c4cac6;
+  --grk-border: #c8c5bb;
+  --grk-border-strong: #8c928f;
+  --grk-border-on-dark: rgb(252 251 247 / 0.28);
+  --grk-grid-line: rgb(17 21 21 / 0.035);
   --grk-action: var(--grk-cobalt);
+  --grk-action-hover: #173cd4;
   --grk-action-text: var(--grk-white);
+  --grk-action-on-dark: #8ea5ff;
   --grk-focus: var(--grk-cobalt);
+  --grk-focus-on-dark: #8ea5ff;
+  --grk-overlay: rgb(17 21 21 / 0.36);
+  --grk-image-scrim: linear-gradient(180deg, rgb(17 21 21 / 0.02), rgb(17 21 21 / 0.14));
 
   /* Type. The logo is outlined artwork and never uses these font tokens. */
   --grk-font-sans: "Geist", "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -48,7 +63,7 @@
   --grk-leading-body: 1.68;
   --grk-leading-ui: 1.5;
 
-  /* 4px base / 8px primary rhythm */
+  /* 4px base / 8px primary rhythm. */
   --grk-space-1: 0.25rem;
   --grk-space-2: 0.5rem;
   --grk-space-3: 0.75rem;
@@ -71,19 +86,79 @@
   --grk-radius-panel: 1.125rem;
   --grk-radius-media: 1.5rem;
   --grk-shadow-interactive: 0 10px 30px rgb(17 21 21 / 0.09);
+  --grk-shadow-elevated: 0 22px 60px rgb(17 21 21 / 0.12);
 
   --grk-duration-control: 200ms;
-  --grk-duration-state: 280ms;
-  --grk-duration-reveal: 520ms;
-  --grk-ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --grk-duration-state: 300ms;
+  --grk-duration-reveal: 560ms;
+  --grk-ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+  --grk-ease-overshoot: cubic-bezier(0.34, 1.56, 0.64, 1);
 
   --grk-navbar-height: 4.5rem;
-  --grk-focus-ring: 0 0 0 3px rgb(38 77 255 / 0.35);
+  --grk-focus-ring: 0 0 0 3px rgb(38 77 255 / 0.32);
 }
 
-/* Verified contrast pairings used by the handoff:
-   cobalt/white 5.85:1; ink/limestone 16.13:1;
-   fog/paper 5.25:1; paper/moss 12.84:1. */
+/* The system preference is the default until the in-page toggle sets a
+   data-theme override. The override is intentionally not persisted. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --grk-bg-page: #0d1110;
+    --grk-bg-surface: #151a19;
+    --grk-bg-elevated: #1c2321;
+    --grk-bg-subtle: #202825;
+    --grk-header-bg: rgb(13 17 16 / 0.9);
+    --grk-text: #f6f4ee;
+    --grk-text-muted: #bec4c0;
+    --grk-text-faint: #979f9b;
+    --grk-border: #3c4743;
+    --grk-border-strong: #596560;
+    --grk-grid-line: rgb(246 244 238 / 0.045);
+    --grk-action: #7894ff;
+    --grk-action-hover: #9badff;
+    --grk-action-text: #0d1110;
+    --grk-focus: #8ea5ff;
+    --grk-overlay: rgb(0 0 0 / 0.64);
+    --grk-image-scrim: linear-gradient(180deg, rgb(13 17 16 / 0.08), rgb(13 17 16 / 0.42));
+    --grk-shadow-interactive: 0 12px 36px rgb(0 0 0 / 0.42), 0 0 0 1px rgb(246 244 238 / 0.06);
+    --grk-shadow-elevated: 0 24px 72px rgb(0 0 0 / 0.55), 0 0 0 1px rgb(246 244 238 / 0.08);
+    --grk-focus-ring: 0 0 0 3px rgb(142 165 255 / 0.38);
+  }
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --grk-bg-page: #0d1110;
+  --grk-bg-surface: #151a19;
+  --grk-bg-elevated: #1c2321;
+  --grk-bg-subtle: #202825;
+  --grk-header-bg: rgb(13 17 16 / 0.9);
+  --grk-text: #f6f4ee;
+  --grk-text-muted: #bec4c0;
+  --grk-text-faint: #979f9b;
+  --grk-border: #3c4743;
+  --grk-border-strong: #596560;
+  --grk-grid-line: rgb(246 244 238 / 0.045);
+  --grk-action: #7894ff;
+  --grk-action-hover: #9badff;
+  --grk-action-text: #0d1110;
+  --grk-focus: #8ea5ff;
+  --grk-overlay: rgb(0 0 0 / 0.64);
+  --grk-image-scrim: linear-gradient(180deg, rgb(13 17 16 / 0.08), rgb(13 17 16 / 0.42));
+  --grk-shadow-interactive: 0 12px 36px rgb(0 0 0 / 0.42), 0 0 0 1px rgb(246 244 238 / 0.06);
+  --grk-shadow-elevated: 0 24px 72px rgb(0 0 0 / 0.55), 0 0 0 1px rgb(246 244 238 / 0.08);
+  --grk-focus-ring: 0 0 0 3px rgb(142 165 255 / 0.38);
+}
+
+/* Verified high-use contrast pairings:
+   light cobalt/white 5.85:1; ink/limestone 16.13:1;
+   light muted/limestone 5.58:1; dark text/dark page 17.28:1;
+   dark muted/dark page 10.72:1; bright cobalt/dark page 6.77:1;
+   action-on-dark/moss 5.68:1. */
 
 @media (prefers-reduced-motion: reduce) {
   :root {

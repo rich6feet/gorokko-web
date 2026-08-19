@@ -60,6 +60,16 @@ const { eyebrow, title, deck, tone = 'light' } = Astro.props;
     color: rgb(252 251 247 / 0.72);
   }
 
+  .page-hero--dark .eyebrow,
+  .page-hero--moss .eyebrow {
+    color: var(--grk-text-muted-on-dark);
+  }
+
+  .page-hero--dark .eyebrow::before,
+  .page-hero--moss .eyebrow::before {
+    background: var(--grk-action-on-dark);
+  }
+
   @media (min-width: 48rem) {
     .page-hero__grid {
       grid-template-columns: 1.25fr 0.75fr;

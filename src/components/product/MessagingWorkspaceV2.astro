@@ -18,7 +18,10 @@ const initialThreadId = `${initialChannel.id}:owner-answer`;
     <aside id="workspace-sidebar" class="messenger-sidebar" aria-label="Workroom navigation" data-sidebar>
       <div class="messenger-workspace">
         <div class="messenger-workspace__mark" aria-hidden="true">
-          <img src="/brand/gorokko-symbol-color.svg" alt="" width="28" height="28" />
+          <span class="rokko-mark">
+            <img class="rokko-mark__color" src="/brand/gorokko-symbol-color.svg" alt="" width="22" height="26" />
+            <img class="rokko-mark__reverse" src="/brand/gorokko-symbol-reverse.svg" alt="" width="22" height="26" />
+          </span>
         </div>
         <div class="messenger-workspace__copy">
           <strong>Rokko workroom</strong>
@@ -47,7 +50,12 @@ const initialThreadId = `${initialChannel.id}:owner-answer`;
                   <span class="channel-button__glyph" aria-hidden="true">#</span>
                 ) : (
                   <span class="dm-avatar" aria-hidden="true">
-                    {channel.id === 'rokko-dm' ? <img src="/brand/gorokko-symbol-color.svg" alt="" /> : 'MC'}
+                    {channel.id === 'rokko-dm' ? (
+                      <span class="rokko-mark">
+                        <img class="rokko-mark__color" src="/brand/gorokko-symbol-color.svg" alt="" width="17" height="20" />
+                        <img class="rokko-mark__reverse" src="/brand/gorokko-symbol-reverse.svg" alt="" width="17" height="20" />
+                      </span>
+                    ) : 'MC'}
                     <span class:list={['presence-dot', `presence-dot--${channel.presence ?? 'offline'}`]}></span>
                   </span>
                 )}
@@ -133,7 +141,12 @@ const initialThreadId = `${initialChannel.id}:owner-answer`;
                 <article class="message-row" data-message-id={message.id} style={`--message-index:${messageIndex}`}>
                   <div class:list={['message-avatar-wrap', message.presence && `has-presence`]}>
                     <div class:list={['message-avatar', `message-avatar--${message.avatarKind ?? 'person'}`]} aria-hidden="true">
-                      {message.avatarKind === 'rokko' ? <img src="/brand/gorokko-symbol-color.svg" alt="" width="26" height="26" /> : message.avatar}
+                      {message.avatarKind === 'rokko' ? (
+                        <span class="rokko-mark">
+                          <img class="rokko-mark__color" src="/brand/gorokko-symbol-color.svg" alt="" width="20" height="24" />
+                          <img class="rokko-mark__reverse" src="/brand/gorokko-symbol-reverse.svg" alt="" width="20" height="24" />
+                        </span>
+                      ) : message.avatar}
                     </div>
                     {message.presence && <span class:list={['presence-dot', `presence-dot--${message.presence}`]}></span>}
                   </div>
@@ -201,6 +214,11 @@ const initialThreadId = `${initialChannel.id}:owner-answer`;
             </section>
           ))}
         </div>
+        <section class="search-empty-state" data-search-empty hidden aria-label="No matching messages">
+          <img src="/assets/empty-work-queue.webp" alt="" width="480" height="480" loading="lazy" decoding="async" />
+          <strong>No messages match that search.</strong>
+          <p>Try a customer name, job detail, or shorter phrase.</p>
+        </section>
         <p class="search-status sr-only" aria-live="polite" data-search-status></p>
       </div>
 
@@ -235,7 +253,12 @@ const initialThreadId = `${initialChannel.id}:owner-answer`;
           <section class="thread-view" data-thread-id={`${channel.id}:${message.id}`} hidden={`${channel.id}:${message.id}` !== initialThreadId}>
             <article class="thread-parent">
               <div class:list={['message-avatar', `message-avatar--${message.avatarKind ?? 'person'}`]} aria-hidden="true">
-                {message.avatarKind === 'rokko' ? <img src="/brand/gorokko-symbol-color.svg" alt="" width="24" height="24" /> : message.avatar}
+                {message.avatarKind === 'rokko' ? (
+                  <span class="rokko-mark">
+                    <img class="rokko-mark__color" src="/brand/gorokko-symbol-color.svg" alt="" width="19" height="22" />
+                    <img class="rokko-mark__reverse" src="/brand/gorokko-symbol-reverse.svg" alt="" width="19" height="22" />
+                  </span>
+                ) : message.avatar}
               </div>
               <div>
                 <div class="message-meta"><strong>{message.author}</strong><time datetime={message.datetime}>{message.time}</time></div>
@@ -246,7 +269,12 @@ const initialThreadId = `${initialChannel.id}:owner-answer`;
               {message.replies?.map((reply, replyIndex) => (
                 <article class="thread-reply" style={`--message-index:${replyIndex}`}>
                   <div class:list={['message-avatar', `message-avatar--${reply.avatarKind ?? 'person'}`]} aria-hidden="true">
-                    {reply.avatarKind === 'rokko' ? <img src="/brand/gorokko-symbol-color.svg" alt="" width="22" height="22" /> : reply.avatar}
+                    {reply.avatarKind === 'rokko' ? (
+                      <span class="rokko-mark">
+                        <img class="rokko-mark__color" src="/brand/gorokko-symbol-color.svg" alt="" width="17" height="20" />
+                        <img class="rokko-mark__reverse" src="/brand/gorokko-symbol-reverse.svg" alt="" width="17" height="20" />
+                      </span>
+                    ) : reply.avatar}
                   </div>
                   <div><div class="message-meta"><strong>{reply.author}</strong><time>{reply.time}</time></div><p>{reply.body}</p></div>
                 </article>
@@ -255,7 +283,7 @@ const initialThreadId = `${initialChannel.id}:owner-answer`;
           </section>
         ))}
         <section class="thread-view thread-view--empty" data-thread-empty hidden>
-          <i data-lucide="message-square-more" aria-hidden="true"></i>
+          <img class="thread-empty-illustration" src="/assets/empty-work-queue.webp" alt="" width="480" height="480" loading="lazy" decoding="async" />
           <strong>Start a thread</strong>
           <p>Keep the job details with the message that needs them.</p>
           <div class="thread-replies" data-thread-replies></div>
@@ -297,6 +325,7 @@ const initialThreadId = `${initialChannel.id}:owner-answer`;
     const search = $<HTMLInputElement>('[data-message-search]');
     const searchBox = $<HTMLElement>('[data-search-box]');
     const searchStatus = $<HTMLElement>('[data-search-status]');
+    const searchEmpty = $<HTMLElement>('[data-search-empty]');
     const messageForm = $<HTMLFormElement>('[data-message-form]');
     const messageInput = $<HTMLTextAreaElement>('[data-message-input]');
     const threadPanel = $<HTMLElement>('[data-thread-panel]');
@@ -328,6 +357,10 @@ const initialThreadId = `${initialChannel.id}:owner-answer`;
       window.setTimeout(() => { toast.hidden = true; }, reducedMotion.matches ? 1850 : 2050);
     };
 
+    const pageTheme = (): ThemeChoice => {
+      const theme = document.documentElement.dataset.theme;
+      return theme === 'light' || theme === 'dark' ? theme : null;
+    };
     const currentTheme = () => themeOverride ?? (systemTheme.matches ? 'dark' : 'light');
     const syncThemeControl = () => {
       const theme = currentTheme();
@@ -339,17 +372,34 @@ const initialThreadId = `${initialChannel.id}:owner-answer`;
       refreshIcons();
     };
 
-    $<HTMLButtonElement>('[data-theme-toggle]')?.addEventListener('click', () => {
-      themeOverride = currentTheme() === 'dark' ? 'light' : 'dark';
-      app.dataset.theme = themeOverride;
+    const syncFromPageTheme = () => {
+      themeOverride = pageTheme();
+      if (themeOverride) app.dataset.theme = themeOverride;
+      else delete app.dataset.theme;
       syncThemeControl();
-      announce(`${themeOverride} theme selected for this visit`);
+    };
+
+    const setSharedTheme = (theme: ThemeChoice) => {
+      themeOverride = theme;
+      if (theme) {
+        document.documentElement.dataset.theme = theme;
+        app.dataset.theme = theme;
+      } else {
+        delete document.documentElement.dataset.theme;
+        delete app.dataset.theme;
+      }
+      syncThemeControl();
+      window.dispatchEvent(new CustomEvent('rokko:themechange', { detail: { theme: currentTheme() } }));
+    };
+
+    $<HTMLButtonElement>('[data-theme-toggle]')?.addEventListener('click', () => {
+      const nextTheme = currentTheme() === 'dark' ? 'light' : 'dark';
+      setSharedTheme(nextTheme);
+      announce(`${nextTheme} theme selected for this visit`);
     });
 
     $<HTMLButtonElement>('[data-theme-auto]')?.addEventListener('click', () => {
-      themeOverride = null;
-      delete app.dataset.theme;
-      syncThemeControl();
+      setSharedTheme(null);
       if (profileMenu) profileMenu.hidden = true;
       profileToggle?.setAttribute('aria-expanded', 'false');
       announce('Theme now follows your device');
@@ -358,7 +408,8 @@ const initialThreadId = `${initialChannel.id}:owner-answer`;
     systemTheme.addEventListener('change', () => {
       if (themeOverride === null) syncThemeControl();
     });
-    syncThemeControl();
+    new MutationObserver(syncFromPageTheme).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    syncFromPageTheme();
 
     const closeProfileMenu = () => {
       if (profileMenu) profileMenu.hidden = true;
@@ -436,6 +487,7 @@ const initialThreadId = `${initialChannel.id}:owner-answer`;
       search.value = '';
       const activePanel = $<HTMLElement>(`[data-channel-panel="${activeChannel}"]`);
       activePanel?.querySelectorAll<HTMLElement>('.message-row').forEach((row) => { row.hidden = false; });
+      if (searchEmpty) searchEmpty.hidden = true;
       if (searchStatus) searchStatus.textContent = '';
     };
 
@@ -546,6 +598,7 @@ const initialThreadId = `${initialChannel.id}:owner-answer`;
         row.hidden = !match;
         if (match) visible += 1;
       });
+      if (searchEmpty) searchEmpty.hidden = !query || visible > 0;
       if (searchStatus) searchStatus.textContent = query ? `${visible} matching messages` : '';
     });
 
@@ -561,10 +614,22 @@ const initialThreadId = `${initialChannel.id}:owner-answer`;
       avatar.className = `message-avatar message-avatar--${kind}`;
       avatar.setAttribute('aria-hidden', 'true');
       if (kind === 'rokko') {
-        const image = document.createElement('img');
-        image.src = '/brand/gorokko-symbol-color.svg';
-        image.alt = '';
-        avatar.append(image);
+        const mark = document.createElement('span');
+        mark.className = 'rokko-mark';
+        const colorImage = document.createElement('img');
+        colorImage.className = 'rokko-mark__color';
+        colorImage.src = '/brand/gorokko-symbol-color.svg';
+        colorImage.alt = '';
+        colorImage.width = 20;
+        colorImage.height = 24;
+        const reverseImage = document.createElement('img');
+        reverseImage.className = 'rokko-mark__reverse';
+        reverseImage.src = '/brand/gorokko-symbol-reverse.svg';
+        reverseImage.alt = '';
+        reverseImage.width = 20;
+        reverseImage.height = 24;
+        mark.append(colorImage, reverseImage);
+        avatar.append(mark);
       } else avatar.textContent = initials;
       wrap.append(avatar);
       return wrap;

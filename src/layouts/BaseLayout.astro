@@ -15,7 +15,7 @@ const {
   title = site.defaultTitle,
   description = site.defaultDescription,
   noindex = false,
-  image = '/brand/gorokko-og-default.png',
+  image = '/assets/rokko-social-card.jpg',
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, site.origin);
 const socialImage = new URL(image, site.origin);
@@ -33,11 +33,67 @@ const schema = {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
+    <meta id="theme-color" name="theme-color" content="#f2f0e9" />
+    <script is:inline>
+      (() => {
+        const root = document.documentElement;
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const themeColors = { light: '#f2f0e9', dark: '#0d1110' };
+        let manualTheme = null;
+        let transitionTimer;
+
+        const currentTheme = () => root.dataset.theme === 'dark' ? 'dark' : 'light';
+        const updateThemeColor = (theme) => {
+          document.querySelector('#theme-color')?.setAttribute('content', themeColors[theme]);
+        };
+        const applyTheme = (theme, source = 'manual', emit = true) => {
+          if (theme !== 'light' && theme !== 'dark') return currentTheme();
+          if (source === 'system' || source === 'initial') manualTheme = null;
+          else if (source !== 'sync') manualTheme = theme;
+
+          const shouldAnimate = source !== 'initial' && source !== 'system' && !reducedMotion.matches;
+          if (shouldAnimate) {
+            root.classList.add('is-theme-changing');
+            window.clearTimeout(transitionTimer);
+            transitionTimer = window.setTimeout(() => root.classList.remove('is-theme-changing'), 360);
+          }
+
+          root.dataset.theme = theme;
+          root.style.colorScheme = theme;
+          updateThemeColor(theme);
+          if (emit) {
+            window.dispatchEvent(new CustomEvent('rokko:themechange', {
+              detail: { theme, source },
+            }));
+          }
+          return theme;
+        };
+
+        window.__rokkoTheme = {
+          get: currentTheme,
+          set: (theme, source = 'manual') => applyTheme(theme, source),
+          toggle: (source = 'manual') => applyTheme(currentTheme() === 'dark' ? 'light' : 'dark', source),
+          useSystem: () => applyTheme(systemTheme.matches ? 'dark' : 'light', 'system'),
+        };
+
+        applyTheme(systemTheme.matches ? 'dark' : 'light', 'initial', false);
+        systemTheme.addEventListener('change', (event) => {
+          if (manualTheme === null) applyTheme(event.matches ? 'dark' : 'light', 'system');
+        });
+        window.addEventListener('rokko:themechange', (event) => {
+          const detail = event.detail || {};
+          if (detail.theme !== 'light' && detail.theme !== 'dark') return;
+          if (detail.source !== 'system' && detail.source !== 'initial') manualTheme = detail.theme;
+          if (currentTheme() !== detail.theme) applyTheme(detail.theme, 'sync', false);
+          else updateThemeColor(detail.theme);
+        });
+      })();
+    </script>
     <title>{title}</title>
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonical} />
-    <meta name="theme-color" content="#111515" />
     <link rel="icon" href="/brand/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/brand/favicon-32.png" sizes="32x32" type="image/png" />
     <link rel="apple-touch-icon" href="/brand/apple-touch-icon-180.png" />
@@ -62,5 +118,45 @@ const schema = {
       <slot />
     </main>
     <Footer />
+    <script>
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const revealSelector = [
+        '[data-reveal]',
+        'main > section',
+        'main > article',
+        '.grid-2 > *',
+        '.grid-3 > *',
+        '[data-reveal-group] > *',
+      ].join(',');
+      const revealItems = Array.from(document.querySelectorAll<HTMLElement>(revealSelector))
+        .filter((item) => !item.closest('.messenger-app') && !item.hidden);
+
+      if (!reducedMotion.matches && 'IntersectionObserver' in window) {
+        revealItems.forEach((item) => {
+          const group = item.parentElement;
+          const siblings = group
+            ? Array.from(group.children).filter((child) => child.matches('.grid-2 > *, .grid-3 > *, [data-reveal-group] > *'))
+            : [];
+          const groupIndex = siblings.indexOf(item);
+          if (groupIndex >= 0) item.style.setProperty('--grk-reveal-delay', `${Math.min(groupIndex, 5) * 65}ms`);
+          item.classList.add('reveal-pending');
+        });
+
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            const item = entry.target as HTMLElement;
+            item.classList.add('is-revealed');
+            observer.unobserve(item);
+            item.addEventListener('transitionend', () => {
+              item.classList.remove('reveal-pending', 'is-revealed');
+              item.style.removeProperty('--grk-reveal-delay');
+            }, { once: true });
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+        revealItems.forEach((item) => revealObserver.observe(item));
+      }
+    </script>
   </body>
 </html>

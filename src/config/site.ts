@@ -6,10 +6,10 @@ export const site = {
   defaultDescription:
     'Rokko helps home-service teams catch work that needs attention, review the details, and approve the next step.',
   demoPath: '/demo/',
-  bookingUrl: null,
+  bookingUrl: 'https://links.serviceosllc.com/widget/form/xFqXRCYsiCDGj5hQo6S7',
   legalEntity: null,
   analyticsId: null,
-  statusUrl: null,
+  statusUrl: 'https://status.crewvana.io/status/marcus',
   publicSecurityContact: null,
   pricingApproved: false,
   proofApproved: false,
@@ -34,4 +34,6 @@ export const indexedRoutes = [
   '/use-cases/sales-to-operations/',
   '/resources/',
   '/about/',
+  '/demo/',
+  '/status/',
 ] as const;

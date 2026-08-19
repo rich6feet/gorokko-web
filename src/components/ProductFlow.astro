@@ -126,6 +126,7 @@ const steps = [
 
 <style>
   .product-flow {
+    --product-flow-accent: var(--grk-action-on-dark, #8ea3ff);
     overflow: hidden;
     color: var(--grk-paper);
     background: var(--grk-moss);
@@ -185,7 +186,11 @@ const steps = [
   .product-flow__tab[aria-selected='true'] {
     color: var(--grk-paper);
     background: rgb(252 251 247 / 0.08);
-    box-shadow: inset 0 -3px 0 var(--grk-cobalt);
+    box-shadow: inset 0 -3px 0 var(--product-flow-accent);
+  }
+
+  .product-flow__tab:focus-visible {
+    outline-color: var(--grk-focus-on-dark, #a7b6ff);
   }
 
   .product-flow__panels {
@@ -233,7 +238,7 @@ const steps = [
   }
 
   .product-flow__source span {
-    color: rgb(252 251 247 / 0.48);
+    color: rgb(252 251 247 / 0.62);
   }
 
   @keyframes panel-in {
@@ -262,7 +267,7 @@ const steps = [
     }
 
     .product-flow__tab[aria-selected='true'] {
-      box-shadow: inset 3px 0 0 var(--grk-cobalt);
+      box-shadow: inset 3px 0 0 var(--product-flow-accent);
     }
   }
 </style>

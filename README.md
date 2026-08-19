@@ -64,11 +64,9 @@ The current `gorokko.com` production setup remains the existing `gorokko-web` Wo
 
 The following inputs remain fail-closed until the owner supplies approved values:
 
-- demo booking URL or form endpoint and fallback contact;
 - public pricing and commercial terms;
 - named customer proof, screenshots, testimonials, and metrics;
 - production security architecture, compliance, and security contact;
-- public status destination;
 - legal entity, privacy policy, terms, and SMS program language;
 - analytics and campaign IDs.
 

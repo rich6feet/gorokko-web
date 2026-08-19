@@ -1,11 +1,44 @@
 ---
-import GatedPage from '../components/GatedPage.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../config/site';
 ---
-<GatedPage
-  eyebrow="Is Rokko running?"
-  title="A live status page is not ready yet."
-  metaTitle="Rokko status — Live page coming later"
-  deck="We won’t show a fake uptime number or made-up outage history."
-  reason="We still need the live page, the systems it will watch, and the person who will post updates during a problem."
-  needed={['List of live systems', 'The tool that watches them', 'Public status page', 'Person who posts outage updates', 'Any approved uptime promise']}
-/>
+
+<BaseLayout
+  title="Rokko system status"
+  description="Open the live service-status page used to monitor Rokko’s shared systems."
+>
+  <PageHero
+    eyebrow="System status"
+    title="See what’s running right now."
+    deck="Rokko’s live service checks are published on our shared status page. Open it for current availability and incident updates."
+    tone="dark"
+  />
+
+  <section class="section status-handoff">
+    <div class="container--content status-handoff__grid">
+      <div class="status-handoff__signal" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
+      <div>
+        <p class="eyebrow">Live monitoring</p>
+        <h2>Open the full status board.</h2>
+        <p class="deck">The board opens in a new tab so you always see the latest result straight from the monitor.</p>
+        <a class="button button--primary" href={site.statusUrl} target="_blank" rel="noopener noreferrer">Open live status <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .status-handoff__grid { display: grid; gap: clamp(3rem, 8vw, 8rem); align-items: center; }
+  .status-handoff__signal { display: grid; min-height: 22rem; place-content: center; gap: 1rem; background: var(--grk-bg-surface); border: 1px solid var(--grk-border); border-radius: var(--grk-radius-panel); }
+  .status-handoff__signal span { display: block; width: clamp(8rem, 20vw, 15rem); height: 0.8rem; overflow: hidden; background: var(--grk-border); border-radius: 999px; }
+  .status-handoff__signal span::after { display: block; width: 72%; height: 100%; content: ''; background: var(--grk-success); border-radius: inherit; animation: status-scan 2.8s var(--grk-ease-standard) infinite alternate; }
+  .status-handoff__signal span:nth-child(2)::after { width: 92%; animation-delay: -0.8s; }
+  .status-handoff__signal span:nth-child(3)::after { width: 84%; animation-delay: -1.6s; }
+  .status-handoff h2 { max-width: 11ch; }
+  .status-handoff .deck { margin-bottom: 2rem; }
+  @keyframes status-scan { from { transform: translateX(-10%); opacity: 0.68; } to { transform: translateX(12%); opacity: 1; } }
+  @media (min-width: 48rem) { .status-handoff__grid { grid-template-columns: 0.8fr 1.2fr; } }
+</style>

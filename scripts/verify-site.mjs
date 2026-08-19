@@ -28,9 +28,7 @@ const requiredOutputs = [
 
 const gatedOutputs = new Set([
   'pricing/index.html',
-  'demo/index.html',
   'security/index.html',
-  'status/index.html',
   'privacy/index.html',
   'terms/index.html',
   'sms-terms/index.html',
@@ -83,7 +81,7 @@ for (const file of htmlFiles) {
 }
 
 const sitemap = readFileSync(join(root, 'sitemap.xml'), 'utf8');
-for (const gated of ['/demo/', '/pricing/', '/security/', '/status/', '/privacy/', '/terms/', '/sms-terms/']) {
+for (const gated of ['/pricing/', '/security/', '/privacy/', '/terms/', '/sms-terms/']) {
   if (sitemap.includes(`<loc>https://gorokko.com${gated}</loc>`)) failures.push(`Sitemap exposes gated route: ${gated}`);
 }
 

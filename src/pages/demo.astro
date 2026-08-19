@@ -1,13 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
-import DraftNotice from '../components/DraftNotice.astro';
+import { site } from '../config/site';
 ---
 
 <BaseLayout
-  title="See a Rokko demo — Booking link coming soon"
+  title="See a Rokko demo"
   description="Bring one daily headache, the job details behind it, and the person who makes the call."
-  noindex
 >
   <PageHero
     eyebrow="See a demo"
@@ -19,7 +18,28 @@ import DraftNotice from '../components/DraftNotice.astro';
   <section class="section demo-intake">
     <div class="container--content demo-intake__grid">
       <div>
-        <DraftNotice title="The booking link is not connected yet">We do not have an approved booking link, form, contact address, or reply-time promise. This page won’t send your request into a dead end.</DraftNotice>
+        <div class="demo-form-shell">
+          <iframe
+            src={site.bookingUrl}
+            id="inline-xFqXRCYsiCDGj5hQo6S7"
+            data-layout="{'id':'INLINE'}"
+            data-trigger-type="alwaysShow"
+            data-trigger-value=""
+            data-activation-type="alwaysActivated"
+            data-activation-value=""
+            data-deactivation-type="neverDeactivate"
+            data-deactivation-value=""
+            data-form-name="Gorokko Demo Request"
+            data-height="759"
+            data-layout-iframe-id="inline-xFqXRCYsiCDGj5hQo6S7"
+            data-form-id="xFqXRCYsiCDGj5hQo6S7"
+            title="Gorokko Demo Request"
+            width="720"
+            height="759"
+            loading="eager"
+          ></iframe>
+        </div>
+        <script is:inline defer src="https://links.serviceosllc.com/js/form_embed.js"></script>
       </div>
       <div>
         <p class="eyebrow">Bring these four things</p>
@@ -36,10 +56,12 @@ import DraftNotice from '../components/DraftNotice.astro';
 
 <style>
   .demo-intake__grid { display: grid; gap: clamp(3rem, 8vw, 8rem); align-items: start; }
+  .demo-form-shell { min-height: 759px; overflow: hidden; background: var(--grk-bg-surface); border: 1px solid var(--grk-border); border-radius: var(--grk-radius-panel); box-shadow: var(--grk-shadow-interactive); }
+  .demo-form-shell iframe { display: block; width: 100%; min-height: 759px; border: 0; border-radius: inherit; }
   .demo-intake ol { margin: 0; padding: 0; border-top: 1px solid var(--grk-border); list-style: none; }
   .demo-intake li { display: grid; grid-template-columns: 3rem 1fr; gap: 1rem; padding-block: 1.5rem; border-bottom: 1px solid var(--grk-border); }
-  .demo-intake li > span { color: var(--grk-cobalt); font-family: var(--grk-font-mono); font-size: 0.72rem; }
+  .demo-intake li > span { color: var(--grk-action); font-family: var(--grk-font-mono); font-size: 0.72rem; }
   .demo-intake h2 { margin-bottom: 0.5rem; font-size: clamp(1.4rem, 2.5vw, 2rem); }
   .demo-intake li p { margin: 0; color: var(--grk-text-muted); }
-  @media (min-width: 48rem) { .demo-intake__grid { grid-template-columns: 0.85fr 1.15fr; } }
+  @media (min-width: 48rem) { .demo-intake__grid { grid-template-columns: minmax(22rem, 1.1fr) minmax(18rem, 0.9fr); } }
 </style>
