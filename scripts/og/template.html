@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<style>
+  @font-face { font-family: "Instrument Serif"; src: url("fonts/instrument-serif-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; }
+  @font-face { font-family: "Instrument Serif"; src: url("fonts/instrument-serif-latin-400-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; }
+  @font-face { font-family: "Geist"; src: url("fonts/Geist-Regular.woff2") format("woff2"); font-weight: 400; }
+  @font-face { font-family: "Geist"; src: url("fonts/Geist-Medium.woff2") format("woff2"); font-weight: 500; }
+  @font-face { font-family: "Geist Mono"; src: url("fonts/GeistMono-Medium.woff2") format("woff2"); font-weight: 500; }
+
+  :root {
+    --ink: #111515; --paper: #fcfbf7; --moss: #17352a; --cobalt: #264dff;
+    --cobalt-on-dark: #8ea5ff; --success: #71d7a0; --muted-on-dark: #c4cac6; --limestone: #f2f0e9;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body { font-family: "Geist", system-ui, sans-serif; color: var(--paper); background: var(--moss); -webkit-font-smoothing: antialiased; }
+
+  .card { position: relative; width: 1200px; height: 630px; padding: 64px 72px 60px 96px; display: grid; grid-template-rows: auto 1fr auto; }
+  .rail { position: absolute; left: 0; top: 0; bottom: 0; width: 22px; background: var(--cobalt); }
+
+  /* faint register grid — the "open register" motif from the symbol */
+  .register { position: absolute; right: 64px; top: 56px; width: 176px; height: 208px; opacity: 0.13; }
+  .register path { fill: var(--paper); }
+  .register rect { fill: var(--cobalt-on-dark); opacity: 1; }
+
+  .lockup { height: 62px; width: auto; }
+  .lockup path { fill: var(--paper); }
+  .lockup rect { fill: var(--cobalt-on-dark); }
+
+  .eyebrow { display: flex; align-items: center; gap: 14px; margin-top: 12px; font-family: "Geist Mono", monospace; font-size: 22px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted-on-dark); }
+  .eyebrow::before { content: ""; width: 34px; height: 3px; background: var(--success); }
+
+  .headline { align-self: end; font-family: "Instrument Serif", Georgia, serif; font-size: 108px; line-height: 0.98; letter-spacing: -0.015em; max-width: 960px; }
+  .headline .accent { color: var(--cobalt-on-dark); font-style: italic; }
+
+  .foot { display: flex; justify-content: space-between; align-items: baseline; margin-top: 44px; font-size: 24px; color: var(--muted-on-dark); }
+  .foot strong { font-family: "Geist Mono", monospace; font-weight: 500; font-size: 22px; letter-spacing: 0.04em; color: var(--paper); }
+
+  /* light variant */
+  body.light { background: var(--limestone); color: var(--ink); }
+  body.light .lockup path { fill: var(--ink); } body.light .lockup rect { fill: var(--cobalt); }
+  body.light .register path { fill: var(--ink); } body.light .register { opacity: 0.08; }
+  body.light .eyebrow { color: #59615f; } body.light .eyebrow::before { background: var(--cobalt); }
+  body.light .headline .accent { color: var(--cobalt); }
+  body.light .foot { color: #59615f; } body.light .foot strong { color: var(--ink); }
+</style>
+</head>
+<body class="{{THEME}}">
+  <div class="card">
+    <div class="rail"></div>
+    <svg class="register" viewBox="0 0 220 260" aria-hidden="true"><path d="M0 0H220V40H40V220H180V148H112V108H220V260H0Z"/><rect x="180" y="108" width="40" height="40"/></svg>
+    <div>
+      {{LOCKUP}}
+      <p class="eyebrow">{{EYEBROW}}</p>
+    </div>
+    <h1 class="headline">{{HEADLINE}}</h1>
+    <div class="foot"><span>{{TAG}}</span><strong>gorokko.com</strong></div>
+  </div>
+</body>
+</html>

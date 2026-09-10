@@ -15,7 +15,7 @@ const {
   title = site.defaultTitle,
   description = site.defaultDescription,
   noindex = false,
-  image = '/assets/rokko-social-card.jpg',
+  image = '/assets/og-default.png',
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, site.origin);
 const socialImage = new URL(image, site.origin);
