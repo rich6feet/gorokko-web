@@ -184,6 +184,32 @@ const faqs = [
     </div>
   </section>
 
+  <section class="section section--paper audiences">
+    <div class="container--content">
+      <div class="audiences__heading">
+        <div>
+          <p class="eyebrow">Who it’s for</p>
+          <h2>Same Rokko, set up around your kind of job.</h2>
+        </div>
+        <a class="text-link" href="/for/">See who Rokko is for</a>
+      </div>
+      <div class="grid-2">
+        <a class="audience-card" href="/use-cases/">
+          <span>01</span>
+          <h3>Contractors and home-service teams</h3>
+          <p>HVAC, plumbing, electrical, roofing, remodeling. Keep the office and the crew on the same page.</p>
+          <strong aria-hidden="true">↗</strong>
+        </a>
+        <a class="audience-card" href="/for/home-inspectors/">
+          <span>02</span>
+          <h3>Home inspectors</h3>
+          <p>Buyer’s inspections and insurance inspections. Book it, get it signed and paid, deliver the report, remind before the form ages out.</p>
+          <strong aria-hidden="true">↗</strong>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <section class="section use-cases">
     <div class="container--content">
       <div class="use-cases__heading">
@@ -513,6 +539,59 @@ const faqs = [
     grid-column: 2;
   }
 
+  .audiences__heading {
+    display: grid;
+    gap: 2rem;
+    align-items: end;
+    margin-bottom: clamp(3rem, 6vw, 6rem);
+  }
+
+  .audiences__heading h2 {
+    max-width: 13ch;
+    margin-bottom: 0;
+  }
+
+  .audience-card {
+    position: relative;
+    display: grid;
+    gap: 0.75rem;
+    min-height: 16rem;
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    background: var(--grk-bg-page);
+    border: 1px solid var(--grk-border);
+    border-radius: var(--grk-radius-panel);
+    text-decoration: none;
+    transition: transform var(--grk-duration-control) var(--grk-ease-standard), box-shadow var(--grk-duration-control) var(--grk-ease-standard);
+  }
+
+  .audience-card:hover {
+    transform: translateY(-0.2rem);
+    box-shadow: var(--grk-shadow-interactive);
+  }
+
+  .audience-card span {
+    color: var(--grk-action);
+    font-family: var(--grk-font-mono);
+    font-size: 0.72rem;
+  }
+
+  .audience-card h3 {
+    margin: 0;
+    max-width: 16ch;
+  }
+
+  .audience-card p {
+    margin: 0;
+    color: var(--grk-text-muted);
+  }
+
+  .audience-card strong {
+    position: absolute;
+    top: clamp(1.5rem, 3vw, 2.25rem);
+    right: clamp(1.5rem, 3vw, 2.25rem);
+    color: var(--grk-action);
+  }
+
   .use-cases__heading {
     align-items: end;
   }
@@ -697,6 +776,7 @@ const faqs = [
     .flow-grid { grid-template-columns: repeat(3, 1fr); }
 
     .layers__heading,
+    .audiences__heading,
     .use-cases__heading {
       grid-template-columns: 1.35fr 0.65fr;
     }

@@ -20,6 +20,7 @@ export const site = {
 
 export const navigation = [
   { label: 'How it works', href: '/product/' },
+  { label: 'Who it’s for', href: '/for/' },
   { label: 'Ways to use it', href: '/use-cases/' },
   { label: 'Your data', href: '/security/' },
   { label: 'Guides', href: '/resources/' },
@@ -34,6 +35,8 @@ export const indexedRoutes = [
   '/use-cases/speed-to-lead/',
   '/use-cases/no-show-rescheduling/',
   '/use-cases/sales-to-operations/',
+  '/for/',
+  '/for/home-inspectors/',
   '/resources/',
   '/about/',
   '/demo/',

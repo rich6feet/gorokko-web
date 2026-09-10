@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import FinalCta from '../../components/FinalCta.astro';
+import { audiences } from '../../content/audiences';
+---
+
+<BaseLayout
+  title="Who Rokko is for — Contractors and home inspectors"
+  description="Rokko is built for the people who run service work: contractors, home-service teams, and home inspectors."
+>
+  <PageHero
+    eyebrow="Who it’s for"
+    title="Built for people who run the work, not just the software."
+    deck="Same Rokko, set up around your kind of job. Pick the one that sounds like your week."
+  />
+
+  <section class="section audience-index">
+    <div class="container--content">
+      <ol>
+        {audiences.map((item) => (
+          <li>
+            <a href={item.href}>
+              <span>{item.number}</span>
+              <div><h2>{item.title}</h2><p>{item.short}</p></div>
+              <strong aria-hidden="true">↗</strong>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section--dark common-ground">
+    <div class="container--content common-ground__grid">
+      <div>
+        <p class="eyebrow">What stays the same</p>
+        <h2>The rules don’t change with the trade.</h2>
+      </div>
+      <dl>
+        <div><dt>Ask</dt><dd>Ask about a job in plain English and get the details in one place.</dd></div>
+        <div><dt>Approve</dt><dd>Nothing important moves until the right person says yes.</dd></div>
+        <div><dt>Check</dt><dd>Your team can see what changed, when, and who made the call.</dd></div>
+        <div><dt>Prove</dt><dd>We set what a good result looks like before a test starts.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <FinalCta
+    eyebrow="Don’t see your trade?"
+    title="Show us the job cycle and we’ll tell you if Rokko fits."
+    body="If your work has requests, bookings, approvals, and follow-ups, it probably does. Bring one real headache."
+  />
+</BaseLayout>
+
+<style>
+  .audience-index ol { margin: 0; padding: 0; border-top: 1px solid var(--grk-border); list-style: none; }
+  .audience-index li { border-bottom: 1px solid var(--grk-border); }
+  .audience-index a { display: grid; grid-template-columns: 3rem 1fr auto; gap: 1rem; min-height: 11rem; align-items: start; padding-block: 1.75rem; text-decoration: none; transition: transform var(--grk-duration-control) var(--grk-ease-standard), background var(--grk-duration-control) var(--grk-ease-standard); }
+  .audience-index a:hover { transform: translateX(0.25rem); background: var(--grk-bg-surface); }
+  .audience-index span { color: var(--grk-action); font-family: var(--grk-font-mono); font-size: 0.72rem; }
+  .audience-index h2 { margin-bottom: 0.75rem; font-size: clamp(1.8rem, 4vw, 3.5rem); }
+  .audience-index p { margin: 0; color: var(--grk-text-muted); }
+  .common-ground__grid { display: grid; gap: clamp(3rem, 8vw, 8rem); }
+  .common-ground h2 { max-width: 13ch; }
+  .common-ground dl { margin: 0; border-top: 1px solid rgb(252 251 247 / 0.2); }
+  .common-ground dl div { display: grid; grid-template-columns: 6rem 1fr; gap: 1rem; padding-block: 1.4rem; border-bottom: 1px solid rgb(252 251 247 / 0.2); }
+  .common-ground dt { color: var(--grk-success); font-family: var(--grk-font-mono); font-size: 0.7rem; text-transform: uppercase; }
+  .common-ground dd { margin: 0; color: rgb(252 251 247 / 0.7); }
+  @media (min-width: 48rem) {
+    .audience-index a { grid-template-columns: 5rem 1fr auto; align-items: center; }
+    .audience-index a div { display: grid; grid-template-columns: 0.75fr 1.25fr; align-items: center; gap: 2rem; }
+    .audience-index h2 { margin: 0; }
+    .common-ground__grid { grid-template-columns: 0.9fr 1.1fr; }
+  }
+</style>

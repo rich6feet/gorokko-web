@@ -1,0 +1,208 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import FinalCta from '../../components/FinalCta.astro';
+
+// Copy rules for this page (see README "Content approval gates"):
+// - No report-software names presented as tested integrations.
+// - No pricing, turnaround promises, or customer proof.
+// - The licensed inspector inspects, decides, and signs. Rokko never fills or signs a form.
+// - Agents and realtors get a simpler request link and a report copy. No referral rewards, ever.
+
+const jobPath = [
+  { label: 'Request', body: 'A homeowner, buyer, or agent asks for an inspection by form, text, or call. Rokko replies with the booking link and opens the job.' },
+  { label: 'Book', body: 'They pick a time. Rokko confirms it, sends the prep checklist, and reminds them the day before and two hours out.' },
+  { label: 'Sign and pay', body: 'Rokko sends your agreement and payment links and moves the job forward when each one is done. Unpaid jobs get a nudge, not a chase.' },
+  { label: 'Inspect', body: 'You inspect. When the appointment is marked done, Rokko asks you for the report link and nothing else.' },
+  { label: 'Deliver', body: 'Paste the report link once. The client gets it by email and text. The agent gets a copy without asking.' },
+  { label: 'Renew', body: 'Insurance forms age out. Rokko reminds the client before a 4-point or wind mitigation goes stale, so the next job comes to you.' },
+];
+
+const faqs = [
+  { q: 'Does Rokko fill out the 4-point or wind mitigation form?', a: 'No. You inspect, you decide, you sign. Rokko keeps the job moving around the inspection: booking, reminders, agreement, payment, delivery, and renewal. It never writes findings, never picks a pass or fail, and never signs anything.' },
+  { q: 'Will it work with my report software?', a: 'Your report software stays where it is. Rokko tracks the job and delivers the link you give it. Before a test starts we confirm which connection, if any, we will set up. We only list connections we have actually tested.' },
+  { q: 'Can I reward agents who send me work?', a: 'We don’t build referral rewards, and we’d rather you didn’t ask us to. Agents get a simpler request link and a copy of every report. That is the whole program.' },
+  { q: 'Does it handle buyer’s inspections and insurance inspections?', a: 'Yes. Both run on the same job cycle. A buyer’s inspection adds the agent, the closing date, and a findings follow-up. An insurance inspection adds the carrier, the policy number, and the renewal reminder.' },
+];
+---
+
+<BaseLayout
+  title="Rokko for home inspectors — Book it, deliver it, get paid"
+  description="Rokko handles the requests, reminders, agreements, payment nudges, report delivery, and renewals around a buyer’s inspection or an insurance inspection. You inspect and sign."
+>
+  <PageHero
+    eyebrow="For home inspectors"
+    title="Spend the day inspecting, not chasing."
+    deck="Rokko handles the requests, reminders, agreement, payment nudges, report delivery, and renewals around every job. The inspection and the signature stay with you."
+    tone="moss"
+  />
+
+  <section class="section operating-question">
+    <div class="container--content operating-question__grid">
+      <div>
+        <p class="eyebrow">The question</p>
+        <blockquote>“Which jobs are booked, paid, inspected, and still waiting on a report?”</blockquote>
+      </div>
+      <div>
+        <p class="deck">A one-person shop can run twenty jobs a week and still lose an afternoon to phone tag, unpaid invoices, and agents asking where the report is. Rokko keeps every job in one list with a clear next step.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper coverage">
+    <div class="container--content">
+      <div class="coverage__heading">
+        <div>
+          <p class="eyebrow">What it covers</p>
+          <h2>Two kinds of inspection. One job cycle.</h2>
+        </div>
+        <p class="deck">Same booking, same reminders, same delivery. Each type adds the few details that matter for that job.</p>
+      </div>
+      <div class="grid-2 coverage__grid">
+        <article class="numbered-card">
+          <span class="numbered-card__number">Buyer’s home inspection</span>
+          <h3>The full walk-through before closing.</h3>
+          <ul>
+            <li>Agent and buyer both get the booking, the confirmation, and the report.</li>
+            <li>Closing date and inspection contingency deadline sit on the job.</li>
+            <li>Findings that need a repair turn into a re-inspection booking, not a lost thread.</li>
+            <li>Agents get one simple request link they can send to every client.</li>
+          </ul>
+        </article>
+        <article class="numbered-card">
+          <span class="numbered-card__number">Insurance inspection</span>
+          <h3>4-point, wind mitigation, roof condition.</h3>
+          <ul>
+            <li>Carrier and policy or application number are captured at booking.</li>
+            <li>Bundle the forms into one visit so nobody drives out twice.</li>
+            <li>Property details from the last visit stay on file for next time.</li>
+            <li>Renewal reminders go out before a form ages out, so the repeat job comes back to you.</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark workflow">
+    <div class="container--content">
+      <div class="workflow__heading">
+        <div><p class="eyebrow">The job path</p><h2>From request to renewal, with you in the middle.</h2></div>
+        <p class="deck">Every step below is one you already do. Rokko does the sending, the reminding, and the tracking. You do the inspecting.</p>
+      </div>
+      <ol>
+        {jobPath.map((step, index) => (
+          <li><span>0{index + 1}</span><strong>{step.label}</strong><p>{step.body}</p></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section boundary">
+    <div class="container--content boundary__grid">
+      <div>
+        <p class="eyebrow">Where Rokko stops</p>
+        <h2>You are the licensed inspector. Rokko isn’t.</h2>
+      </div>
+      <div>
+        <p class="deck">Rokko never fills out an inspection form, never decides what passes, and never signs. It drafts the message, keeps the record, and puts the next step in front of you.</p>
+        <dl class="signal-list">
+          <div><dt>01</dt><dd>Findings, photos, and certifications are yours. Rokko only carries the link.</dd></div>
+          <div><dt>02</dt><dd>No referral fees or rewards for agents. A simpler request link and a report copy is the whole program.</dd></div>
+          <div><dt>03</dt><dd>No promises to your client about what a carrier will accept. Rokko sends what you wrote, nothing more.</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper tools">
+    <div class="container--content tools__grid">
+      <div>
+        <p class="eyebrow">Your report software</p>
+        <h2>Keep writing reports where you write them now.</h2>
+      </div>
+      <div>
+        <p class="deck">Rokko tracks the job and delivers the report link. It doesn’t replace the tool you inspect with. Before a test starts, we confirm which connection, if any, we’ll set up. We only list connections we’ve tested.</p>
+        <a class="text-link" href="/security/">See how we handle your data</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section faq">
+    <div class="container--content faq__grid">
+      <div>
+        <p class="eyebrow">Quick answers</p>
+        <h2>What inspectors ask us first.</h2>
+      </div>
+      <div>
+        {faqs.map((item) => (
+          <details>
+            <summary>{item.q}</summary>
+            <p>{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <FinalCta
+    eyebrow="Try it on your next week"
+    title="Bring one week of jobs. We’ll show you the list."
+    body="Requests, bookings, unpaid invoices, reports that went out, reports that didn’t. That’s the demo."
+  />
+</BaseLayout>
+
+<style>
+  .operating-question__grid,
+  .workflow__heading,
+  .coverage__heading,
+  .boundary__grid,
+  .tools__grid,
+  .faq__grid { display: grid; gap: clamp(2.5rem, 7vw, 7rem); align-items: end; }
+  .operating-question blockquote { max-width: 18ch; margin: 0; font-family: var(--grk-font-serif); font-size: clamp(2rem, 4.5vw, 4rem); line-height: 1.04; }
+  .coverage__heading { margin-bottom: clamp(3rem, 6vw, 6rem); }
+  .coverage h2 { max-width: 13ch; }
+  .coverage .numbered-card { min-height: 24rem; }
+  .coverage .numbered-card h3 { margin-bottom: 1rem; }
+  .coverage ul { margin: 0; padding-left: 1.1rem; color: var(--grk-text-muted); }
+  .coverage li { margin-bottom: 0.6rem; }
+  .workflow__heading { margin-bottom: clamp(3rem, 6vw, 6rem); }
+  .workflow h2 { max-width: 13ch; }
+  .workflow ol { display: grid; margin: 0; padding: 0; border-top: 1px solid rgb(252 251 247 / 0.2); list-style: none; }
+  .workflow li { display: grid; grid-template-columns: 3rem 1fr; padding-block: 1.5rem; border-bottom: 1px solid rgb(252 251 247 / 0.2); }
+  .workflow li span { color: var(--grk-success); font-family: var(--grk-font-mono); font-size: 0.72rem; }
+  .workflow li p { grid-column: 2; margin: 0.5rem 0 0; color: rgb(252 251 247 / 0.68); }
+  .boundary__grid,
+  .tools__grid { align-items: start; }
+  .boundary h2,
+  .tools h2 { max-width: 12ch; }
+  .signal-list { margin: 1.5rem 0 0; }
+  .signal-list div { display: grid; grid-template-columns: 3rem 1fr; padding-block: 1.1rem; border-bottom: 1px solid var(--grk-border); }
+  .signal-list dt { color: var(--grk-action); font-family: var(--grk-font-mono); font-size: 0.72rem; }
+  .signal-list dd { margin: 0; }
+  .faq h2 { max-width: 12ch; }
+  .faq details { border-top: 1px solid var(--grk-border); }
+  .faq details:last-child { border-bottom: 1px solid var(--grk-border); }
+  .faq summary { position: relative; display: flex; min-height: 4.75rem; align-items: center; padding: 1rem 2.5rem 1rem 0; font-weight: 650; cursor: pointer; list-style: none; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { position: absolute; right: 0; content: '+'; color: var(--grk-action); font-family: var(--grk-font-mono); font-size: 1.25rem; }
+  .faq details[open] summary::after { content: '−'; }
+  .faq details p { color: var(--grk-text-muted); }
+  @media (min-width: 48rem) {
+    .operating-question__grid { grid-template-columns: 1.15fr 0.85fr; }
+    .coverage__heading { grid-template-columns: 1.35fr 0.65fr; }
+    .workflow__heading { grid-template-columns: 1.1fr 0.9fr; }
+    .workflow ol { grid-template-columns: repeat(3, 1fr); }
+    .workflow li { grid-template-columns: 1fr; min-height: 15rem; padding: 1.5rem; border-right: 1px solid rgb(252 251 247 / 0.2); }
+    .workflow li:nth-child(3n) { border-right: 0; }
+    .workflow li strong { margin-top: 3rem; }
+    .workflow li p { grid-column: 1; }
+    .boundary__grid,
+    .tools__grid { grid-template-columns: 1fr 1fr; }
+    .faq__grid { grid-template-columns: 0.8fr 1.2fr; }
+  }
+  @media (min-width: 68rem) {
+    .workflow ol { grid-template-columns: repeat(6, 1fr); }
+    .workflow li:nth-child(3n) { border-right: 1px solid rgb(252 251 247 / 0.2); }
+    .workflow li:last-child { border-right: 0; }
+  }
+</style>
