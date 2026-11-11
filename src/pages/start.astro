@@ -1,0 +1,192 @@
+---
+// /start/ — client billing setup (2026-11-11). Private link sent after a proposal is signed; never indexed.
+// Card details never touch this page or HighLevel: step 2 hands off to a Stripe-hosted page.
+// Optional ?pay=<Stripe Payment Link id> shows the "Add your card" button (new clients). Existing clients
+// with a card already in Stripe (e.g. JLA) get the link without ?pay.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../config/site';
+
+const formId = site.billingFormId;
+const formUrl = formId ? `https://links.serviceosllc.com/widget/form/${formId}` : null;
+const entity = site.billingEntity;
+const included = site.billingIncludedUsd;
+---
+
+<BaseLayout
+  title="Set up billing for Rokko"
+  description="Send the details we need to invoice you, then put your card on file with Stripe."
+  noindex
+>
+  <PageHero
+    eyebrow="Billing setup"
+    title="Set up billing in about five minutes."
+    deck="Your plan is already agreed. This page collects the details we need to invoice you and gets your card on file with Stripe."
+    tone="moss"
+  />
+
+  <section class="section">
+    <div class="container--content">
+      <ol class="grid-3 start-steps" aria-label="Three steps">
+        <li class="numbered-card"><span class="numbered-card__number">01</span><h2>Your business details</h2><p>Who we bill, where invoices go, and who can approve charges. The form is below.</p></li>
+        <li class="numbered-card"><span class="numbered-card__number">02</span><h2>Your card, on Stripe</h2><p>Stripe keeps your card on its own secure page. We never see or store the number.</p></li>
+        <li class="numbered-card"><span class="numbered-card__number">03</span><h2>You’re set</h2><p>Your plan starts on the date in your proposal. Every month you get one itemized invoice.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section--paper start-terms" aria-labelledby="how-billing-works">
+    <div class="container--content start-terms__grid">
+      <div>
+        <p class="eyebrow">Before you fill it in</p>
+        <h2 id="how-billing-works">How your monthly bill works</h2>
+      </div>
+      <ul class="start-terms__list">
+        <li><strong>Your monthly plan</strong> at the price in your proposal, charged on the same date each month.</li>
+        <li><strong>${included} of usage credit every month,</strong> included in your plan. It covers AI, texts, calls and email. You only pay for usage past that.</li>
+        <li><strong>Usage past that</strong> is billed at the rates below and shows up as its own line on your next invoice.</li>
+        <li><strong>If a payment fails,</strong> Stripe tries again and we let you know. If it’s still unpaid after 5 days, service pauses, and it comes back as soon as the invoice is paid.</li>
+        <li><strong>Who bills you:</strong> {entity}. That’s the name you’ll see on your card statement.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="usage-rates">
+    <div class="container--content start-terms__grid">
+      <div>
+        <p class="eyebrow">Rates as of {site.billingRatesAsOf}</p>
+        <h2 id="usage-rates">Usage rates</h2>
+      </div>
+      <div>
+        <div class="start-rates__scroll">
+          <table class="start-rates">
+            <caption>AI usage, in US dollars per million tokens</caption>
+            <thead>
+              <tr><th scope="col">Model</th><th scope="col">Input</th><th scope="col">Output</th><th scope="col">Cached reading</th><th scope="col">Cache writes (5 min / 1 hr)</th></tr>
+            </thead>
+            <tbody>
+              {site.aiRates.map((r) => (
+                <tr><th scope="row">{r.model}</th><td>${r.input}</td><td>${r.output}</td><td>${r.cacheRead}</td><td>${r.cacheWrite}</td></tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <ul class="start-terms__list start-rates__notes">
+          <li>A token is roughly three quarters of a word. Most of an assistant’s work is cached reading, the cheapest rate.</li>
+          <li>Texts, calls and email are billed at our standard messaging rates and itemized by type on your invoice.</li>
+          <li>If our AI provider changes its prices, we’ll tell you before your rates change.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper" aria-labelledby="step-1">
+    <div class="container--content start-form__grid">
+      <div class="start-form__intro">
+        <p class="eyebrow">Step 1</p>
+        <h2 id="step-1">Your business details</h2>
+        <p>At the end of the form you’ll confirm this authorization:</p>
+        <blockquote class="start-auth">
+          I authorize {entity} to charge the card I keep on file with Stripe for my monthly plan, and for usage beyond what my plan includes, as described in my proposal and on this page.
+        </blockquote>
+      </div>
+      <div>
+        {formUrl ? (
+          <>
+            <div class="start-form__shell">
+              <iframe
+                src={formUrl}
+                id={`inline-${formId}`}
+                data-layout="{'id':'INLINE'}"
+                data-trigger-type="alwaysShow"
+                data-trigger-value=""
+                data-activation-type="alwaysActivated"
+                data-activation-value=""
+                data-deactivation-type="neverDeactivate"
+                data-deactivation-value=""
+                data-form-name="Rokko Billing Setup"
+                data-height="900"
+                data-layout-iframe-id={`inline-${formId}`}
+                data-form-id={formId}
+                title="Billing setup form"
+                width="720"
+                height="900"
+                loading="eager"
+              ></iframe>
+            </div>
+            <p class="start-form__fallback">Form not loading? <a href={formUrl} target="_blank" rel="noopener noreferrer">Open it in a new tab</a>.</p>
+            <script is:inline defer src="https://links.serviceosllc.com/js/form_embed.js"></script>
+          </>
+        ) : (
+          <div class="start-panel" role="status">
+            <h3>Your form is on its way</h3>
+            <p>We’re finishing your billing form. Reply to the email that sent you here and we’ll send the link as soon as it’s ready.</p>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="step-2">
+    <div class="container--content start-card__grid">
+      <div>
+        <p class="eyebrow">Step 2</p>
+        <h2 id="step-2">Your card, on Stripe</h2>
+      </div>
+      <div>
+        <div class="start-panel" data-pay-panel>
+          <p data-pay-default>Already have a card on file with us? There’s nothing to do here. If not, we’ll email you a secure Stripe link after you send the form.</p>
+          <div data-pay-ready hidden>
+            <p>Add your card on Stripe’s secure page. It opens in a new tab.</p>
+            <p><a class="button button--primary" data-pay-link href="https://stripe.com" target="_blank" rel="noopener noreferrer">Add your card on Stripe</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+    (() => {
+      // ?pay=<Payment Link id> -> https://buy.stripe.com/<id>. Only that host, only a plain id: the param can't send people anywhere else.
+      const id = new URLSearchParams(window.location.search).get('pay') || '';
+      if (!/^[A-Za-z0-9_]{8,64}$/.test(id)) return;
+      const link = document.querySelector('[data-pay-link]');
+      if (!link) return;
+      link.href = 'https://buy.stripe.com/' + id;
+      document.querySelector('[data-pay-default]')?.setAttribute('hidden', '');
+      document.querySelector('[data-pay-ready]')?.removeAttribute('hidden');
+    })();
+  </script>
+</BaseLayout>
+
+<style>
+  .start-steps { margin: 0; padding: 0; list-style: none; }
+  .start-steps h2 { font-size: clamp(1.4rem, 2.2vw, 2rem); }
+  .start-terms__grid, .start-form__grid, .start-card__grid { display: grid; gap: clamp(2.5rem, 7vw, 6rem); align-items: start; }
+  .start-terms__list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--grk-border); }
+  .start-terms__list li { padding-block: 1.1rem; color: var(--grk-text-muted); border-bottom: 1px solid var(--grk-border); }
+  .start-terms__list strong { color: var(--grk-text); }
+  .start-form__intro > p { color: var(--grk-text-muted); }
+  .start-auth { margin: 1rem 0 0; padding: 1.25rem 1.5rem; border-left: 3px solid var(--grk-border-strong, currentColor); background: var(--grk-bg-surface); border-radius: var(--grk-radius-panel); }
+  .start-form__shell { overflow: hidden; background: #fff; border: 1px solid var(--grk-border); border-radius: var(--grk-radius-panel); box-shadow: var(--grk-shadow-interactive); }
+  .start-form__shell iframe { display: block; width: 100%; min-height: 900px; border: 0; border-radius: inherit; }
+  .start-form__fallback { margin: 1rem 0 0; color: var(--grk-text-muted); font-size: 0.9rem; text-align: center; }
+  .start-terms__grid > * { min-width: 0; }   /* lets the rates table scroll inside its column on phones */
+  .start-rates__scroll { overflow-x: auto; }
+  .start-rates { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  .start-rates caption { margin-bottom: 0.75rem; color: var(--grk-text-muted); text-align: left; }
+  .start-rates th, .start-rates td { padding: 0.85rem 0.75rem; text-align: right; border-bottom: 1px solid var(--grk-border); white-space: nowrap; }
+  .start-rates th:first-child { padding-left: 0; text-align: left; }
+  .start-rates thead th { color: var(--grk-text-muted); font-weight: 500; font-size: 0.85rem; }
+  .start-rates__notes { margin-top: 2rem; border-top: 0; }
+  .start-panel { padding: clamp(1.5rem, 4vw, 2.5rem); background: var(--grk-bg-surface); border: 1px solid var(--grk-border); border-radius: var(--grk-radius-panel); }
+  .start-panel h3 { margin-top: 0; }
+  .start-panel p:last-child { margin-bottom: 0; }
+  @media (min-width: 48rem) {
+    .start-terms__grid, .start-card__grid { grid-template-columns: 0.8fr 1.2fr; }
+  }
+  @media (min-width: 64rem) {
+    .start-form__grid { grid-template-columns: minmax(16rem, 0.6fr) minmax(32rem, 1.4fr); }
+    .start-form__intro { position: sticky; top: 7rem; }
+  }
+</style>

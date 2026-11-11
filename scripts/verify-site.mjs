@@ -22,12 +22,14 @@ const requiredOutputs = [
   'privacy/index.html',
   'terms/index.html',
   'sms-terms/index.html',
+  'start/index.html',
   '404.html',
   'robots.txt',
   'sitemap.xml',
 ];
 
 const gatedOutputs = new Set([
+  'start/index.html', // private billing-setup link, never indexed (2026-11-11)
   'pricing/index.html',
   'security/index.html',
   'privacy/index.html',
