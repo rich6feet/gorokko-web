@@ -20,7 +20,8 @@ import { site } from '../config/site';
       <div>
         <div class="demo-form-shell">
           <iframe
-            src={site.bookingUrl}
+            data-ghl-embed
+            data-src={site.bookingUrl}
             id="inline-xFqXRCYsiCDGj5hQo6S7"
             data-layout="{'id':'INLINE'}"
             data-trigger-type="alwaysShow"
@@ -38,6 +39,7 @@ import { site } from '../config/site';
             height="759"
             loading="eager"
           ></iframe>
+          <noscript><p style="padding:2rem;margin:0"><a href={site.bookingUrl}>Open the demo request form</a></p></noscript>
         </div>
         <script is:inline defer src="https://links.serviceosllc.com/js/form_embed.js"></script>
       </div>

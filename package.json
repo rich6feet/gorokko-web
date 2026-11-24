@@ -9,6 +9,7 @@
     "preview": "astro preview",
     "check": "astro check",
     "verify": "node scripts/verify-site.mjs",
+    "test": "node --experimental-strip-types scripts/test-attribution.mjs",
     "cloudflare:preview": "npm run build && wrangler dev",
     "cloudflare:dry-run": "npm run build && npm run verify && wrangler deploy --dry-run",
     "deploy": "npm run build && npm run verify && wrangler deploy"

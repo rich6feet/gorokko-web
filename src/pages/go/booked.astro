@@ -1,0 +1,35 @@
+---
+// Thank-you page after a discovery-call booking. Also a clean URL-based conversion target
+// if the GHL calendar is set to redirect here. noindex.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+---
+
+<BaseLayout
+  title="You’re booked · GoRokko"
+  description="Your GoRokko discovery call is booked. Here’s what happens next."
+  noindex
+  chrome="minimal"
+  ctaHref="/"
+  ctaLabel="Visit gorokko.com"
+>
+  <PageHero
+    eyebrow="You’re booked"
+    title="See you on the call."
+    deck="Your calendar invite is on its way by email. Use the link in it if you need to change the time."
+    tone="moss"
+  />
+
+  <section class="section booked-next">
+    <div class="container--content">
+      <p class="eyebrow">Before we talk</p>
+      <h2>Bring one thing that slips.</h2>
+      <p class="deck">A missed call, a late follow-up, a job that got lost between the office and the crew. Pick the one that happens most often in your week. That’s where we’ll start.</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .booked-next h2 { max-width: 16ch; }
+  .booked-next .deck { max-width: 40rem; }
+</style>

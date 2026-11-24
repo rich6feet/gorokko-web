@@ -1,0 +1,22 @@
+---
+// Loaded on every page by BaseLayout. Records the ad touch (utm_*, gclid, fbclid, ...) from the
+// landing URL, then fills every [data-ghl-embed] iframe's src with that touch so GHL can attribute
+// the booking. Iframes without JS fall back to the <noscript> link in GhlCalendar.
+---
+
+<script>
+  import { STORAGE_KEY, mergeTouch, parseTouch, readStored, touchForEmbed, withTouch } from '../lib/attribution';
+
+  let raw: string | null = null;
+  try { raw = window.localStorage.getItem(STORAGE_KEY); } catch { raw = null; }
+
+  const stored = mergeTouch(readStored(raw), parseTouch(window.location.search), Date.now());
+  try { window.localStorage.setItem(STORAGE_KEY, JSON.stringify(stored)); } catch { /* storage blocked: in-page only */ }
+
+  const touch = touchForEmbed(stored);
+  document.querySelectorAll<HTMLIFrameElement>('iframe[data-ghl-embed]').forEach((frame) => {
+    const base = frame.dataset.src;
+    if (!base) return;
+    try { frame.src = withTouch(base, touch); } catch { frame.src = base; }
+  });
+</script>

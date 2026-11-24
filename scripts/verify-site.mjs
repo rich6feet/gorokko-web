@@ -22,6 +22,8 @@ const requiredOutputs = [
   'privacy/index.html',
   'terms/index.html',
   'sms-terms/index.html',
+  'go/discovery/index.html',
+  'go/booked/index.html',
   '404.html',
   'robots.txt',
   'sitemap.xml',
@@ -35,6 +37,10 @@ const gatedOutputs = new Set([
   'sms-terms/index.html',
   '404.html',
 ]);
+
+// Paid-traffic funnel pages: always noindex, never in the sitemap, no site navigation.
+const funnelOutputs = new Set(['go/discovery/index.html', 'go/booked/index.html']);
+const noindexOutputs = new Set([...gatedOutputs, ...funnelOutputs]);
 
 const htmlFiles = [];
 const walk = (directory) => {
@@ -70,9 +76,12 @@ for (const file of htmlFiles) {
   if (!/<link rel="canonical" href="https:\/\/gorokko\.com\//.test(html)) failures.push(`${rel}: missing canonical`);
   if (/href="#"|src=""|TODO|Lorem ipsum|example\.com/i.test(html)) failures.push(`${rel}: contains placeholder or empty destination`);
 
-  const shouldBeGated = gatedOutputs.has(rel);
+  const shouldBeGated = noindexOutputs.has(rel);
   const isNoindex = /<meta name="robots" content="noindex, nofollow">/.test(html);
   if (shouldBeGated !== isNoindex) failures.push(`${rel}: unexpected robots gate state`);
+
+  if (funnelOutputs.has(rel) && html.includes('id="site-navigation"')) failures.push(`${rel}: funnel page must not show site navigation`);
+  if (/<iframe[^>]*\ssrc="https:\/\/links\.serviceosllc\.com/.test(html)) failures.push(`${rel}: GHL iframe must use data-src so attribution is attached`);
 
   const urls = [...html.matchAll(/(?:href|src)="(\/[^"]*)"/g)].map((match) => match[1]);
   for (const url of urls) {
@@ -82,9 +91,18 @@ for (const file of htmlFiles) {
 }
 
 const sitemap = readFileSync(join(root, 'sitemap.xml'), 'utf8');
-for (const gated of ['/pricing/', '/security/', '/privacy/', '/terms/', '/sms-terms/']) {
+for (const gated of ['/pricing/', '/security/', '/privacy/', '/terms/', '/sms-terms/', '/go/discovery/', '/go/booked/']) {
   if (sitemap.includes(`<loc>https://gorokko.com${gated}</loc>`)) failures.push(`Sitemap exposes gated route: ${gated}`);
 }
+
+if (failures.length) {
+  console.error(failures.join('\n'));
+  process.exit(1);
+}
+
+const discovery = readFileSync(join(root, 'go/discovery/index.html'), 'utf8');
+if ((discovery.match(/<iframe[^>]*\sdata-ghl-embed/g) || []).length !== 1) failures.push('go/discovery/index.html: expected exactly one GHL embed');
+if (!discovery.includes('id="book"')) failures.push('go/discovery/index.html: missing #book anchor');
 
 if (failures.length) {
   console.error(failures.join('\n'));

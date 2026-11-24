@@ -11,12 +11,30 @@ export const site = {
   calendarUrl: 'https://links.serviceosllc.com/widget/booking/6goTW1YljKlb3R1fjnNd',
   legalEntity: null,
   analyticsId: null,
+  // Paid-traffic funnel (/go/). The discovery page embeds this GHL calendar directly.
+  discoveryPath: '/go/discovery/',
+  bookedPath: '/go/booked/',
+  discoveryCalendarUrl: 'https://links.serviceosllc.com/widget/booking/6goTW1YljKlb3R1fjnNd',
+  // Ad tags stay off until Richard supplies the real ids (fail closed: null ships no tag code).
+  // googleTagId: 'AW-…' (Google Ads) or 'G-…' (GA4). metaPixelId: numeric Meta pixel id.
+  googleTagId: null as string | null,
+  metaPixelId: null as string | null,
   statusUrl: 'https://status.crewvana.io/status/marcus',
   publicSecurityContact: null,
   pricingApproved: false,
   proofApproved: false,
   legalApproved: false,
 } as const;
+
+// Legal links for the /go/ funnel pages. The GHL booking and demo forms already link to these
+// ServiceOS LLC policies, so the funnel shows the same ones. DECISION (Richard + counsel): add
+// GoRokko to those policies' brand list before ads run. Set to null to fall back to the site's
+// own (gated) /privacy/, /terms/ and /sms-terms/ pages.
+export const funnelLegalLinks: { label: string; href: string }[] | null = [
+  { label: 'Privacy policy', href: 'https://serviceosllc.com/privacy' },
+  { label: 'Terms of service', href: 'https://serviceosllc.com/terms' },
+  { label: 'SMS terms', href: 'https://serviceosllc.com/sms-terms' },
+];
 
 export const navigation = [
   { label: 'How it works', href: '/product/' },

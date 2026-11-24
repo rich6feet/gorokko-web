@@ -1,7 +1,30 @@
 ---
+import { funnelLegalLinks } from '../config/site';
+
+interface Props {
+  // 'minimal' = paid-traffic pages: legal links and a contact line only.
+  variant?: 'full' | 'minimal';
+}
+
+const { variant = 'full' } = Astro.props;
 const year = new Date().getFullYear();
+const legalLinks = funnelLegalLinks ?? [
+  { label: 'Privacy', href: '/privacy/' },
+  { label: 'Terms', href: '/terms/' },
+  { label: 'SMS terms', href: '/sms-terms/' },
+];
 ---
 
+{variant === 'minimal' ? (
+  <footer class="site-footer site-footer--minimal">
+    <div class="container site-footer__minimal">
+      <span>© {year} Rokko. Questions? <a href="mailto:rich@serviceosllc.com">rich@serviceosllc.com</a></span>
+      <nav aria-label="Legal">
+        {legalLinks.map((link) => <a href={link.href}>{link.label}</a>)}
+      </nav>
+    </div>
+  </footer>
+) : (
 <footer class="site-footer">
   <div class="container">
     <div class="site-footer__top">
@@ -39,8 +62,35 @@ const year = new Date().getFullYear();
     </div>
   </div>
 </footer>
+)}
 
 <style>
+  .site-footer--minimal {
+    padding-block: 2rem;
+  }
+
+  .site-footer__minimal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2rem;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--grk-text-muted);
+    font-size: 0.9rem;
+  }
+
+  .site-footer__minimal nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.25rem;
+  }
+
+  .site-footer__minimal a {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+  }
+
   .site-footer {
     padding-block: clamp(3.5rem, 7vw, 7rem) 2rem;
     color: var(--grk-text);

@@ -1,6 +1,16 @@
 ---
 import { navigation, site } from '../config/site';
 
+interface Props {
+  // 'minimal' = paid-traffic pages: logo, theme toggle and one CTA, no navigation.
+  variant?: 'full' | 'minimal';
+  ctaHref?: string;
+  ctaLabel?: string;
+}
+
+const { variant = 'full', ctaHref = site.demoPath, ctaLabel = 'Show me Rokko' } = Astro.props;
+const minimal = variant === 'minimal';
+
 const normalizePath = (path: string) => path === '/' ? path : path.replace(/\/+$/, '');
 const currentPath = normalizePath(Astro.url.pathname);
 const isCurrent = (href: string) => {
@@ -14,14 +24,18 @@ const isCurrent = (href: string) => {
     <a class="site-header__logo" href="/" aria-label="Rokko home">
       <img src="/brand/gorokko-03b-lockup-color.svg" width="520" height="116" alt="GO ROKKO" />
     </a>
-    <nav id="site-navigation" class="site-nav" aria-label="Primary">
-      <ul>
-        {navigation.map((item) => (
-          <li><a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a></li>
-        ))}
-      </ul>
-      <a class="button button--primary site-nav__cta" href={site.demoPath}>Show me Rokko</a>
-    </nav>
+    {minimal ? (
+      <a class="button button--primary site-header__cta" href={ctaHref}>{ctaLabel}</a>
+    ) : (
+      <nav id="site-navigation" class="site-nav" aria-label="Primary">
+        <ul>
+          {navigation.map((item) => (
+            <li><a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a></li>
+          ))}
+        </ul>
+        <a class="button button--primary site-nav__cta" href={ctaHref}>{ctaLabel}</a>
+      </nav>
+    )}
     <div class="site-header__controls">
       <button class="theme-toggle" type="button" aria-pressed="false">
         <span class="sr-only" data-theme-label>Switch to dark theme</span>
@@ -32,10 +46,12 @@ const isCurrent = (href: string) => {
           </span>
         </span>
       </button>
-      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation">
-        <span class="menu-toggle__label">Menu</span>
-        <span class="menu-toggle__bars" aria-hidden="true"></span>
-      </button>
+      {!minimal && (
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation">
+          <span class="menu-toggle__label">Menu</span>
+          <span class="menu-toggle__bars" aria-hidden="true"></span>
+        </button>
+      )}
     </div>
   </div>
 </header>
@@ -107,6 +123,11 @@ const isCurrent = (href: string) => {
 </script>
 
 <style>
+  .site-header__cta {
+    margin-left: auto;
+    white-space: nowrap;
+  }
+
   .site-header {
     position: sticky;
     top: 0;

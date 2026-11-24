@@ -1,0 +1,157 @@
+---
+// Paid-traffic landing page: ad click -> pick a time -> discovery / qualification call.
+// Rules: noindex, no site navigation, one action (book). Copy stays inside approved claims:
+// no prices, results, testimonials or named integrations (see README "Content approval gates").
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import GhlCalendar from '../../components/GhlCalendar.astro';
+import { site } from '../../config/site';
+import { useCases } from '../../content/useCases';
+
+const promises = [
+  '20 minutes, on a call',
+  'We start with the tools you already use',
+  'Big changes wait for your yes',
+];
+
+const agenda = [
+  { number: '01', title: 'Where work slips', body: 'The calls, follow-ups, and handoffs that fall through today, and what they cost you.' },
+  { number: '02', title: 'What you already use', body: 'Your CRM, phone, calendar, and job software. We work with what you have before we suggest anything new.' },
+  { number: '03', title: 'Whether we fit', body: 'If GoRokko fits, we outline the setup and what it costs. If it doesn’t, we’ll tell you.' },
+];
+
+const faqs = [
+  { q: 'Is this a sales call?', a: 'It’s a fit check. We ask how work moves through your business and where it gets stuck. You leave with a clearer picture of what slips, whether or not you work with us.' },
+  { q: 'Do I have to switch software?', a: 'No. We start with the tools you already use and only suggest a change when it clearly saves your team time.' },
+  { q: 'Will Rokko change things without asking?', a: 'Big changes wait for the right person to say yes. We set those rules with you before anything goes live.' },
+  { q: 'What does it cost?', a: 'It depends on your setup and how much your team uses it. We walk through it on the call instead of guessing at a number on a web page.' },
+];
+---
+
+<BaseLayout
+  title="Book a GoRokko discovery call"
+  description="GoRokko is the backend support team for home-service businesses. Book a 20-minute call to see where leads and jobs slip and whether we can take that work off your plate."
+  noindex
+  chrome="minimal"
+  ctaHref="#book"
+  ctaLabel="Pick a time"
+>
+  <section class="section discovery-hero" aria-labelledby="discovery-title">
+    <div class="container discovery-hero__grid">
+      <div class="discovery-hero__copy">
+        <p class="eyebrow">GoRokko · Backend support</p>
+        <h1 id="discovery-title">We run your backend. <span class="display-accent">You run the jobs.</span></h1>
+        <p class="deck discovery-hero__deck">
+          GoRokko is your local backend support team. We set up and look after the systems behind your office: lead follow-up, calls and texts, scheduling, and a Rokko assistant your team can simply ask. Pick a time and we’ll spend 20 minutes on where work slips today.
+        </p>
+        <p class="deck discovery-hero__deck--short">Your local backend support team. Pick a time for a 20-minute call on where work slips today.</p>
+      </div>
+      <div id="book" class="discovery-hero__booking">
+        <p class="eyebrow">Pick a time</p>
+        <GhlCalendar url={site.discoveryCalendarUrl} title="Book a GoRokko discovery call" />
+      </div>
+      <ul class="discovery-hero__promises">
+        {promises.map((item) => <li>{item}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--paper discovery-agenda">
+    <div class="container--content">
+      <p class="eyebrow">On the call</p>
+      <h2>Three things, twenty minutes.</h2>
+      <ol class="discovery-agenda__list">
+        {agenda.map((item) => (
+          <li><span>{item.number}</span><div><h3>{item.title}</h3><p>{item.body}</p></div></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section discovery-scope">
+    <div class="container--content">
+      <div class="discovery-scope__heading">
+        <p class="eyebrow">What GoRokko looks after</p>
+        <h2>The office work that slips when you’re busy.</h2>
+      </div>
+      <div class="discovery-scope__grid">
+        {useCases.map((item) => (
+          <article><span>{item.number}</span><h3>{item.title}</h3><p>{item.short}</p></article>
+        ))}
+      </div>
+      <p class="discovery-scope__who">Built for contractors, home-service teams, and home inspectors.</p>
+    </div>
+  </section>
+
+  <section class="section section--paper discovery-faq">
+    <div class="container--content discovery-faq__grid">
+      <div>
+        <p class="eyebrow">Before you book</p>
+        <h2>Straight answers.</h2>
+      </div>
+      <div>
+        {faqs.map((item) => (
+          <details>
+            <summary>{item.q}</summary>
+            <p>{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--moss discovery-close">
+    <div class="container--content discovery-close__grid">
+      <h2>Ready when you are.</h2>
+      <a class="button button--primary" href="#book">Pick a time</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .discovery-hero { padding-block: clamp(1.75rem, 6vw, 5.5rem); }
+  .discovery-hero__grid { display: grid; gap: 1.75rem; align-items: start; grid-template-areas: 'copy' 'book' 'promises'; }
+  .discovery-hero__copy { grid-area: copy; }
+  .discovery-hero__booking { grid-area: book; scroll-margin-top: calc(var(--grk-navbar-height) + 1rem); }
+  .discovery-hero h1 { max-width: 13ch; }
+  .discovery-hero__deck { display: none; }
+  .discovery-hero__deck--short { margin-bottom: 0; }
+  .discovery-hero__promises { grid-area: promises; display: grid; gap: 0.6rem; margin: 0; padding: 0; list-style: none; }
+  .discovery-hero__promises li { display: flex; gap: 0.75rem; align-items: baseline; }
+  .discovery-hero__promises li::before { content: ''; flex: none; width: 0.6rem; height: 0.6rem; background: var(--grk-action); transform: translateY(-0.05rem); }
+
+  .discovery-agenda__list { display: grid; gap: 0; margin: 2.5rem 0 0; padding: 0; list-style: none; border-top: 1px solid var(--grk-border); }
+  .discovery-agenda__list li { display: grid; grid-template-columns: 3rem 1fr; gap: 1rem; padding-block: 1.5rem; border-bottom: 1px solid var(--grk-border); }
+  .discovery-agenda__list span, .discovery-scope__grid span { color: var(--grk-action); font-family: var(--grk-font-mono); font-size: 0.72rem; }
+  .discovery-agenda__list h3 { margin-bottom: 0.4rem; }
+  .discovery-agenda__list p, .discovery-scope__grid p { margin: 0; color: var(--grk-text-muted); }
+
+  .discovery-scope__heading { max-width: 40rem; margin-bottom: 2.5rem; }
+  .discovery-scope__grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
+  .discovery-scope__grid article { display: grid; gap: 0.6rem; padding: 1.5rem; background: var(--grk-bg-surface); border: 1px solid var(--grk-border); border-radius: var(--grk-radius-panel); }
+  .discovery-scope__grid h3 { margin: 0; font-size: 1.25rem; }
+  .discovery-scope__who { margin: 2rem 0 0; color: var(--grk-text-muted); }
+
+  .discovery-faq__grid { display: grid; gap: clamp(2rem, 6vw, 6rem); }
+  .discovery-faq details { padding-block: 1.25rem; border-bottom: 1px solid var(--grk-border); }
+  .discovery-faq summary { cursor: pointer; font-weight: 600; min-height: 2.75rem; display: flex; align-items: center; }
+  .discovery-faq details p { margin: 0.75rem 0 0; color: var(--grk-text-muted); }
+
+  .discovery-close__grid { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; align-items: center; justify-content: space-between; }
+  .discovery-close h2 { margin: 0; }
+
+  @media (min-width: 48rem) {
+    .discovery-hero__deck { display: block; }
+    .discovery-hero__deck--short { display: none; }
+  }
+
+  @media (min-width: 64rem) {
+    .discovery-hero__grid {
+      grid-template-columns: minmax(18rem, 0.85fr) minmax(30rem, 1.15fr);
+      grid-template-areas: 'copy book' 'promises book';
+      column-gap: clamp(2rem, 5vw, 4.5rem);
+      row-gap: 1.75rem;
+      grid-template-rows: auto 1fr;
+    }
+    .discovery-faq__grid { grid-template-columns: 0.8fr 1.2fr; }
+  }
+</style>
